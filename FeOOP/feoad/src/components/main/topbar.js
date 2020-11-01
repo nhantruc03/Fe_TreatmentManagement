@@ -13,7 +13,7 @@ class topbar extends Component {
                         <div className="NBar">
                             <NavLink className="link" to="/listusers" >Home</NavLink>
                             <NavLink className="link" to="/listusers" >Patient</NavLink>
-                            <NavLink className="link" to="/listusers" >Department</NavLink>
+                            <NavLink className="link" to="/listdepartments" >Department</NavLink>
                             <NavLink className="link" to="/listusers" >Pharmacity</NavLink>
                             <NavLink className="link" to="/listusers" >User</NavLink>
                         </div>

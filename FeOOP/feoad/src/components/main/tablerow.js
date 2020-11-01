@@ -29,15 +29,17 @@ class TableDataRow extends Component {
             if (value === "isDeleted") {
                 var stt;
                 if (this.props.data[value] === true) {
-                    stt = "Không khả dụng";
+                    stt = "Disable";
+                    return (
+                        <td key={key} ><div className="disable">{stt}</div> </td>
+                    )
                 }
                 else {
-                    stt = "Khả dụng";
+                    stt = "Enable";
+                    return (
+                        <td key={key} ><div className="enable">{stt}</div> </td>
+                    )
                 }
-
-                return (
-                    <td key={key} > {stt}</td>
-                )
             }
             if (value.includes('Id')) {
                 return <td key={key}>{this.props.data[value].name}</td>
@@ -100,12 +102,12 @@ class TableDataRow extends Component {
     render() {
         if (this.state.onEdit) {
             return (
-                <Redirect to={"/admin/edit" + this.props.obj + "/" + this.props.data._id} />
+                <Redirect to={"/edit" + this.props.obj + "/" + this.props.data._id} />
             )
         }
         else if (this.state.onView) {
             return (
-                <Redirect to={"/admin/" + this.props.obj + "/" + this.props.data._id} />
+                <Redirect to={"/" + this.props.obj + "/" + this.props.data._id} />
             )
         }
         else {

@@ -115,6 +115,25 @@ div {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.enable {
+  background: #E3FFDC;
+  border-radius: 50px;
+  text-align: center;
+  font-family: Noto Sans;
+  font-style: normal;
+  text-align: center;
+  color: #1B9300;
+}
+
+.disable {
+  background: #EAEAEA;
+  border-radius: 50px;
+  text-align: center;
+  font-family: Noto Sans;
+  font-style: normal;
+  text-align: center;
+  color:#6D7071;
+}
 
 /*!
  * Font Awesome Free 5.13.1 by @fontawesome - https://fontawesome.com

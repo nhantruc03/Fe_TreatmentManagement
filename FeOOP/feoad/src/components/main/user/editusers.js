@@ -16,14 +16,14 @@ var Genders = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' }
 ]
-class addusers extends Component {
+class editusers extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
             address: '',
             phoneNumber: '',
-            role: 'client',
+            role: '',
             username: '',
             password: '',
             list_faculties: [],
@@ -31,7 +31,7 @@ class addusers extends Component {
             departmentId: '',
             facultyId: '',
             email: '',
-            gender: 'male',
+            gender: '',
             birthday: undefined,
             isDone: false
         }
@@ -97,8 +97,7 @@ class addusers extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        console.log(data)
-        Axios.post('/users', data, {
+        Axios.put('/users/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -127,7 +126,15 @@ class addusers extends Component {
         })
 
         this._isMounted = true;
-        const [faculties, departments] = await Promise.all([
+        const [user, faculties, departments] = await Promise.all([
+            Axios.get('/users/' + this.props.match.params.id, {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
+                }
+            })
+                .then((res) =>
+                    res.data.data
+                ),
             Axios.get('/faculties', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -147,8 +154,23 @@ class addusers extends Component {
         ]);
 
 
-        if (faculties !== null && departments !== null) {
+        if (faculties !== null && departments !== null && user !== null) {
             if (this._isMounted) {
+
+                this.setState({
+                    name: user.name,
+                    address: user.address,
+                    phoneNumber: user.phoneNumber,
+                    username: user.username,
+                    password: user.password,
+                    role: user.role,
+                    departmentId: user.departmentId,
+                    facultyId: user.facultyId,
+                    birthday: user.birthday,
+                    gender: user.gender,
+                    email: user.email
+                })
+
                 var temp = [];
                 faculties.forEach(e => {
                     var o = {
@@ -192,11 +214,11 @@ class addusers extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-9">
-                                <div onClick={() => this.onDone()} className='subject'> {`<- Create new user`}</div>
+                                <div onClick={() => this.onDone()} className='subject'> {`<- Edit user`}</div>
                             </div>
                             <div className="col">
                                 {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
-                                <button type="submit" className="btn btn-createnew">Create</button>
+                                <button type="submit" className="btn btn-createnew">Edit</button>
                             </div>
                         </div>
 
@@ -209,34 +231,34 @@ class addusers extends Component {
                                     <div className="row mt-3">
                                         <div className="col-7">
                                             <label htmlFor="username"  >User name</label>
-                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="username" placeholder="Tài khoản" required={true} />
+                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="username" placeholder="Tài khoản" value={this.state.username} required={true} />
                                         </div>
                                         <div className="col-5">
                                             <label htmlFor="name"  >Name</label>
-                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên người dùng" required={true} />
+                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên người dùng" value={this.state.name} required={true} />
                                         </div>
                                     </div>
                                     <div className="row mt-3">
                                         <div className="col-7">
                                             <label htmlFor="phoneNumber"  >Phone</label>
-                                            <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="phoneNumber" placeholder="Eg. 0919385172" required={true} />
+                                            <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="phoneNumber" placeholder="Eg. 0919385172" value={this.state.phoneNumber} required={true} />
                                         </div>
                                         <div className="col-5">
                                             <label htmlFor="address">Address</label>
-                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" required={true} />
+                                            <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" value={this.state.address} required={true} />
                                         </div>
                                     </div>
                                     <div className="row mt-3">
                                         <div className="col-7">
                                             {this.state.birthday && <label htmlFor="address">Day: {this.state.birthday}</label>}
                                             {!this.state.birthday && <label htmlFor="address">Day</label>}
-                                            <DayPickerInput onDayChange={this.handleDayChange} />
+                                            <DayPickerInput onDayChange={this.handleDayChange} value={this.state.birthday}/>
                                         </div>
                                         <div className="col-5">
                                             <label htmlFor="gender"  >Gender</label>
                                             <Select
                                                 onChange={(e) => this.onSelectGender(e)}
-                                                defaultValue={Genders[1]}
+                                                value={Genders.filter(({ value }) => value === this.state.gender)}
                                                 options={Genders}
                                             />
                                         </div>
@@ -244,13 +266,13 @@ class addusers extends Component {
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="email"  >Email</label>
-                                            <input onChange={(e) => this.onChange(e)} type="email" className="form-control" name="email" placeholder="Eg. abc**@gmail.com" required={true} />
+                                            <input onChange={(e) => this.onChange(e)} type="email" className="form-control" name="email" placeholder="Eg. abc**@gmail.com" value={this.state.email} required={true} />
                                         </div>
                                     </div>
                                     <hr></hr>
                                     <br></br>
                                     <label htmlFor="password"  >Mật khẩu</label>
-                                    <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" required={true} />
+                                    <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" value={this.state.password} required={true} />
                                 </div>
                                 <div className="col-1"></div>
                                 <div className="col-5">
@@ -260,21 +282,21 @@ class addusers extends Component {
                                     <label className="mt-3" htmlFor="role"  >Role</label>
                                     <Select
                                         onChange={(e) => this.onSelectRole(e)}
-                                        // defaultValue={Roles[1]}
+                                        value={Roles.filter(({ value }) => value === this.state.role)}
                                         options={Roles}
                                     />
 
                                     <label className="mt-3" htmlFor="departmentId"  >Department</label>
                                     <Select
                                         onChange={(e) => this.onSelectDepartment(e)}
-                                        // defaultValue={Roles[1]}
+                                        value={this.state.list_departments.filter(({ value }) => value === this.state.departmentId)}
                                         options={this.state.list_departments}
                                     />
 
                                     <label className="mt-3" htmlFor="facultyId"  >Faculty</label>
                                     <Select
                                         onChange={(e) => this.onSelectFaculty(e)}
-                                        // defaultValue={Roles[1]}
+                                        value={this.state.list_faculties.filter(({ value }) => value === this.state.facultyId)}
                                         options={this.state.list_faculties}
                                     />
                                 </div>
@@ -287,4 +309,4 @@ class addusers extends Component {
     }
 }
 
-export default addusers;
+export default editusers;

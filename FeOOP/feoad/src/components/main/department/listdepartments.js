@@ -5,11 +5,11 @@ import Pagination from '../Pagination';
 import { Redirect } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
-const tablerow = ['Name', 'Email', 'Date', 'Role', 'Phone', 'Department', 'Faculty', 'Status', 'Thao tác']
-const keydata = ['name', 'email', 'birthday', 'role', 'phoneNumber', 'departmentId', 'facultyId','isDeleted']
-const obj = "users"
+const tablerow = ['Name', 'Faculty', 'Phone','Room', 'Floor', 'Note/remark', 'Status', 'Thao tác']
+const keydata = ['name', 'facultyId', 'phoneNumber','room', 'floor','note', 'isDeleted']
+const obj = "departments"
 
-class listusers extends Component {
+class listdepartments extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,8 +23,8 @@ class listusers extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [users] = await Promise.all([
-            Axios.get('/users', {
+        const [departments] = await Promise.all([
+            Axios.get('/departments', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -35,11 +35,11 @@ class listusers extends Component {
         ]);
 
 
-        if (users !== null) {
+        if (departments !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: users,
-                    SearchData: users
+                    data: departments,
+                    SearchData: departments
                 })
             }
         }
@@ -137,9 +137,9 @@ class listusers extends Component {
         }
         else {
             return (
-                <Redirect to={"/addusers"} />
+                <Redirect to={"/adddepartments"} />
             )
         }
     }
 }
-export default listusers;
+export default listdepartments;

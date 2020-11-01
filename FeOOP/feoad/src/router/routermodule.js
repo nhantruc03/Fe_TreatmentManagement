@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import adddepartments from '../components/main/department/adddepartments';
+import editdepartments from '../components/main/department/editdepartments';
+import listdepartments from '../components/main/department/listdepartments';
 // import { Route } from 'react-router-dom'
 // import Listproducts from '../components/areaadmin/product/listproducts'
 // import Addproducts from '../components/areaadmin/product/addproducts'
@@ -34,6 +37,7 @@ import React, { Component } from 'react';
 // import Shop from '../components/areaclient/shop/shop';
 import Admin from '../components/main/page';
 import addusers from '../components/main/user/addusers';
+import editusers from '../components/main/user/editusers';
 import user from '../components/main/user/listusers';
 import { AppRoute } from './AppRoute';
 class router extends Component {
@@ -80,6 +84,12 @@ class router extends Component {
                 <AppRoute exact path="/" component={user} layout={Admin}/>
                 <AppRoute exact path="/listusers" component={user} layout={Admin}/>
                 <AppRoute exact path="/addusers" component={addusers} layout={Admin}/>
+                <AppRoute exact path="/editusers/:id" component={editusers} layout={Admin}/>
+
+                
+                <AppRoute exact path="/listdepartments" component={listdepartments} layout={Admin}/>
+                <AppRoute exact path="/adddepartments" component={adddepartments} layout={Admin}/>
+                <AppRoute exact path="/editdepartments/:id" component={editdepartments} layout={Admin}/>
             </div>
 
         );
