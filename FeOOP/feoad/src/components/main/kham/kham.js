@@ -1,15 +1,16 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
-import TableData from '../table';
+// import { Redirect } from 'react-router-dom';
+import { AUTH } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
-import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+import TableData from '../table';
+const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
+const keydata = ['patientId.name', 'reason', 'status']
+var obj = "departments";
 
-class listdepartments extends Component {
+
+class kham extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +18,30 @@ class listdepartments extends Component {
             currentPage: 1,
             postsPerPage: 10,
             listPage: [],
-            SearchData: []
+            SearchData: [],
+            type: ''
         }
     }
-
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        const [queue, this_room, polyclinic] = await Promise.all([
+            Axios.get('/departments/' + this.props.match.params.id + "/patient-queue", {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
+                }
+            })
+                .then((res) =>
+                    res.data.data
+                ),
+            Axios.get('/departments/' + this.props.match.params.id, {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
+                }
+            })
+                .then((res) =>
+                    res.data.data
+                ),
+            Axios.post('/faculties/getAll', { name: "polyclinic" }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -34,22 +51,28 @@ class listdepartments extends Component {
                 )
         ]);
 
-
-        if (departments !== null) {
+        if (queue !== null && this_room !== null && polyclinic !== null) {
             if (this._isMounted) {
+                if (this_room.facultyId === polyclinic[0]._id) {
+                    this.setState({
+                        type: 'khamdakhoa'
+                    })
+                } else {
+                    this.setState({
+                        type: 'khamchuyenkhoa'
+                    })
+                }
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: queue[0].queue,
+                    SearchData: queue[0].queue
                 })
             }
         }
-
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
-
     getCurData = (SearchData) => {
         var indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
@@ -78,7 +101,8 @@ class listdepartments extends Component {
 
     onDelete = (e) => {
         this.setState({
-            data: this.state.data.filter(o => o._id !== e)
+            data: this.state.data.filter(o => o._id !== e),
+            SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
     }
     onChange = (e) => {
@@ -93,23 +117,20 @@ class listdepartments extends Component {
         }
         return listpage;
     }
-
     printData = (SearchData) => {
         if (this.state.data !== null) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
+                            <div className='subject'>Danh sách chờ của phòng khám</div>
                         </div>
-                        <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
-                        </div>
+                        {/* <div className="col">
+                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Register for medical examination</div>
+                        </div> */}
                     </div>
-                    <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <TableData type={this.state.type} curRoom={this.props.match.params.id} obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} departmentId={this.props.match.params.id} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -126,7 +147,6 @@ class listdepartments extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>
@@ -137,4 +157,5 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+
+export default kham;

@@ -1,3 +1,12 @@
-let AUTH = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjVmODI1YjA2OTVlZjFlZmM1YzU3YmJjOSIsImlhdCI6MTYwNDEyMzgzNCwiZXhwIjoxNjA1MzMzNDM0fQ.AilVE35yPi9_ZK8cRog8_j8J5DDBdHRNCsTE6onnzyA";
+var AUTH= ''
+try {
+    var login = localStorage.getItem('login');
+    var obj = JSON.parse(login);
+    
+    AUTH = obj.token;
+} catch (e) {
+    console.log(e);
+}
 
-export {AUTH}
+
+export { AUTH }

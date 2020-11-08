@@ -4,12 +4,10 @@ import TableData from '../table';
 import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+const tablerow = ['Ngày bán','Mã thuốc','Tên thuốc','Nhà sản xuất','Đơn vị tính','Số lượng']
+const keydata = ['createdAt','medicineId._id','medicineId.name','medicineId.brand','medicineId.unit','quantity']
 
-class listdepartments extends Component {
+class sobanthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,8 +21,8 @@ class listdepartments extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        const [bill_details] = await Promise.all([
+            Axios.post('/prescription-bill-details/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -34,12 +32,11 @@ class listdepartments extends Component {
                 )
         ]);
 
-
-        if (departments !== null) {
+        if (bill_details !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: bill_details,
+                    SearchData: bill_details
                 })
             }
         }
@@ -54,7 +51,6 @@ class listdepartments extends Component {
         var indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
         return SearchData.slice(indexOfFirstPost, indexOfLastPost);
-
     }
 
     getSearchData = (data) => {
@@ -70,17 +66,6 @@ class listdepartments extends Component {
             });
     }
 
-    onAddClick = () => {
-        this.setState({
-            onAdd: true
-        })
-    }
-
-    onDelete = (e) => {
-        this.setState({
-            data: this.state.data.filter(o => o._id !== e)
-        })
-    }
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -100,16 +85,11 @@ class listdepartments extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
-                        </div>
-                        <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
+                            <div className='subject'>Sổ bán thuốc</div>
                         </div>
                     </div>
-                    <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <Search targetParent="medicineId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <TableData noaction={true} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -120,7 +100,7 @@ class listdepartments extends Component {
         } else {
             return (
                 <div className='mt-5'>
-                    <h1 className='text-primary mb-3'>Danh sách người dùng</h1>
+                    <h1 className='text-primary mb-3'>Sổ bán thuốc</h1>
                     <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
                 </div>
             )
@@ -137,4 +117,5 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+
+export default sobanthuoc;

@@ -2,14 +2,14 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
+import { Redirect } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
 const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
 const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+const obj = "doctor_listdepartments"
 
-class listdepartments extends Component {
+class doctor_listdepartments extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,12 +75,6 @@ class listdepartments extends Component {
             onAdd: true
         })
     }
-
-    onDelete = (e) => {
-        this.setState({
-            data: this.state.data.filter(o => o._id !== e)
-        })
-    }
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -102,14 +96,15 @@ class listdepartments extends Component {
                         <div className="col-9">
                             <div className='subject'>Danh sách phòng</div>
                         </div>
-                        <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
-                        </div>
                     </div>
                     <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <TableData
+                        redirectUrl="doctor_listdepartments"
+                        obj={obj} dataRow={tablerow}
+                        data={this.getCurData(SearchData)}
+                        keydata={keydata}
+                        type="chonphongkham"
+                    />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -120,21 +115,27 @@ class listdepartments extends Component {
         } else {
             return (
                 <div className='mt-5'>
-                    <h1 className='text-primary mb-3'>Danh sách người dùng</h1>
-                    <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
+                    <h1 className='text-primary mb-3'>Danh sách phòng</h1>
                 </div>
             )
         }
     }
 
     render() {
-        return (
-            <div>
-                <div className="container-fluid">
-                    {this.printData(this.state.SearchData)}
+        if (!this.state.onAdd) {
+            return (
+                <div>
+                    <div className="container-fluid">
+                        {this.printData(this.state.SearchData)}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            return (
+                <Redirect to={"/adddepartments"} />
+            )
+        }
     }
 }
-export default listdepartments;
+export default doctor_listdepartments;

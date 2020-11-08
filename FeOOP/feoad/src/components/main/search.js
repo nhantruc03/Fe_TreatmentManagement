@@ -21,7 +21,7 @@ class Search extends Component {
     }
     render() {
         return (
-            <input onChange={(e) => this.onChange(e)} name="search" id="search" className="form-control search input-field" type="text" placeholder="Tìm kiếm" ></input>
+            <input onChange={(e) => this.onChange(e)} name="search" id="search" className="form-control search input-field mt-4" type="text" placeholder="Tìm kiếm" ></input>
         );
     }
 }

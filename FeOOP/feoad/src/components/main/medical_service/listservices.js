@@ -2,14 +2,14 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
+import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+const tablerow = ['Tên', 'Giá', 'Trạng thái', 'Thao tác']
+const keydata = ['name', 'price', 'isDeleted']
+const obj = "services"
 
-class listdepartments extends Component {
+class listservices extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,8 +23,8 @@ class listdepartments extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        const [services] = await Promise.all([
+            Axios.get('/services', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -35,11 +35,11 @@ class listdepartments extends Component {
         ]);
 
 
-        if (departments !== null) {
+        if (services !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: services,
+                    SearchData: services
                 })
             }
         }
@@ -78,7 +78,8 @@ class listdepartments extends Component {
 
     onDelete = (e) => {
         this.setState({
-            data: this.state.data.filter(o => o._id !== e)
+            data: this.state.data.filter(o => o._id !== e),
+            SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
     }
     onChange = (e) => {
@@ -100,10 +101,10 @@ class listdepartments extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
+                            <div className='subject'>Danh sách dịch vụ</div>
                         </div>
                         <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
+                            <Link className="link" to={`/addservices`} >
                                 <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
                             </Link>
                         </div>
@@ -137,4 +138,4 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+export default listservices;

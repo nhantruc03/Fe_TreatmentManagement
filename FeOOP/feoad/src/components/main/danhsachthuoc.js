@@ -1,15 +1,13 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
-import TableData from '../table';
-import Pagination from '../Pagination';
-import Search from '../search';
-import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+import TableData from './table';
+import Pagination from './Pagination';
+import Search from './search';
+import { AUTH } from '../env'
+const tablerow = ['Name', 'Unit', 'Quantity', 'Thao tác']
+const keydata = ['name', 'unit', 'quantity']
 
-class listdepartments extends Component {
+class danhsachthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +15,15 @@ class listdepartments extends Component {
             currentPage: 1,
             postsPerPage: 10,
             listPage: [],
-            SearchData: []
+            SearchData: [],
+            type: 'taodonthuoc'
         }
     }
 
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        const [medicines] = await Promise.all([
+            Axios.post('/medicines/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -33,13 +32,11 @@ class listdepartments extends Component {
                     res.data.data
                 )
         ]);
-
-
-        if (departments !== null) {
+        if (medicines !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: medicines,
+                    SearchData: medicines
                 })
             }
         }
@@ -100,16 +97,13 @@ class listdepartments extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
-                        </div>
-                        <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
+                            <div className='subject'>Danh sách thuốc</div>
                         </div>
                     </div>
+
+
                     <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <TableData add={(e) => this.props.add(e)} type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -120,7 +114,7 @@ class listdepartments extends Component {
         } else {
             return (
                 <div className='mt-5'>
-                    <h1 className='text-primary mb-3'>Danh sách người dùng</h1>
+                    <h1 className='text-primary mb-3'>Danh sách thuốc</h1>
                     <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
                 </div>
             )
@@ -137,4 +131,5 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+
+export default danhsachthuoc;

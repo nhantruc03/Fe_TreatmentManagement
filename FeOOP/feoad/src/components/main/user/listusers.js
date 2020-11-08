@@ -2,11 +2,11 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
-const tablerow = ['Name', 'Email', 'Date', 'Role', 'Phone', 'Department', 'Faculty', 'Status', 'Thao tác']
-const keydata = ['name', 'email', 'birthday', 'role', 'phoneNumber', 'departmentId', 'facultyId','isDeleted']
+const tablerow = ['Tên', 'Email', 'Ngày sinh', 'Chức vụ', 'Điện thoại', 'Phòng', 'Ban', 'Trạng thái', 'Thao tác']
+const keydata = ['name', 'email', 'birthday', 'role', 'phoneNumber', 'departmentId.name', 'facultyId.name', 'isDeleted']
 const obj = "users"
 
 class listusers extends Component {
@@ -78,7 +78,8 @@ class listusers extends Component {
 
     onDelete = (e) => {
         this.setState({
-            data: this.state.data.filter(o => o._id !== e)
+            data: this.state.data.filter(o => o._id !== e),
+            SearchData: this.state.data.filter(o => o._id !== e)
         })
     }
     onChange = (e) => {
@@ -103,7 +104,9 @@ class listusers extends Component {
                             <div className='subject'>List of users</div>
                         </div>
                         <div className="col">
-                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Create new</div>
+                            <Link className="link" to={`/addusers`} >
+                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                            </Link>
                         </div>
                     </div>
                     <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
@@ -126,20 +129,13 @@ class listusers extends Component {
     }
 
     render() {
-        if (!this.state.onAdd) {
-            return (
-                <div>
-                    <div className="container-fluid">
-                        {this.printData(this.state.SearchData)}
-                    </div>
+        return (
+            <div>
+                <div className="container-fluid">
+                    {this.printData(this.state.SearchData)}
                 </div>
-            );
-        }
-        else {
-            return (
-                <Redirect to={"/addusers"} />
-            )
-        }
+            </div>
+        );
     }
 }
 export default listusers;

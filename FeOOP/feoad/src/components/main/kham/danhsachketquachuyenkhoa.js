@@ -1,15 +1,14 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
-import TableData from '../table';
+// import { Redirect } from 'react-router-dom';
+import { AUTH } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
-import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
-
-class listdepartments extends Component {
+import TableData from '../table';
+const tablerow = ['Bác sĩ','Ghi chú', 'Kết quả', 'Thao tác']
+const keydata = ['doctorId.name','note', 'result']
+var obj = "departments";
+class danhsachketquachuyenkhoa extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +16,17 @@ class listdepartments extends Component {
             currentPage: 1,
             postsPerPage: 10,
             listPage: [],
-            SearchData: []
+            SearchData: [],
+            type: 'ketquachuyenkhoa'
         }
     }
-
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        var data = {
+            medicalrecordId: this.props.match.params.id
+        }
+        const [ketquachuyenkhoa] = await Promise.all([
+            Axios.post('/medical-details/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -34,22 +36,19 @@ class listdepartments extends Component {
                 )
         ]);
 
-
-        if (departments !== null) {
+        if (ketquachuyenkhoa !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: ketquachuyenkhoa,
+                    SearchData: ketquachuyenkhoa
                 })
             }
         }
-
     }
 
     componentWillUnmount() {
         this._isMounted = false;
     }
-
     getCurData = (SearchData) => {
         var indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
@@ -78,7 +77,8 @@ class listdepartments extends Component {
 
     onDelete = (e) => {
         this.setState({
-            data: this.state.data.filter(o => o._id !== e)
+            data: this.state.data.filter(o => o._id !== e),
+            SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
     }
     onChange = (e) => {
@@ -93,23 +93,20 @@ class listdepartments extends Component {
         }
         return listpage;
     }
-
+    goBack = () => {
+        this.props.history.goBack();
+    }
     printData = (SearchData) => {
         if (this.state.data !== null) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
-                        </div>
-                        <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
+                            <div onClick={this.goBack} className='subject'>{`<- Quay về`}</div>
                         </div>
                     </div>
-                    <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <TableData type={this.state.type} curRoom={this.props.match.params.id} obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} departmentId={this.props.match.params.id} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -126,7 +123,6 @@ class listdepartments extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>
@@ -137,4 +133,5 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+
+export default danhsachketquachuyenkhoa;

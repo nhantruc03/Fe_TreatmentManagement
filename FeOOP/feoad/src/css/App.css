@@ -37,10 +37,12 @@
   }
 }
 
-a.link {
+a.link.top {
   padding: 10px !important;
 }
-
+.DayPickerInput input:disabled {
+  background-color: #eaecf4;
+}
 input#search {
   width: 250px;
   height: 32px;
@@ -76,9 +78,9 @@ th {
   color: black;
 }
 
-div {
+/* div {
   background-color: white;
-}
+} */
 
 
 .section{

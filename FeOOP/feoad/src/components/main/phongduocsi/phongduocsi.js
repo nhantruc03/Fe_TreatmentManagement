@@ -4,12 +4,10 @@ import TableData from '../table';
 import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
-const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
-const obj = "departments"
+const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Ngày tạo', 'Thao tác']
+const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'createdAt']
 
-class listdepartments extends Component {
+class phongduocsi extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +15,15 @@ class listdepartments extends Component {
             currentPage: 1,
             postsPerPage: 10,
             listPage: [],
-            SearchData: []
+            SearchData: [],
+            type: 'phongduocsi'
         }
     }
 
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+        const [prescriptions] = await Promise.all([
+            Axios.post('/prescriptions/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -35,11 +34,14 @@ class listdepartments extends Component {
         ]);
 
 
-        if (departments !== null) {
+        if (prescriptions !== null) {
             if (this._isMounted) {
+                prescriptions.forEach((value) => {
+                    value.medicalrecordId = value.medicalrecordId.patientId
+                })
                 this.setState({
-                    data: departments,
-                    SearchData: departments
+                    data: prescriptions,
+                    SearchData: prescriptions
                 })
             }
         }
@@ -78,7 +80,8 @@ class listdepartments extends Component {
 
     onDelete = (e) => {
         this.setState({
-            data: this.state.data.filter(o => o._id !== e)
+            data: this.state.data.filter(o => o._id !== e),
+            SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
     }
     onChange = (e) => {
@@ -100,16 +103,14 @@ class listdepartments extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
+                            <div className='subject'>Phòng dược sĩ</div>
                         </div>
                         <div className="col">
-                            <Link className="link" to={`/adddepartments`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
-                            </Link>
+                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Create new</div>
                         </div>
                     </div>
-                    <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <Search targetParent="medicalrecordId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <TableData  type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -137,4 +138,5 @@ class listdepartments extends Component {
         );
     }
 }
-export default listdepartments;
+
+export default phongduocsi;

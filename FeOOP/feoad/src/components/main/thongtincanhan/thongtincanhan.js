@@ -15,7 +15,7 @@ var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
 ]
-class editusers extends Component {
+class thongtincanhan extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,6 +73,8 @@ class editusers extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
         var data = {
             name: this.state.name,
             address: this.state.address,
@@ -86,7 +88,7 @@ class editusers extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/users/' + this.props.match.params.id, data, {
+        Axios.put('/users/' + obj.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -107,16 +109,12 @@ class editusers extends Component {
     }
 
     async componentDidMount() {
-        this.setState({
-            isLoad: true
-        })
-        this.setState({
-            isLoad: false
-        })
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
 
         this._isMounted = true;
         const [user, faculties, departments] = await Promise.all([
-            Axios.get('/users/' + this.props.match.params.id, {
+            Axios.get('/users/' + obj.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -146,7 +144,6 @@ class editusers extends Component {
         if (faculties !== null && departments !== null && user !== null) {
             if (this._isMounted) {
                 var day = new Date(user.birthday);
-                console.log(typeof (day))
                 this.setState({
                     name: user.name,
                     address: user.address,
@@ -302,4 +299,4 @@ class editusers extends Component {
     }
 }
 
-export default editusers;
+export default thongtincanhan;
