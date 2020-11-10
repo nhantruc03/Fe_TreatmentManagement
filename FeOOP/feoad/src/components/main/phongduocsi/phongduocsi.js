@@ -4,6 +4,7 @@ import TableData from '../table';
 import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
+import { Link } from 'react-router-dom';
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Ngày tạo', 'Thao tác']
 const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'createdAt']
 
@@ -106,11 +107,13 @@ class phongduocsi extends Component {
                             <div className='subject'>Phòng dược sĩ</div>
                         </div>
                         <div className="col">
-                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Create new</div>
+                            <Link className="link" to={`/taodonthuoctudo`} >
+                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                            </Link>
                         </div>
                     </div>
                     <Search targetParent="medicalrecordId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData  type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />
+                    <TableData type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}

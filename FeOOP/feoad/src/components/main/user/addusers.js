@@ -165,7 +165,7 @@ class addusers extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.onDone()} className='subject'> {`<- Create new user`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Create new user`}</div>
                         </div>
                         <div className="col">
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}

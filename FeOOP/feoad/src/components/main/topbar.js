@@ -25,7 +25,7 @@ class topbar extends Component {
 
     handleSelect = (e) => {
         if (e === 'Logout') {
-            auth.logoutAdmin();
+            auth.logout();
             this.setState({
                 logout: true
             })

@@ -5,7 +5,7 @@ import TableData from '../table';
 import { AUTH } from '../../env';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
-class xemdonthuoc extends Component {
+class taodonthuoctudo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,44 +95,6 @@ class xemdonthuoc extends Component {
 
     }
 
-
-    async componentDidMount() {
-        this._isMounted = true;
-        const [prescription_details, prescriptions] = await Promise.all([
-            Axios.post('/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
-                headers: {
-                    'Authorization': { AUTH }.AUTH
-                }
-            })
-                .then((res) =>
-                    res.data.data
-                ),
-            Axios.get('/prescriptions/' + this.props.match.params.id, {
-                headers: {
-                    'Authorization': { AUTH }.AUTH
-                }
-            })
-                .then((res) =>
-                    res.data.data
-                )
-        ]);
-        if (prescription_details !== null && prescriptions !== null) {
-            if (this._isMounted) {
-                this.setState({
-                    data: prescription_details,
-                    SearchData: prescription_details,
-                    conclude: prescriptions.conclude,
-                    name: prescriptions.medicalrecordId.patientId.name
-                })
-            }
-        }
-
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
     printData = (data) => {
         if (this.state.data !== null) {
             return (
@@ -147,7 +109,7 @@ class xemdonthuoc extends Component {
                     </div>
                     <div className="row">
                         <label htmlFor="name"  >Tên người mua</label>
-                        <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Eg. name" required={true} value={this.state.name} />
+                        <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Eg. name" required={true} />
                     </div>
                     <div className="row mt-3">
                         <TableData
@@ -162,7 +124,7 @@ class xemdonthuoc extends Component {
                     <div className="row">
                         <div className="col">
                             <label htmlFor="conclude" className='subject'>Kết luận</label>
-                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude}></textarea>
+                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude"></textarea>
                         </div>
 
                     </div>
@@ -195,4 +157,4 @@ class xemdonthuoc extends Component {
     }
 }
 
-export default xemdonthuoc;
+export default taodonthuoctudo;
