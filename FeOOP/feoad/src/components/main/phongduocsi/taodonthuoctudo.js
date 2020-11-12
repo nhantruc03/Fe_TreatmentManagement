@@ -52,9 +52,11 @@ class taodonthuoctudo extends Component {
     }
 
     Create = async () => {
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
         var data = {
             name: this.state.name,
-            pharmacistId: "5f825b9ad45d8cfd1fe32c14",
+            pharmacistId: obj.id,
             conclude: this.state.conclude
         }
         var curprescriptions_bill = await Axios.post('/prescription-bills', data, {

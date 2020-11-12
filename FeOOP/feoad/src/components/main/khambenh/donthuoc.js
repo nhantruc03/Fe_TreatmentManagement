@@ -7,8 +7,7 @@ import { AUTH } from '../../env'
 import { Link } from 'react-router-dom';
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
 const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'doctorId.facultyId', 'doctorId.departmentId', 'createdAt']
-
-class phongduocsi extends Component {
+class donthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +16,17 @@ class phongduocsi extends Component {
             postsPerPage: 10,
             listPage: [],
             SearchData: [],
-            type: 'phongduocsi'
+            type: 'donthuoctuphongkham'
         }
     }
 
     async componentDidMount() {
         this._isMounted = true;
+        var data = {
+            medicalrecordId: this.props.match.params.id
+        }
         const [prescriptions] = await Promise.all([
-            Axios.post('/prescriptions/getAll', {}, {
+            Axios.post('/prescriptions/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -34,7 +36,7 @@ class phongduocsi extends Component {
                 )
         ]);
 
-
+        console.log(prescriptions);
         if (prescriptions !== null) {
             if (this._isMounted) {
                 prescriptions.forEach((value) => {
@@ -100,13 +102,17 @@ class phongduocsi extends Component {
         return listpage;
     }
 
+    goBack = () => {
+        this.props.history.goBack();
+    }
+
     printData = (SearchData) => {
         if (this.state.data !== null) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Phòng dược sĩ</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/taodonthuoctudo`} >
@@ -144,4 +150,4 @@ class phongduocsi extends Component {
     }
 }
 
-export default phongduocsi;
+export default donthuoc;

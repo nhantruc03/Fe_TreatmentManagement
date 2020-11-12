@@ -42,10 +42,13 @@ class tablerow_khamdakhoa extends Component {
                         <div className="btn btn-warning"><i className="fa fa-edit" />Xem</div>
                     </Link>
                     <Link className="link" to={`/khamdakhoa/danhsachketquachuyenkhoa/${this.props.data._id}`} >
-                        <div className="btn btn-warning"><i className="fa fa-edit" />Danh sách khám chuyên khoa</div>
+                        <div className="btn btn-warning"><i className="fa fa-edit" />Danh sách kết quả chuyên khoa</div>
                     </Link>
                     <Link className="link" to={`/khamdakhoa/taodonthuoc/${this.props.data._id}`} >
                         <div className="btn btn-warning"><i className="fa fa-edit" />Tạo đơn thuốc</div>
+                    </Link>
+                    <Link className="link" to={`/xemdonthuoc/${this.props.data._id}`} >
+                        <div className="btn btn-warning"><i className="fa fa-edit" />Xem đơn thuốc</div>
                     </Link>
                     <div onClick={() => this.onComplete()} className="btn btn-warning"><i className="fa fa-edit" />Hoàn thành khám bệnh</div>
                 </div>

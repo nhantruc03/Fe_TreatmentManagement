@@ -37,6 +37,8 @@ import { AppRoute } from './AppRoute';
 import thongtincanhan from '../components/main/thongtincanhan/thongtincanhan';
 import taodonthuoctudo from '../components/main/phongduocsi/taodonthuoctudo';
 import loginfail from '../components/loginfail';
+import donthuoc from '../components/main/khambenh/donthuoc';
+import chitietdonthuoc from '../components/main/khambenh/chitietdonthuoc';
 class router extends Component {
     render() {
         return (
@@ -72,11 +74,14 @@ class router extends Component {
                 <SecureRouteDoctor exact path="/khamdakhoa/danhsachketquachuyenkhoa/:id" component={danhsachketquachuyenkhoa} layout={Admin} />
                 <SecureRouteDoctor exact path="/khamdakhoa/chitietchuyenkhoa/:id" component={chitietchuyenkhoa} layout={Admin} />
                 <SecureRouteDoctor exact path="/khamdakhoa/taodonthuoc/:id" component={taodonthuoc} layout={Admin} />
+                <SecureRouteDoctor exact path="/khamchuyenkhoa/taodonthuoc/:id" component={taodonthuoc} layout={Admin} />
                 <SecureRoutePharmacist exact path="/phongduocsi" component={phongduocsi} layout={Admin} />
                 <SecureRoutePharmacist exact path="/phongduocsi/xemdonthuoc/:id" component={xemdonthuoc} layout={Admin} />
                 <SecureRoutePharmacist exact path="/sobanthuoc" component={sobanthuoc} layout={Admin} />
                 <SecureRouteStaff exact path="/thongtincanhan" component={thongtincanhan} layout={Admin} />
                 <SecureRoutePharmacist exact path="/taodonthuoctudo" component={taodonthuoctudo} layout={Admin} />
+                <SecureRoutePharmacist exact path="/xemdonthuoc/:id" component={donthuoc} layout={Admin} />
+                <SecureRoutePharmacist exact path="/xemdonthuoc/chitietdonthuoc/:id" component={chitietdonthuoc} layout={Admin} />
 
                 <AppRoute exact path="/login" component={login} layout={loginpage} />
                 <AppRoute exact path="/khongcoquyen" component={loginfail} layout={Admin} />

@@ -1,17 +1,17 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
-import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
-const tablerow = ['Tên', 'Đơn vị tính', 'Số lượng', 'Thao tác']
-const keydata = ['medicineId.name', 'medicineId.unit', 'quantity']
-class taodonthuoc extends Component {
+const tablerow = ['Name', 'Unit', 'Quantity', 'Price']
+const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
+class chitietdonthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
             conclude: '',
-            type: 'donthuoc'
+            type: 'donthuoc',
+            name: ''
         }
     }
 
@@ -54,11 +54,12 @@ class taodonthuoc extends Component {
         const login = localStorage.getItem('login');
         const obj = JSON.parse(login);
         var data = {
-            medicalrecordId: this.props.match.params.id,
-            doctorId: obj.id,
-            conclude: this.state.conclude
+            name: this.state.name,
+            pharmacistId: obj.id,
+            conclude: this.state.conclude,
+            prescriptionId: this.props.match.params.id
         }
-        var curprescriptions = await Axios.post('/prescriptions', data, {
+        var curprescriptions_bill = await Axios.post('/prescription-bills', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -71,15 +72,15 @@ class taodonthuoc extends Component {
             .catch(err => {
                 console.log(err);
             })
-            
+
 
         this.state.data.forEach(async (value) => {
             data = {
-                prescriptionId: curprescriptions,
+                prescriptionbillId: curprescriptions_bill,
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/prescription-details', data, {
+            await Axios.post('/prescription-bill-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -96,30 +97,72 @@ class taodonthuoc extends Component {
 
     }
 
+
+    async componentDidMount() {
+        this._isMounted = true;
+        const [prescription_details, prescriptions] = await Promise.all([
+            Axios.post('/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
+                }
+            })
+                .then((res) =>
+                    res.data.data
+                ),
+            Axios.get('/prescriptions/' + this.props.match.params.id, {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
+                }
+            })
+                .then((res) =>
+                    res.data.data
+                )
+        ]);
+        if (prescription_details !== null && prescriptions !== null) {
+            if (this._isMounted) {
+                this.setState({
+                    data: prescription_details,
+                    SearchData: prescription_details,
+                    conclude: prescriptions.conclude,
+                    name: prescriptions.medicalrecordId.patientId.name
+                })
+            }
+        }
+
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    goBack = () => {
+        this.props.history.goBack();
+    }
+
     printData = (data) => {
         if (this.state.data !== null) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Đơn thuốc</div>
-                        </div>
-                        <div className="col">
-                            <div onClick={() => this.Create()} className="btn btn-createnew">+ Tạo đơn thuốc</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
                         </div>
                     </div>
-                    <TableData
-                        dataRow={tablerow}
-                        data={data}
-                        keydata={keydata}
-                        type={this.state.type}
-                        quantity_change={(e) => this.quantity_change(e)}
-                        delete={(e) => this.delete(e)}
-                    />
+                    <div className="row mt-3">
+                        <TableData
+                            noaction={true}
+                            dataRow={tablerow}
+                            data={data}
+                            keydata={keydata}
+                            type={this.state.type}
+                            quantity_change={(e) => this.quantity_change(e)}
+                            delete={(e) => this.delete(e)}
+                        />
+                    </div>
                     <div className="row">
                         <div className="col">
-                            <label htmlFor="conclude" className='subject'>Conclude</label>
-                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude}></textarea>
+                            <label htmlFor="conclude" className='subject'>Kết luận</label>
+                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude} readOnly></textarea>
                         </div>
 
                     </div>
@@ -138,16 +181,15 @@ class taodonthuoc extends Component {
     }
     render() {
         return (
-            <div className="row">
-                <div className="col-4">
-                    <Danhsachthuoc add={(e) => this.add(e)} />
-                </div>
-                <div className="col">
-                    {this.printData(this.state.data)}
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col">
+                        {this.printData(this.state.data)}
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default taodonthuoc;
+export default chitietdonthuoc;
