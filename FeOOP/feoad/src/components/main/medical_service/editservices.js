@@ -27,7 +27,7 @@ class editservices extends Component {
             price: this.state.price,
             note: this.state.note
         };
-        Axios.put('/services/' + this.props.match.params.id, data, {
+        Axios.put('/api/services/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -51,7 +51,7 @@ class editservices extends Component {
 
         this._isMounted = true;
         const [services] = await Promise.all([
-            Axios.get('/services/' + this.props.match.params.id, {
+            Axios.get('/api/services/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

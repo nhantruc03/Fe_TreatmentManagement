@@ -43,7 +43,7 @@ class dangkidichvu extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [medical_record, services] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -51,7 +51,7 @@ class dangkidichvu extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/services', {
+            Axios.get('/api/services', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -103,7 +103,7 @@ class dangkidichvu extends Component {
         var data = {
             medicalrecordId: [this.props.match.params.id]
         };
-        var curBill = await Axios.post('/medical-bills/getAll', data, {
+        var curBill = await Axios.post('/api/medical-bills/getAll', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -121,7 +121,7 @@ class dangkidichvu extends Component {
             data = {
                 medicalrecordId: this.props.match.params.id
             }
-            curBill = await Axios.post('/medical-bills', data, {
+            curBill = await Axios.post('/api/medical-bills', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -143,7 +143,7 @@ class dangkidichvu extends Component {
             serviceId: this.state.serviceId,
             medicalBillId: curBill
         }
-        await Axios.post('/medical-bill-details', data, {
+        await Axios.post('/api/medical-bill-details', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

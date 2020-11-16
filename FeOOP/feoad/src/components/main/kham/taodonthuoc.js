@@ -58,7 +58,7 @@ class taodonthuoc extends Component {
             doctorId: obj.id,
             conclude: this.state.conclude
         }
-        var curprescriptions = await Axios.post('/prescriptions', data, {
+        var curprescriptions = await Axios.post('/api/prescriptions', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -79,7 +79,7 @@ class taodonthuoc extends Component {
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/prescription-details', data, {
+            await Axios.post('/api/prescription-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

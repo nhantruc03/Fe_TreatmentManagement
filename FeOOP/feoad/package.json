@@ -9,6 +9,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "history": "^5.0.0",
+    "http-proxy-middleware": "^1.0.6",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-day-picker": "^7.4.8",
@@ -43,6 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3001"
+  }
 }

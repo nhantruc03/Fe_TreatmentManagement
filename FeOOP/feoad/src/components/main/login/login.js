@@ -25,10 +25,9 @@ class login extends Component {
 
         data.append("username", this.state.username);
         data.append("password", this.state.password);
-        await Axios.post('/users/login', data)
+        await Axios.post('/api/users/login', data)
             .then(res => {
                 if (res.data.success === true) {
-                    console.log(res.data.data)
                     auth.login(res.data.data);
                 }
                 if (auth.isAuthenticatedAdmin() === true || auth.isAuthenticatedDoctor() === true || auth.isAuthenticatedPharmacist() === true || auth.isAuthenticatedStaff() === true) {

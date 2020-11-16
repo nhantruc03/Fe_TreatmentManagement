@@ -24,7 +24,7 @@ class chitietchuyenkhoa extends Component {
 
         this._isMounted = true;
         const [medical_record] = await Promise.all([
-            Axios.get('/medical-details/' + this.props.match.params.id, {
+            Axios.get('/api/medical-details/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

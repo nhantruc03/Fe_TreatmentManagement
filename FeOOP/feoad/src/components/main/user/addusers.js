@@ -86,7 +86,7 @@ class addusers extends Component {
             email: this.state.email
         };
         console.log(data)
-        Axios.post('/users', data, {
+        Axios.post('/api/users', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -107,7 +107,7 @@ class addusers extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [faculties, departments] = await Promise.all([
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -115,7 +115,7 @@ class addusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

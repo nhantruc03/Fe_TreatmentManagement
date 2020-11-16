@@ -48,7 +48,7 @@ class dangkikhamchuyenkhoa extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [medical_record, departments] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -56,7 +56,7 @@ class dangkikhamchuyenkhoa extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -106,7 +106,7 @@ class dangkikhamchuyenkhoa extends Component {
         var data = {
             medicalrecordIds: [this.props.match.params.id]
         };
-        await Axios.put('/departments/' + this.state.departmentId + '/add-patients', data, {
+        await Axios.put('/api/departments/' + this.state.departmentId + '/add-patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

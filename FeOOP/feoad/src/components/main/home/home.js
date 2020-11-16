@@ -27,7 +27,7 @@ class home extends Component {
         this._isMounted = true;
         this.props.history.push("/");
         const [polyclinic] = await Promise.all([
-            Axios.post('/faculties/getAll', { name: "polyclinic" }, {
+            Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -38,7 +38,7 @@ class home extends Component {
         ])
         if (polyclinic !== undefined) {
             const [departments] = await Promise.all([
-                Axios.post('/departments/getAll', { facultyId: polyclinic[0]._id }, {
+                Axios.post('/api/departments/getAll', { facultyId: polyclinic[0]._id }, {
                     headers: {
                         'Authorization': { AUTH }.AUTH
                     }

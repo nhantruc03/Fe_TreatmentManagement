@@ -116,7 +116,7 @@ class editusers extends Component {
 
         this._isMounted = true;
         const [user, faculties, departments] = await Promise.all([
-            Axios.get('/users/' + this.props.match.params.id, {
+            Axios.get('/api/users/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -124,7 +124,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -132,7 +132,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

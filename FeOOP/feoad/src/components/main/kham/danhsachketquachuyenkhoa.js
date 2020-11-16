@@ -26,7 +26,7 @@ class danhsachketquachuyenkhoa extends Component {
             medicalrecordId: this.props.match.params.id
         }
         const [ketquachuyenkhoa] = await Promise.all([
-            Axios.post('/medical-details/getAll', data, {
+            Axios.post('/api/medical-details/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

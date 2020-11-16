@@ -66,7 +66,7 @@ class khamdakhoa extends Component {
 
         this._isMounted = true;
         const [medical_record] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -104,7 +104,7 @@ class khamdakhoa extends Component {
             reason: this.state.reason,
             status: this.state.status
         }
-        Axios.put('/medical-records/' + this.props.match.params.id, data, {
+        Axios.put('/api/medical-records/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

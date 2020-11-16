@@ -28,7 +28,7 @@ class addservices extends Component {
             price: this.state.price,
             note: this.state.note
         };
-        Axios.post('/services', data, {
+        Axios.post('/api/services', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

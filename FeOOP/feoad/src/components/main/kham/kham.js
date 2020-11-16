@@ -25,7 +25,7 @@ class kham extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [queue, this_room, polyclinic] = await Promise.all([
-            Axios.get('/departments/' + this.props.match.params.id + "/patient-queue", {
+            Axios.get('/api/departments/' + this.props.match.params.id + "/patient-queue", {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -33,7 +33,7 @@ class kham extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/departments/' + this.props.match.params.id, {
+            Axios.get('/api/departments/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -41,7 +41,7 @@ class kham extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', { name: "polyclinic" }, {
+            Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

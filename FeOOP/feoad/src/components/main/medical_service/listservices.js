@@ -24,7 +24,7 @@ class listservices extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [services] = await Promise.all([
-            Axios.get('/services', {
+            Axios.get('/api/services', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

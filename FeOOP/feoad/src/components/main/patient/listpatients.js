@@ -23,7 +23,7 @@ class listpatients extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [patients] = await Promise.all([
-            Axios.post('/patients/getAll', {}, {
+            Axios.post('/api/patients/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

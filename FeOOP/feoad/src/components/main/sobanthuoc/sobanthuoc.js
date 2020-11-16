@@ -22,7 +22,7 @@ class sobanthuoc extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [bill_details] = await Promise.all([
-            Axios.post('/prescription-bill-details/getAll', {}, {
+            Axios.post('/api/prescription-bill-details/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

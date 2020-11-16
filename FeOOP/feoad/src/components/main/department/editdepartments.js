@@ -42,7 +42,7 @@ class editdepartments extends Component {
             facultyId: this.state.facultyId
         };
         console.log(data)
-        Axios.put('/departments', data, {
+        Axios.put('/api/departments', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -66,7 +66,7 @@ class editdepartments extends Component {
 
         this._isMounted = true;
         const [department, faculties] = await Promise.all([
-            Axios.get('/departments/' + this.props.match.params.id, {
+            Axios.get('/api/departments/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -74,7 +74,7 @@ class editdepartments extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

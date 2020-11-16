@@ -24,7 +24,7 @@ class listusers extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [users] = await Promise.all([
-            Axios.get('/users', {
+            Axios.get('/api/users', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

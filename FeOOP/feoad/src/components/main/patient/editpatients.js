@@ -54,7 +54,7 @@ class editpatients extends Component {
             email: this.state.email,
             job: this.state.job
         };
-        Axios.put('/patients/' + this.props.match.params.id, data, {
+        Axios.put('/api/patients/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -72,7 +72,7 @@ class editpatients extends Component {
 
         this._isMounted = true;
         const [patients] = await Promise.all([
-            Axios.get('/patients/' + this.props.match.params.id, {
+            Axios.get('/api/patients/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

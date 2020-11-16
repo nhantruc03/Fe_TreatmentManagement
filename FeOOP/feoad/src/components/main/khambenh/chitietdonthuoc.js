@@ -59,7 +59,7 @@ class chitietdonthuoc extends Component {
             conclude: this.state.conclude,
             prescriptionId: this.props.match.params.id
         }
-        var curprescriptions_bill = await Axios.post('/prescription-bills', data, {
+        var curprescriptions_bill = await Axios.post('/api/prescription-bills', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -80,7 +80,7 @@ class chitietdonthuoc extends Component {
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/prescription-bill-details', data, {
+            await Axios.post('/api/prescription-bill-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -101,7 +101,7 @@ class chitietdonthuoc extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [prescription_details, prescriptions] = await Promise.all([
-            Axios.post('/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
+            Axios.post('/api/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -109,7 +109,7 @@ class chitietdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/prescriptions/' + this.props.match.params.id, {
+            Axios.get('/api/prescriptions/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

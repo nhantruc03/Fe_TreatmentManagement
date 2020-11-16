@@ -88,7 +88,7 @@ class thongtincanhan extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/users/' + obj.id, data, {
+        Axios.put('/api/users/' + obj.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -114,7 +114,7 @@ class thongtincanhan extends Component {
 
         this._isMounted = true;
         const [user, faculties, departments] = await Promise.all([
-            Axios.get('/users/' + obj.id, {
+            Axios.get('/api/users/' + obj.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -122,7 +122,7 @@ class thongtincanhan extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -130,7 +130,7 @@ class thongtincanhan extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

@@ -54,7 +54,7 @@ class addpatients extends Component {
             job: this.state.job
         };
         console.log(data)
-        Axios.post('/patients', data, {
+        Axios.post('/api/patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

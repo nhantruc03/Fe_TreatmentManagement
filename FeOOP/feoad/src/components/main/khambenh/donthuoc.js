@@ -26,7 +26,7 @@ class donthuoc extends Component {
             medicalrecordId: this.props.match.params.id
         }
         const [prescriptions] = await Promise.all([
-            Axios.post('/prescriptions/getAll', data, {
+            Axios.post('/api/prescriptions/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

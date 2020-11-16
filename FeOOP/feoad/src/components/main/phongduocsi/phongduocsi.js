@@ -24,7 +24,7 @@ class phongduocsi extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [prescriptions] = await Promise.all([
-            Axios.post('/prescriptions/getAll', {}, {
+            Axios.post('/api/prescriptions/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
