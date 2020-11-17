@@ -86,7 +86,7 @@ class editusers extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/users/' + this.props.match.params.id, data, {
+        Axios.put('/api/users/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

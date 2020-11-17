@@ -2,7 +2,7 @@ import NumberFormat from 'react-number-format';
 
 function isDate(val) {
     try {
-        val = val.replace(" ","");
+        val = val.replaceAll(" ","");
         var d = new Date(val);
         return !isNaN(d.valueOf());
     } catch {

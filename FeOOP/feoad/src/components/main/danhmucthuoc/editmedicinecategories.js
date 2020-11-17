@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 
-class editservices extends Component {
+class editmedicinecategories extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            price: '',
-            note: '',
             isDone: false
         }
     }
@@ -23,11 +21,9 @@ class editservices extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         var data = {
-            name: this.state.name,
-            price: this.state.price,
-            note: this.state.note
+            name: this.state.name
         };
-        Axios.put('/api/services/' + this.props.match.params.id, data, {
+        Axios.put('/api/medicine-categories/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -41,6 +37,12 @@ class editservices extends Component {
             })
     }
 
+    onDone = () => {
+        this.setState({
+            isDone: !this.state.isDone
+        })
+    }
+
     async componentDidMount() {
         this.setState({
             isLoad: true
@@ -50,8 +52,8 @@ class editservices extends Component {
         })
 
         this._isMounted = true;
-        const [services] = await Promise.all([
-            Axios.get('/api/services/' + this.props.match.params.id, {
+        const [medicinecategories] = await Promise.all([
+            Axios.get('/api/medicine-categories/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -62,12 +64,10 @@ class editservices extends Component {
         ]);
 
 
-        if (services !== null) {
+        if (medicinecategories !== null) {
             if (this._isMounted) {
                 this.setState({
-                    name: services.name,
-                    price: services.price,
-                    note: services.note
+                    name: medicinecategories.name
                 })
             }
         }
@@ -80,37 +80,32 @@ class editservices extends Component {
     goBack = () => {
         this.props.history.goBack();
     }
-
     render() {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Sửa thông tin dịch vụ`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
                         </div>
                         <div className="col">
-                            <button type="submit" className="btn btn-createnew">Cập nhật</button>
+                            <button type="submit" className="btn btn-createnew">Sửa</button>
                         </div>
                     </div>
 
                     <div className="container-fluid mt-3">
-                        <div className="row mt-3">
+                        <div className="row">
                             <div className="col">
-                                <label htmlFor="name"  >Tên</label>
-                                <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Eg. name" value={this.state.name} required={true} />
-                            </div>
-                        </div>
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label htmlFor="price"  >Giá</label>
-                                <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="price" placeholder="Eg. 100000" value={this.state.price} required={true} />
-                            </div>
-                        </div>
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label htmlFor="note"  >Ghi chú</label>
-                                <textarea rows="5" onChange={(e) => this.onChange(e)} type="text" className="form-control" name="note" placeholder="Eg. notes" value={this.state.note} required={true} />
+                                <div className="section">
+                                    <li className="fas fa-user"></li> Thông tin danh mục thuốc
+                                    </div>
+                                <div className="row mt-3">
+                                    <div className="col">
+                                        <label htmlFor="name"  >Tên</label>
+                                        <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên danh mục thuốc" value={this.state.name} required={true} />
+                                    </div>
+                                </div>
+                                <br></br>
                             </div>
                         </div>
                     </div>
@@ -120,4 +115,4 @@ class editservices extends Component {
     }
 }
 
-export default editservices;
+export default editmedicinecategories;

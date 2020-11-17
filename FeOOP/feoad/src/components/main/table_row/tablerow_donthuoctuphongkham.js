@@ -11,7 +11,7 @@ class tablerow_donthuoctuphongkham extends Component {
     renderAction = () => {
         return (
             <td>
-                <Link className="link" to={`/xemdonthuoc/chitietdonthuoc/${this.props.data._id}`} >
+                <Link className="link" to={`/xemdonthuocbs/chitietdonthuoc/${this.props.data._id}`} >
                     <div className="btn btn-warning"><i className="fa fa-edit" />Xem Đơn thuốc</div>
                 </Link>
             </td>

@@ -5,8 +5,8 @@ import { AUTH } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
-const tablerow = ['Bác sĩ','Ghi chú', 'Kết quả', 'Thao tác']
-const keydata = ['doctorId.name','note', 'result']
+const tablerow = ['Tên bác sĩ', "Phòng", "Khoa", 'note', 'result', 'Thao tác']
+const keydata = ['doctorId.name', "doctorId.departmentId", "doctorId.facultyId", 'note', 'result']
 var obj = "departments";
 class danhsachketquachuyenkhoa extends Component {
     constructor(props) {
@@ -38,6 +38,10 @@ class danhsachketquachuyenkhoa extends Component {
 
         if (ketquachuyenkhoa !== null) {
             if (this._isMounted) {
+                ketquachuyenkhoa.forEach((value) => {
+                    value.doctorId.facultyId = value.doctorId.facultyId.name;
+                    value.doctorId.departmentId = value.doctorId.departmentId.name;
+                })
                 this.setState({
                     data: ketquachuyenkhoa,
                     SearchData: ketquachuyenkhoa
@@ -97,15 +101,15 @@ class danhsachketquachuyenkhoa extends Component {
         this.props.history.goBack();
     }
     printData = (SearchData) => {
-        if (this.state.data !== null) {
+        if (this.state.data.length !== 0) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'>{`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'>{`<- Danh sách kết quả khám chuyên khoa`}</div>
                         </div>
                     </div>
-                    <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <Search targetParent="doctorId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData type={this.state.type} curRoom={this.props.match.params.id} obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} departmentId={this.props.match.params.id} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
@@ -116,9 +120,13 @@ class danhsachketquachuyenkhoa extends Component {
             )
         } else {
             return (
-                <div className='mt-5'>
-                    <h1 className='text-primary mb-3'>Danh sách người dùng</h1>
-                    <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
+                <div className='mt-1'>
+                    <div className="row">
+                        <div className="col-9">
+                            <div onClick={this.goBack} className='subject'>{`<- Danh sách kết quả khám chuyên khoa`}</div>
+                        </div>
+                    </div>
+                    <div className='text-primary text-center mb-3'>Không có kết quả khảm chuyên khoa</div>
                 </div>
             )
         }

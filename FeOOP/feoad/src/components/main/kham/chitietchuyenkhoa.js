@@ -66,7 +66,7 @@ class chitietchuyenkhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Chi tiết khám chuyên khoa`}</div>
                         </div>
                     </div>
 

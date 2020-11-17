@@ -199,7 +199,7 @@ class thongtincanhan extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Thông tin cá nhân`}</div>
                         </div>
                         <div className="col">
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
@@ -261,10 +261,11 @@ class thongtincanhan extends Component {
                                     </div>
                                 </div>
                                 <hr></hr>
-                                <br></br>
                                 <label htmlFor="password"  >Mật khẩu</label>
                                 <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" value={this.state.password} required={true} />
+                                <br></br>
                             </div>
+                        
                             <div className="col-1"></div>
                             <div className="col-5">
                                 <div className="section">
@@ -291,6 +292,7 @@ class thongtincanhan extends Component {
                                     options={this.state.list_faculties}
                                 />
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -112,7 +112,7 @@ class xemhoadon extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Back`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Hóa đơn`}</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/dangkidichvu/${this.props.match.params.id}`} >

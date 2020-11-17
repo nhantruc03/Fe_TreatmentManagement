@@ -1,24 +1,25 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
+import NumberFormat from 'react-number-format';
+import { AUTH } from '../../env'
 import TableData from '../table';
-import { AUTH } from '../../env';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
-class chitietdonthuoc extends Component {
+class chitiethoadonthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
             conclude: '',
             type: 'donthuoc',
-            name: ''
+            total: 0
         }
     }
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescription_details, prescriptions] = await Promise.all([
-            Axios.post('/api/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
+        const [prescription_bill_details, prescription_bills] = await Promise.all([
+            Axios.post('/api/prescription-bill-details/getAll', { prescriptionbillId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -26,7 +27,7 @@ class chitietdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/api/prescriptions/' + this.props.match.params.id, {
+            Axios.get('/api/prescription-bills/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -35,13 +36,19 @@ class chitietdonthuoc extends Component {
                     res.data.data
                 )
         ]);
-        if (prescription_details !== null && prescriptions !== null) {
+        if (prescription_bill_details !== null && prescription_bills !== null) {
             if (this._isMounted) {
+                console.log(prescription_bill_details)
                 this.setState({
-                    data: prescription_details,
-                    SearchData: prescription_details,
-                    conclude: prescriptions.conclude,
-                    name: prescriptions.medicalrecordId.patientId.name
+                    data: prescription_bill_details,
+                    SearchData: prescription_bill_details,
+                    conclude: prescription_bills.conclude
+                })
+
+                prescription_bill_details.forEach((value) => {
+                    this.setState({
+                        total: this.state.total + (value.medicineId.price * value.quantity)
+                    })
                 })
             }
         }
@@ -62,7 +69,7 @@ class chitietdonthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Chi tiết đơn thuốc`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
                         </div>
                     </div>
                     <div className="row mt-3">
@@ -73,6 +80,12 @@ class chitietdonthuoc extends Component {
                             keydata={keydata}
                             type={this.state.type}
                         />
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <label htmlFor="total" className='subject'>Tổng cộng:  <NumberFormat value={this.state.total} displayType={'text'} thousandSeparator={true} /> vnđ</label>
+                        </div>
+
                     </div>
                     <div className="row">
                         <div className="col">
@@ -107,4 +120,4 @@ class chitietdonthuoc extends Component {
     }
 }
 
-export default chitietdonthuoc;
+export default chitiethoadonthuoc;

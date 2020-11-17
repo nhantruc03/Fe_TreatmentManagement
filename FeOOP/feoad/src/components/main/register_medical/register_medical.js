@@ -165,10 +165,9 @@ class register_medical extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-9">
-                                <div onClick={() => this.onDone()} className='subject'> {`<- Quay về`}</div>
+                                <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
                             </div>
                             <div className="col">
-                                {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                                 <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
                             </div>
                         </div>

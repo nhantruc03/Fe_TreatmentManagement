@@ -9,6 +9,10 @@ import Taodonthuoc from './table_row/tablerow_taodonthuoc';
 import Donthuoc from './table_row/tablerow_donthuoc';
 import Phongduocsi from './table_row/tablerow_phongduocsi';
 import Donthuoctuphongkham from './table_row/tablerow_donthuoctuphongkham';
+import Hoadonthuoc from './table_row/tablerow_hoadonthuoc';
+import Hosobenhnhan from './table_row/tablerow_hosobenhnhan';
+import Hosokhambenh from './table_row/tablerow_hosokhambenh';
+
 class TableData extends Component {
 
     mappingDataUser = () => {
@@ -114,8 +118,6 @@ class TableData extends Component {
                         key={key}
                         keydata={this.props.keydata}
                         data={value}
-                        quantity_change={(e) => this.props.quantity_change(e)}
-                        delete={(e) => this.props.delete(e)}
                     />
                 ))
             )
@@ -128,8 +130,42 @@ class TableData extends Component {
                         key={key}
                         keydata={this.props.keydata}
                         data={value}
-                        quantity_change={(e) => this.props.quantity_change(e)}
-                        delete={(e) => this.props.delete(e)}
+                    />
+                ))
+            )
+        }
+        else if (this.props.type === "hoadonthuoc") {
+            return (
+                this.props.data.map((value, key) => (
+                    <Hoadonthuoc
+                        obj={this.props.obj}
+                        key={key}
+                        keydata={this.props.keydata}
+                        data={value}
+                    />
+                ))
+            )
+        }
+        else if (this.props.type === "hosobenhnhan") {
+            return (
+                this.props.data.map((value, key) => (
+                    <Hosobenhnhan
+                        obj={this.props.obj}
+                        key={key}
+                        keydata={this.props.keydata}
+                        data={value}
+                    />
+                ))
+            )
+        }
+        else if (this.props.type === "hosokhambenh") {
+            return (
+                this.props.data.map((value, key) => (
+                    <Hosokhambenh
+                        obj={this.props.obj}
+                        key={key}
+                        keydata={this.props.keydata}
+                        data={value}
                     />
                 ))
             )

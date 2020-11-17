@@ -25,7 +25,7 @@ class home extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        this.props.history.push("/");
+        this.props.history.push("/home");
         const [polyclinic] = await Promise.all([
             Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
                 headers: {

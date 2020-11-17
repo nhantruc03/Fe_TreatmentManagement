@@ -7,6 +7,7 @@ class topbar extends Component {
         super(props);
         this.state = {
             name: '',
+            role: '',
             logout: false,
             thongtincanhan: false
         }
@@ -15,7 +16,8 @@ class topbar extends Component {
         var login = localStorage.getItem('login');
         var obj = JSON.parse(login);
         this.setState({
-            name: obj.name
+            name: obj.name,
+            role: obj.role
         })
     }
 
@@ -35,6 +37,56 @@ class topbar extends Component {
                     thongtincanhan: true
                 })
             }
+        }
+    }
+
+    renderData = () => {
+        if (this.state.role === 'admin') {
+            return (
+                <div className="NBar">
+                    <NavLink className="link top" to="/home" >Trang đăng kí</NavLink>
+                    <NavLink className="link top" to="/listpatients" >Bệnh nhân</NavLink>
+                    <NavLink className="link top" to="/listdepartments" >Phòng</NavLink>
+                    <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
+                    <NavLink className="link top" to="/listusers" >Người dùng</NavLink>
+                    <NavLink className="link top" to="/listservices" >Dịch vụ</NavLink>
+                    <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
+                    <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
+                </div>
+            )
+        }
+        else if (this.state.role === 'staff') {
+            return (
+                <div className="NBar">
+                    <NavLink className="link top" to="/home" >Trang đăng kí</NavLink>
+                    <NavLink className="link top" to="/listpatients" >Bệnh nhân</NavLink>
+                    <NavLink className="link top" to="/listdepartments" >Phòng</NavLink>
+                    <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
+                    <NavLink className="link top" to="/listusers" >Người dùng</NavLink>
+                    <NavLink className="link top" to="/listservices" >Dịch vụ</NavLink>
+                    <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
+                    <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
+                </div>
+            )
+        }
+        else if (this.state.role === 'doctor') {
+            return (
+                <div className="NBar">
+                    <NavLink className="link top" to="/danhsachbenhnhan" >Hồ sơ khám bệnh</NavLink>
+                    <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
+                </div>
+            )
+        }
+        else if (this.state.role === 'pharmacist') {
+            return (
+                <div className="NBar">
+                    <NavLink className="link top" to="/listmedicinecategories" >Danh mục thuốc</NavLink>
+                    <NavLink className="link top" to="/listmedicines" >Thuốc</NavLink>
+                    <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
+                    <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
+                    <NavLink className="link top" to="/hoadonthuoc" >Hóa đơn thuốc</NavLink>
+                </div>
+            )
         }
     }
 
@@ -58,16 +110,7 @@ class topbar extends Component {
                             asdfasdf
                         </div>
                         <div className="col">
-                            <div className="NBar">
-                                <NavLink className="link top" to="/home" >Trang đăng kí</NavLink>
-                                <NavLink className="link top" to="/listpatients" >Bệnh nhân</NavLink>
-                                <NavLink className="link top" to="/listdepartments" >Phòng</NavLink>
-                                <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
-                                <NavLink className="link top" to="/listusers" >Người dùng</NavLink>
-                                <NavLink className="link top" to="/listservices" >Dịch vụ</NavLink>
-                                <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
-                                <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
-                            </div>
+                            {this.renderData()}
                         </div>
                         {/* Topbar Navbar */}
                         <div className="navbar-nav ml-auto">

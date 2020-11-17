@@ -112,7 +112,7 @@ class donthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Đơn thuốc`}</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/taodonthuoctudo`} >

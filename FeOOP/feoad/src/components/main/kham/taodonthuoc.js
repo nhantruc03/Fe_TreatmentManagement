@@ -102,7 +102,7 @@ class taodonthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Đơn thuốc</div>
+                            <div onClick={this.goBack} className='subject'>{`<- Đơn thuốc`}</div>
                         </div>
                         <div className="col">
                             <div onClick={() => this.Create()} className="btn btn-createnew">+ Tạo đơn thuốc</div>

@@ -112,7 +112,7 @@ class editpatients extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Sửa bệnh nhân`}</div>
                         </div>
                         <div className="col">
                             <button type="submit" className="btn btn-createnew">Cập nhập</button>

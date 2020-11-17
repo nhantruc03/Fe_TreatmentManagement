@@ -47,7 +47,7 @@ class tablerow_khamdakhoa extends Component {
                     <Link className="link" to={`/khamdakhoa/taodonthuoc/${this.props.data._id}`} >
                         <div className="btn btn-warning"><i className="fa fa-edit" />Tạo đơn thuốc</div>
                     </Link>
-                    <Link className="link" to={`/xemdonthuoc/${this.props.data._id}`} >
+                    <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
                         <div className="btn btn-warning"><i className="fa fa-edit" />Xem đơn thuốc</div>
                     </Link>
                     <div onClick={() => this.onComplete()} className="btn btn-warning"><i className="fa fa-edit" />Hoàn thành khám bệnh</div>
