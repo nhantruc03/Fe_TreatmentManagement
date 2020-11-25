@@ -23,7 +23,7 @@ class danhsachthuoc extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [medicines] = await Promise.all([
-            Axios.post('/medicines/getAll', {}, {
+            Axios.post('/api/medicines/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

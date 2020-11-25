@@ -18,7 +18,7 @@ class TableDataRow extends Component {
     }
 
     deleteClick = () => {
-        Axios.delete("/" + this.props.obj + "/" + this.props.data._id, {
+        Axios.delete("/api/" + this.props.obj + "/" + this.props.data._id, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }

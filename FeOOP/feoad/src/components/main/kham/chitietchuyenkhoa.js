@@ -24,7 +24,7 @@ class chitietchuyenkhoa extends Component {
 
         this._isMounted = true;
         const [medical_record] = await Promise.all([
-            Axios.get('/medical-details/' + this.props.match.params.id, {
+            Axios.get('/api/medical-details/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -66,7 +66,7 @@ class chitietchuyenkhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Chi tiết khám chuyên khoa`}</div>
                         </div>
                     </div>
 

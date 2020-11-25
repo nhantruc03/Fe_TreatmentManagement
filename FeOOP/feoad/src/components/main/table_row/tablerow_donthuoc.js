@@ -30,9 +30,16 @@ class tablerow_donthuoc extends Component {
                 }
                 else {
                     if (value === 'quantity') {
-                        return (
-                            <td key={key} ><input type="number" onChange={(e) => this.Change(e)} value={data[value]} /></td>
-                        )
+                        if (this.props.noaction === true) {
+                            return (
+                                <td key={key} >{data[value]}</td>
+                            )
+                        }
+                        else {
+                            return (
+                                <td key={key} ><input type="number" onChange={(e) => this.Change(e)} value={data[value]} /></td>
+                            )
+                        }
                     }
                     else {
                         return (
@@ -50,13 +57,16 @@ class tablerow_donthuoc extends Component {
     }
 
     renderAction = () => {
-        return (
-            <td>
-                <div className="btn-group">
-                    <div onClick={() => this.delete()} className="btn btn-warning"><i className="fa fa-edit" />Xóa</div>
-                </div>
-            </td>
-        )
+        if (this.props.noaction !== true) {
+            return (
+                <td>
+                    <div className="btn-group">
+                        <div onClick={() => this.delete()} className="btn btn-warning"><i className="fa fa-edit" />Xóa</div>
+                    </div>
+                </td>
+            )
+        }
+
     }
 
     render() {

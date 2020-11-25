@@ -28,7 +28,7 @@ class addservices extends Component {
             price: this.state.price,
             note: this.state.note
         };
-        Axios.post('/services', data, {
+        Axios.post('/api/services', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -64,7 +64,7 @@ class addservices extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-9">
-                                <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                                <div onClick={() => this.goBack()} className='subject'> {`<- Thêm dịch vụ`}</div>
                             </div>
                             <div className="col">
                                 <button type="submit" className="btn btn-createnew">Tạo mới</button>

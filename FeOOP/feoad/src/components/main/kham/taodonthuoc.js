@@ -51,12 +51,14 @@ class taodonthuoc extends Component {
     }
 
     Create = async () => {
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
         var data = {
             medicalrecordId: this.props.match.params.id,
-            doctorId: "5f825b9ad45d8cfd1fe32c14",
+            doctorId: obj.id,
             conclude: this.state.conclude
         }
-        var curprescriptions = await Axios.post('/prescriptions', data, {
+        var curprescriptions = await Axios.post('/api/prescriptions', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -77,7 +79,7 @@ class taodonthuoc extends Component {
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/prescription-details', data, {
+            await Axios.post('/api/prescription-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -100,7 +102,7 @@ class taodonthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Đơn thuốc</div>
+                            <div onClick={this.goBack} className='subject'>{`<- Đơn thuốc`}</div>
                         </div>
                         <div className="col">
                             <div onClick={() => this.Create()} className="btn btn-createnew">+ Tạo đơn thuốc</div>

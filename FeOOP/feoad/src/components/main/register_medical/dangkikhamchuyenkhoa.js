@@ -48,7 +48,7 @@ class dangkikhamchuyenkhoa extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [medical_record, departments] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -56,7 +56,7 @@ class dangkikhamchuyenkhoa extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -106,7 +106,7 @@ class dangkikhamchuyenkhoa extends Component {
         var data = {
             medicalrecordIds: [this.props.match.params.id]
         };
-        await Axios.put('/departments/' + this.state.departmentId + '/add-patients', data, {
+        await Axios.put('/api/departments/' + this.state.departmentId + '/add-patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -130,10 +130,9 @@ class dangkikhamchuyenkhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Đăng kí khám chuyên khoa`}</div>
                         </div>
                         <div className="col">
-                            {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                             <button type="submit" className="btn btn-createnew">Đăng kí</button>
                         </div>
                     </div>

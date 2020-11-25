@@ -42,7 +42,7 @@ class adddepartments extends Component {
             facultyId: this.state.facultyId
         };
         console.log(data)
-        Axios.post('/departments', data, {
+        Axios.post('/api/departments', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -72,7 +72,7 @@ class adddepartments extends Component {
 
         this._isMounted = true;
         const [faculties] = await Promise.all([
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

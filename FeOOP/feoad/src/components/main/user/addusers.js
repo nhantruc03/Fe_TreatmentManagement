@@ -86,7 +86,7 @@ class addusers extends Component {
             email: this.state.email
         };
         console.log(data)
-        Axios.post('/users', data, {
+        Axios.post('/api/users', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -107,7 +107,7 @@ class addusers extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [faculties, departments] = await Promise.all([
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -115,7 +115,7 @@ class addusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -165,7 +165,7 @@ class addusers extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.onDone()} className='subject'> {`<- Create new user`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Create new user`}</div>
                         </div>
                         <div className="col">
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}

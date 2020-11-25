@@ -27,7 +27,7 @@ class editservices extends Component {
             price: this.state.price,
             note: this.state.note
         };
-        Axios.put('/services/' + this.props.match.params.id, data, {
+        Axios.put('/api/services/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -51,7 +51,7 @@ class editservices extends Component {
 
         this._isMounted = true;
         const [services] = await Promise.all([
-            Axios.get('/services/' + this.props.match.params.id, {
+            Axios.get('/api/services/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -87,7 +87,7 @@ class editservices extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Sửa thông tin dịch vụ`}</div>
                         </div>
                         <div className="col">
                             <button type="submit" className="btn btn-createnew">Cập nhật</button>

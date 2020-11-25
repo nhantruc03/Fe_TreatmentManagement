@@ -66,7 +66,7 @@ class khamdakhoa extends Component {
 
         this._isMounted = true;
         const [medical_record] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -104,7 +104,7 @@ class khamdakhoa extends Component {
             reason: this.state.reason,
             status: this.state.status
         }
-        Axios.put('/medical-records/' + this.props.match.params.id, data, {
+        Axios.put('/api/medical-records/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -125,10 +125,9 @@ class khamdakhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Hồ sơ khám bệnh`}</div>
                         </div>
                         <div className="col">
-                            {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                             <button type="submit" className="btn btn-createnew">Cập nhật</button>
                         </div>
                     </div>

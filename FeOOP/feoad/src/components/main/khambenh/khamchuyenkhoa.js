@@ -60,7 +60,7 @@ class khamchuyenkhoa extends Component {
 
         this._isMounted = true;
         const [medical_record] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -94,7 +94,8 @@ class khamchuyenkhoa extends Component {
     }
     onSubmit = async (e) => {
         e.preventDefault();
-
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
         var data = new FormData();
         var temp_list = [];
         if (this.state.images != null) {
@@ -108,10 +109,10 @@ class khamchuyenkhoa extends Component {
         data.append("medical_reason", this.state.medical_reason);
         data.append("result", this.state.result);
         data.append('note', this.state.note);
-        data.append('doctorId', "5f825b9ad45d8cfd1fe32c14");
+        data.append('doctorId', obj.id);
         data.append('medicalrecordId', this.props.match.params.id);
 
-        Axios.post('/medical-details', data, {
+        Axios.post('/api/medical-details', data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': { AUTH }.AUTH
@@ -134,7 +135,7 @@ class khamchuyenkhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Tạo kết quả khám chuyên khoa`}</div>
                         </div>
                         <div className="col">
                             <button type="submit" className="btn btn-createnew">Cập nhật</button>

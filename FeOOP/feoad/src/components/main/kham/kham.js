@@ -25,7 +25,7 @@ class kham extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [queue, this_room, polyclinic] = await Promise.all([
-            Axios.get('/departments/' + this.props.match.params.id + "/patient-queue", {
+            Axios.get('/api/departments/' + this.props.match.params.id + "/patient-queue", {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -33,7 +33,7 @@ class kham extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/departments/' + this.props.match.params.id, {
+            Axios.get('/api/departments/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -41,7 +41,7 @@ class kham extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', { name: "polyclinic" }, {
+            Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -50,6 +50,8 @@ class kham extends Component {
                     res.data.data
                 )
         ]);
+
+        console.log(queue);
 
         if (queue !== null && this_room !== null && polyclinic !== null) {
             if (this._isMounted) {
@@ -73,6 +75,7 @@ class kham extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
+
     getCurData = (SearchData) => {
         var indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
         var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
@@ -117,17 +120,19 @@ class kham extends Component {
         }
         return listpage;
     }
+
+    goBack = () =>{
+        this.props.history.goBack();
+    }
+
     printData = (SearchData) => {
         if (this.state.data !== null) {
             return (
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách chờ của phòng khám</div>
+                            <div onClick={this.goBack} className='subject'>{`<- Danh sách chờ của phòng khám`}</div>
                         </div>
-                        {/* <div className="col">
-                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Register for medical examination</div>
-                        </div> */}
                     </div>
                     <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData type={this.state.type} curRoom={this.props.match.params.id} obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} departmentId={this.props.match.params.id} />
@@ -142,7 +147,6 @@ class kham extends Component {
             return (
                 <div className='mt-5'>
                     <h1 className='text-primary mb-3'>Danh sách người dùng</h1>
-                    <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
                 </div>
             )
         }

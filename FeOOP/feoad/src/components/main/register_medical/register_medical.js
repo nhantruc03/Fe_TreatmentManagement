@@ -63,7 +63,7 @@ class register_medical extends Component {
                 email: this.state.email,
                 job: this.state.job
             };
-            await Axios.post('/patients/', data, {
+            await Axios.post('/api/patients/', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -84,7 +84,7 @@ class register_medical extends Component {
             status: 'chờ'
         }
 
-        await Axios.post('/medical-records/', data, {
+        await Axios.post('/api/medical-records/', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -100,7 +100,7 @@ class register_medical extends Component {
         data = {
             medicalrecordIds: [temp_medicalrecord_id]
         };
-        await Axios.put('/departments/' + this.props.match.params.id + '/add-patients', data, {
+        await Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -127,7 +127,7 @@ class register_medical extends Component {
     Find = async (e) => {
         e.preventDefault();
         const [patients] = await Promise.all([
-            Axios.get('/patients/' + this.state._id, {
+            Axios.get('/api/patients/' + this.state._id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -165,10 +165,9 @@ class register_medical extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-9">
-                                <div onClick={() => this.onDone()} className='subject'> {`<- Quay về`}</div>
+                                <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
                             </div>
                             <div className="col">
-                                {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                                 <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
                             </div>
                         </div>

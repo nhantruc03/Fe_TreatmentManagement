@@ -24,7 +24,7 @@ class doctor_listdepartments extends Component {
     async componentDidMount() {
         this._isMounted = true;
         const [departments] = await Promise.all([
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }

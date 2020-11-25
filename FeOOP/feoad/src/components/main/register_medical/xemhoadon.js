@@ -55,7 +55,7 @@ class xemhoadon extends Component {
         var data = {
             medicalrecordId: [this.props.match.params.id]
         };
-        var curBill = await Axios.post('/medical-bills/getAll', data, {
+        var curBill = await Axios.post('/api/medical-bills/getAll', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -78,7 +78,7 @@ class xemhoadon extends Component {
             data = {
                 medicalBillId: curBill
             }
-            await Axios.post('/medical-bill-details/getAll', data, {
+            await Axios.post('/api/medical-bill-details/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -112,7 +112,7 @@ class xemhoadon extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Back`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Hóa đơn`}</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/dangkidichvu/${this.props.match.params.id}`} >
