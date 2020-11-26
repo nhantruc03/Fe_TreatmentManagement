@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 class adddepartments extends Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class adddepartments extends Component {
         })
 
         this._isMounted = true;
-        const [faculties] = await Promise.all([
+        const [faculties] = await trackPromise(Promise.all([
             Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -80,7 +81,7 @@ class adddepartments extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (faculties !== null) {

@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -126,7 +127,7 @@ class register_medical extends Component {
 
     Find = async (e) => {
         e.preventDefault();
-        const [patients] = await Promise.all([
+        const [patients] = await trackPromise(Promise.all([
             Axios.get('/api/patients/' + this.state._id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -135,7 +136,7 @@ class register_medical extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (patients !== null) {

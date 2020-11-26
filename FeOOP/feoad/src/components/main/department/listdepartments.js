@@ -5,6 +5,7 @@ import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
 import { Link } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên', 'Khoa', 'Điện thoại', 'Phòng', 'Tầng', 'Ghi chú', 'Trạng thái', 'Thao tác']
 const keydata = ['name', 'facultyId.name', 'phoneNumber', 'room', 'floor', 'note', 'isDeleted']
 const obj = "departments"
@@ -23,7 +24,7 @@ class listdepartments extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [departments] = await Promise.all([
+        const [departments] = await trackPromise(Promise.all([
             Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -32,7 +33,7 @@ class listdepartments extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (departments !== null) {

@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 var Roles = [
     { value: 'admin', label: 'Quản trị viên' },
     { value: 'doctor', label: 'Bác sĩ' },
@@ -115,7 +116,7 @@ class editusers extends Component {
         })
 
         this._isMounted = true;
-        const [user, faculties, departments] = await Promise.all([
+        const [user, faculties, departments] = await trackPromise(Promise.all([
             Axios.get('/api/users/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -140,7 +141,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (faculties !== null && departments !== null && user !== null) {

@@ -5,6 +5,7 @@ import { AUTH } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 const obj = "departments";
@@ -18,15 +19,14 @@ class home extends Component {
             postsPerPage: 10,
             listPage: [],
             SearchData: [],
-            min_departmentId: '',
-            isload: true
+            min_departmentId: ''
         }
     }
 
     async componentDidMount() {
         this._isMounted = true;
         this.props.history.push("/home");
-        const [polyclinic] = await Promise.all([
+        const polyclinic = await trackPromise(
             Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -35,19 +35,18 @@ class home extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ])
+        )
         if (polyclinic !== undefined) {
-            const [departments] = await Promise.all([
+            const departments = await trackPromise(
                 Axios.post('/api/departments/getAll', { facultyId: polyclinic[0]._id }, {
                     headers: {
                         'Authorization': { AUTH }.AUTH
                     }
-                })
-                    .then((res) =>
-                        res.data.data
-                    )
-            ]);
+                }).then((res) =>
+                    res.data.data
+                )
 
+            );
             var temp_data = [];
             var min_index = 9999;
             var min_department = '';
@@ -67,8 +66,7 @@ class home extends Component {
                     this.setState({
                         data: temp_data,
                         SearchData: temp_data,
-                        min_departmentId: min_department,
-                        isload: false
+                        min_departmentId: min_department
                     })
                 }
             }
@@ -138,18 +136,13 @@ class home extends Component {
         )
     }
     render() {
-        if (this.state.isload) {
-            return <p>loading ...</p>
-        }
-        else {
-            return (
-                <div>
-                    <div className="container-fluid">
-                        {this.printData(this.state.SearchData)}
-                    </div>
+        return (
+            <div>
+                <div className="container-fluid">
+                    {this.printData(this.state.SearchData)}
                 </div>
-            );
-        }
+            </div>
+        );
     }
 }
 

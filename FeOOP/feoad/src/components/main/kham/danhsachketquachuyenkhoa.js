@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
+import { trackPromise } from 'react-promise-tracker';
 // import { Redirect } from 'react-router-dom';
 import { AUTH } from '../../env'
 import Pagination from '../Pagination';
@@ -25,7 +26,7 @@ class danhsachketquachuyenkhoa extends Component {
         var data = {
             medicalrecordId: this.props.match.params.id
         }
-        const [ketquachuyenkhoa] = await Promise.all([
+        const [ketquachuyenkhoa] = await trackPromise(Promise.all([
             Axios.post('/api/medical-details/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -34,7 +35,7 @@ class danhsachketquachuyenkhoa extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
         if (ketquachuyenkhoa !== null) {
             if (this._isMounted) {

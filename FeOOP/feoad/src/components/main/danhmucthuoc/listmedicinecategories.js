@@ -5,6 +5,7 @@ import Pagination from '../Pagination';
 import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên', 'Thao tác']
 const keydata = ['name']
 const obj = "medicine-categories"
@@ -23,7 +24,7 @@ class listmedicinecategories extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [users] = await Promise.all([
+        const [users] = await trackPromise(Promise.all([
             Axios.post('/api/medicine-categories/getAll',{}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -32,7 +33,7 @@ class listmedicinecategories extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (users !== null) {

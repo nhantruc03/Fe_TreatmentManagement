@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
+import { trackPromise } from 'react-promise-tracker';
 import { AUTH } from '../../env'
 import TableData from '../table';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price']
@@ -18,7 +19,7 @@ class chitiethoadonthuoc extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescription_bill_details, prescription_bills] = await Promise.all([
+        const [prescription_bill_details, prescription_bills] = await trackPromise(Promise.all([
             Axios.post('/api/prescription-bill-details/getAll', { prescriptionbillId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -35,7 +36,7 @@ class chitiethoadonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
         if (prescription_bill_details !== null && prescription_bills !== null) {
             if (this._isMounted) {
                 console.log(prescription_bill_details)

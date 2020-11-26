@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 var Genders = [
     { value: 'male', label: 'Male' },
@@ -71,7 +72,7 @@ class editpatients extends Component {
     async componentDidMount() {
 
         this._isMounted = true;
-        const [patients] = await Promise.all([
+        const [patients] = await trackPromise(Promise.all([
             Axios.get('/api/patients/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -80,7 +81,7 @@ class editpatients extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (patients !== null) {

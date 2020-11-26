@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
+import { trackPromise } from 'react-promise-tracker';
 import Select from 'react-select';
 import { AUTH } from '../../env'
 class addmedicines extends Component {
@@ -67,7 +68,7 @@ class addmedicines extends Component {
         })
 
         this._isMounted = true;
-        const [medicinecategories] = await Promise.all([
+        const [medicinecategories] = await trackPromise(Promise.all([
             Axios.post('/api/medicine-categories/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -76,7 +77,7 @@ class addmedicines extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (medicinecategories !== null) {

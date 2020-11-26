@@ -5,6 +5,7 @@ import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
 import { Link } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
 const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'doctorId.facultyId', 'doctorId.departmentId', 'createdAt']
 class donthuoc extends Component {
@@ -25,7 +26,7 @@ class donthuoc extends Component {
         var data = {
             medicalrecordId: this.props.match.params.id
         }
-        const [prescriptions] = await Promise.all([
+        const [prescriptions] = await trackPromise(Promise.all([
             Axios.post('/api/prescriptions/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -34,7 +35,7 @@ class donthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
         console.log(prescriptions);
         if (prescriptions !== null) {

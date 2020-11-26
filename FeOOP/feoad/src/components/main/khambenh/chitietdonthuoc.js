@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class chitietdonthuoc extends Component {
@@ -17,7 +18,7 @@ class chitietdonthuoc extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescription_details, prescriptions] = await Promise.all([
+        const [prescription_details, prescriptions] = await trackPromise(Promise.all([
             Axios.post('/api/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -34,7 +35,7 @@ class chitietdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
         if (prescription_details !== null && prescriptions !== null) {
             if (this._isMounted) {
                 this.setState({

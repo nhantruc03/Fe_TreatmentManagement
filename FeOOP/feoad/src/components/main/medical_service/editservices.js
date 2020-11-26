@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 class editservices extends Component {
     constructor(props) {
@@ -50,7 +51,7 @@ class editservices extends Component {
         })
 
         this._isMounted = true;
-        const [services] = await Promise.all([
+        const [services] = await trackPromise(Promise.all([
             Axios.get('/api/services/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -59,7 +60,7 @@ class editservices extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (services !== null) {

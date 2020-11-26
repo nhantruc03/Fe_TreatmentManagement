@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 class editdepartments extends Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class editdepartments extends Component {
         })
 
         this._isMounted = true;
-        const [department, faculties] = await Promise.all([
+        const [department, faculties] = await trackPromise(Promise.all([
             Axios.get('/api/departments/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -82,7 +83,7 @@ class editdepartments extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (faculties !== null && department !== null) {

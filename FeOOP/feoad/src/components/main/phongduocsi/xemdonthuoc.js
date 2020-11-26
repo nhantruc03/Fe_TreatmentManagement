@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class xemdonthuoc extends Component {
@@ -23,6 +24,7 @@ class xemdonthuoc extends Component {
         }
 
         var temp = this.state.data.filter(el => el.medicineId._id === data.medicineId._id)
+      
         if (temp.length === 0) {
             this.setState({
                 data: [...this.state.data, data]
@@ -74,25 +76,27 @@ class xemdonthuoc extends Component {
                 console.log(err);
             })
 
-
+        let list_temp = [];
         this.state.data.forEach(async (value) => {
             data = {
                 prescriptionbillId: curprescriptions_bill,
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/api/prescription-bill-details', data, {
-                headers: {
-                    'Authorization': { AUTH }.AUTH
-                }
-            })
-                .then(res => {
-                    console.log(res.data.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            list_temp.push(data)
+            
         })
+        await Axios.post('/api/prescription-bill-details', list_temp, {
+            headers: {
+                'Authorization': { AUTH }.AUTH
+            }
+        })
+            .then(res => {
+                console.log(res.data.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
         this.goBack();
 
@@ -101,7 +105,7 @@ class xemdonthuoc extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescription_details, prescriptions] = await Promise.all([
+        const [prescription_details, prescriptions] = await trackPromise(Promise.all([
             Axios.post('/api/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -118,7 +122,7 @@ class xemdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
         if (prescription_details !== null && prescriptions !== null) {
             if (this._isMounted) {
                 this.setState({

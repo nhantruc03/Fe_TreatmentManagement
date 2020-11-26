@@ -5,6 +5,7 @@ import Pagination from '../Pagination';
 import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên', 'Email', 'Ngày sinh', 'Chức vụ', 'Điện thoại', 'Phòng', 'Ban', 'Trạng thái', 'Thao tác']
 const keydata = ['name', 'email', 'birthday', 'role', 'phoneNumber', 'departmentId.name', 'facultyId.name', 'isDeleted']
 const obj = "users"
@@ -23,7 +24,7 @@ class listusers extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [users] = await Promise.all([
+        const [users] = await trackPromise(Promise.all([
             Axios.get('/api/users', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -32,7 +33,7 @@ class listusers extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (users !== null) {

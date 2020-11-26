@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
+import { trackPromise } from 'react-promise-tracker';
 // import { Redirect } from 'react-router-dom';
 import { AUTH } from '../../env'
 import Pagination from '../Pagination';
@@ -24,7 +25,7 @@ class kham extends Component {
     }
     async componentDidMount() {
         this._isMounted = true;
-        const [queue, this_room, polyclinic] = await Promise.all([
+        const [queue, this_room, polyclinic] = await trackPromise(Promise.all([
             Axios.get('/api/departments/' + this.props.match.params.id + "/patient-queue", {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -49,7 +50,7 @@ class kham extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
         console.log(queue);
 

@@ -5,6 +5,7 @@ import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
 import { Link } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
 const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'doctorId.facultyId', 'doctorId.departmentId', 'createdAt']
 
@@ -23,7 +24,7 @@ class phongduocsi extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescriptions] = await Promise.all([
+        const [prescriptions] = await trackPromise(Promise.all([
             Axios.post('/api/prescriptions/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
@@ -32,7 +33,7 @@ class phongduocsi extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (prescriptions !== null) {
