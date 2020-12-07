@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class xemdonthuoc extends Component {
@@ -23,6 +24,7 @@ class xemdonthuoc extends Component {
         }
 
         var temp = this.state.data.filter(el => el.medicineId._id === data.medicineId._id)
+      
         if (temp.length === 0) {
             this.setState({
                 data: [...this.state.data, data]
@@ -52,12 +54,15 @@ class xemdonthuoc extends Component {
     }
 
     Create = async () => {
+        const login = localStorage.getItem('login');
+        const obj = JSON.parse(login);
         var data = {
             name: this.state.name,
-            pharmacistId: "5f825b9ad45d8cfd1fe32c14",
-            conclude: this.state.conclude
+            pharmacistId: obj.id,
+            conclude: this.state.conclude,
+            prescriptionId: this.props.match.params.id
         }
-        var curprescriptions_bill = await Axios.post('/prescription-bills', data, {
+        var curprescriptions_bill = await Axios.post('/api/prescription-bills', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -71,25 +76,27 @@ class xemdonthuoc extends Component {
                 console.log(err);
             })
 
-
+        let list_temp = [];
         this.state.data.forEach(async (value) => {
             data = {
                 prescriptionbillId: curprescriptions_bill,
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/prescription-bill-details', data, {
-                headers: {
-                    'Authorization': { AUTH }.AUTH
-                }
-            })
-                .then(res => {
-                    console.log(res.data.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            list_temp.push(data)
+            
         })
+        await Axios.post('/api/prescription-bill-details', list_temp, {
+            headers: {
+                'Authorization': { AUTH }.AUTH
+            }
+        })
+            .then(res => {
+                console.log(res.data.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
         this.goBack();
 
@@ -98,8 +105,8 @@ class xemdonthuoc extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescription_details, prescriptions] = await Promise.all([
-            Axios.post('/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
+        const [prescription_details, prescriptions] = await trackPromise(Promise.all([
+            Axios.post('/api/prescription-details/getAll', { prescriptionId: this.props.match.params.id }, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -107,7 +114,7 @@ class xemdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/prescriptions/' + this.props.match.params.id, {
+            Axios.get('/api/prescriptions/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -115,7 +122,7 @@ class xemdonthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
         if (prescription_details !== null && prescriptions !== null) {
             if (this._isMounted) {
                 this.setState({
@@ -139,7 +146,7 @@ class xemdonthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Đơn thuốc</div>
+                            <div onClick={this.goBack} className='subject'>{`<- Đơn thuốc`}</div>
                         </div>
                         <div className="col">
                             <div onClick={() => this.Create()} className="btn btn-createnew">+ Tạo hóa đơn thuốc</div>
@@ -161,7 +168,7 @@ class xemdonthuoc extends Component {
                     </div>
                     <div className="row">
                         <div className="col">
-                            <label htmlFor="conclude" className='subject'>Kế luận</label>
+                            <label htmlFor="conclude" className='subject'>Kết luận</label>
                             <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude}></textarea>
                         </div>
 

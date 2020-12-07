@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 var Roles = [
     { value: 'admin', label: 'Quản trị viên' },
     { value: 'doctor', label: 'Bác sĩ' },
@@ -88,7 +89,7 @@ class thongtincanhan extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/users/' + obj.id, data, {
+        Axios.put('/api/users/' + obj.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -113,8 +114,8 @@ class thongtincanhan extends Component {
         const obj = JSON.parse(login);
 
         this._isMounted = true;
-        const [user, faculties, departments] = await Promise.all([
-            Axios.get('/users/' + obj.id, {
+        const [user, faculties, departments] = await trackPromise(Promise.all([
+            Axios.get('/api/users/' + obj.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -122,7 +123,7 @@ class thongtincanhan extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -130,7 +131,7 @@ class thongtincanhan extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -138,7 +139,7 @@ class thongtincanhan extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (faculties !== null && departments !== null && user !== null) {
@@ -199,7 +200,7 @@ class thongtincanhan extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Thông tin cá nhân`}</div>
                         </div>
                         <div className="col">
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
@@ -261,10 +262,11 @@ class thongtincanhan extends Component {
                                     </div>
                                 </div>
                                 <hr></hr>
-                                <br></br>
                                 <label htmlFor="password"  >Mật khẩu</label>
                                 <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" value={this.state.password} required={true} />
+                                <br></br>
                             </div>
+                        
                             <div className="col-1"></div>
                             <div className="col-5">
                                 <div className="section">
@@ -291,6 +293,7 @@ class thongtincanhan extends Component {
                                     options={this.state.list_faculties}
                                 />
                             </div>
+
                         </div>
                     </div>
                 </div>

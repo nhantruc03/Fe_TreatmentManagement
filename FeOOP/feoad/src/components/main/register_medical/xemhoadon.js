@@ -7,6 +7,7 @@ import TableData from '../table';
 import Pagination from '../Pagination';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 
 const tablerow = ['Name', 'Note', 'Price']
 const keydata = ['serviceId.name', 'note', 'serviceId.price']
@@ -55,30 +56,31 @@ class xemhoadon extends Component {
         var data = {
             medicalrecordId: [this.props.match.params.id]
         };
-        var curBill = await Axios.post('/medical-bills/getAll', data, {
-            headers: {
-                'Authorization': { AUTH }.AUTH
-            }
-        })
-            .then(res => {
-                if (res.data.data.length > 0) {
-                    return (
-                        res.data.data[0]._id
-                    )
-                } else {
-                    return undefined
+        var curBill = await trackPromise(
+            Axios.post('/api/medical-bills/getAll', data, {
+                headers: {
+                    'Authorization': { AUTH }.AUTH
                 }
             })
-            .catch(err => {
-                console.log(err);
-            })
+                .then(res => {
+                    if (res.data.data.length > 0) {
+                        return (
+                            res.data.data[0]._id
+                        )
+                    } else {
+                        return undefined
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        )
 
-        console.log(curBill)
         if (curBill !== undefined) {
             data = {
                 medicalBillId: curBill
             }
-            await Axios.post('/medical-bill-details/getAll', data, {
+            await trackPromise(Axios.post('/api/medical-bill-details/getAll', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -92,7 +94,7 @@ class xemhoadon extends Component {
                 .catch(err => {
                     console.log(err);
                 })
-
+            )
             this.state.data.forEach((value) => {
                 this.setState({
                     total: this.state.total + value.serviceId.price
@@ -112,7 +114,7 @@ class xemhoadon extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Back`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Hóa đơn`}</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/dangkidichvu/${this.props.match.params.id}`} >

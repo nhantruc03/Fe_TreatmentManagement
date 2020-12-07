@@ -4,8 +4,10 @@ import TableData from '../table';
 import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
-const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Ngày tạo', 'Thao tác']
-const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'createdAt']
+import { Link } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
+const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
+const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'doctorId.facultyId', 'doctorId.departmentId', 'createdAt']
 
 class phongduocsi extends Component {
     constructor(props) {
@@ -22,8 +24,8 @@ class phongduocsi extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [prescriptions] = await Promise.all([
-            Axios.post('/prescriptions/getAll', {}, {
+        const [prescriptions] = await trackPromise(Promise.all([
+            Axios.post('/api/prescriptions/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -31,13 +33,15 @@ class phongduocsi extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (prescriptions !== null) {
             if (this._isMounted) {
                 prescriptions.forEach((value) => {
-                    value.medicalrecordId = value.medicalrecordId.patientId
+                    value.medicalrecordId = value.medicalrecordId.patientId;
+                    value.doctorId.facultyId = value.doctorId.facultyId.name;
+                    value.doctorId.departmentId = value.doctorId.departmentId.name;
                 })
                 this.setState({
                     data: prescriptions,
@@ -106,11 +110,13 @@ class phongduocsi extends Component {
                             <div className='subject'>Phòng dược sĩ</div>
                         </div>
                         <div className="col">
-                            <div onClick={() => this.onAddClick()} className="btn btn-createnew">+ Create new</div>
+                            <Link className="link" to={`/taodonthuoctudo`} >
+                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                            </Link>
                         </div>
                     </div>
                     <Search targetParent="medicalrecordId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData  type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />
+                    <TableData type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}

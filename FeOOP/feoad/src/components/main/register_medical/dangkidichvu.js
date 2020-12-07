@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -42,8 +43,8 @@ class dangkidichvu extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [medical_record, services] = await Promise.all([
-            Axios.get('/medical-records/' + this.props.match.params.id, {
+        const [medical_record, services] = await trackPromise(Promise.all([
+            Axios.get('/api/medical-records/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -51,7 +52,7 @@ class dangkidichvu extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.get('/services', {
+            Axios.get('/api/services', {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -59,7 +60,7 @@ class dangkidichvu extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
         if (medical_record !== null && services !== null) {
             if (this._isMounted) {
@@ -103,7 +104,7 @@ class dangkidichvu extends Component {
         var data = {
             medicalrecordId: [this.props.match.params.id]
         };
-        var curBill = await Axios.post('/medical-bills/getAll', data, {
+        var curBill = await Axios.post('/api/medical-bills/getAll', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -121,7 +122,7 @@ class dangkidichvu extends Component {
             data = {
                 medicalrecordId: this.props.match.params.id
             }
-            curBill = await Axios.post('/medical-bills', data, {
+            curBill = await Axios.post('/api/medical-bills', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -143,7 +144,7 @@ class dangkidichvu extends Component {
             serviceId: this.state.serviceId,
             medicalBillId: curBill
         }
-        await Axios.post('/medical-bill-details', data, {
+        await Axios.post('/api/medical-bill-details', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -166,10 +167,9 @@ class dangkidichvu extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Đăng kí dịch vụ`}</div>
                         </div>
                         <div className="col">
-                            {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                             <button type="submit" className="btn btn-createnew">Đăng kí</button>
                         </div>
                     </div>

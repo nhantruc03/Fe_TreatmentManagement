@@ -4,6 +4,7 @@ import TableData from './table';
 import Pagination from './Pagination';
 import Search from './search';
 import { AUTH } from '../env'
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Thao tác']
 const keydata = ['name', 'unit', 'quantity']
 
@@ -22,8 +23,8 @@ class danhsachthuoc extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [medicines] = await Promise.all([
-            Axios.post('/medicines/getAll', {}, {
+        const [medicines] = await trackPromise(Promise.all([
+            Axios.post('/api/medicines/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -31,7 +32,7 @@ class danhsachthuoc extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
         if (medicines !== null) {
             if (this._isMounted) {
                 this.setState({

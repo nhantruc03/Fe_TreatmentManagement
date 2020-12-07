@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 var Roles = [
     { value: 'admin', label: 'Quản trị viên' },
     { value: 'doctor', label: 'Bác sĩ' },
@@ -86,7 +87,7 @@ class editusers extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/users/' + this.props.match.params.id, data, {
+        Axios.put('/api/users/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -115,8 +116,8 @@ class editusers extends Component {
         })
 
         this._isMounted = true;
-        const [user, faculties, departments] = await Promise.all([
-            Axios.get('/users/' + this.props.match.params.id, {
+        const [user, faculties, departments] = await trackPromise(Promise.all([
+            Axios.get('/api/users/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -124,7 +125,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/faculties/getAll', {}, {
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -132,7 +133,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 ),
-            Axios.post('/departments/getAll', {}, {
+            Axios.post('/api/departments/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -140,7 +141,7 @@ class editusers extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (faculties !== null && departments !== null && user !== null) {

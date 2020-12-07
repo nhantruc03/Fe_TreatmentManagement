@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 class editservices extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class editservices extends Component {
             price: this.state.price,
             note: this.state.note
         };
-        Axios.put('/services/' + this.props.match.params.id, data, {
+        Axios.put('/api/services/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -50,8 +51,8 @@ class editservices extends Component {
         })
 
         this._isMounted = true;
-        const [services] = await Promise.all([
-            Axios.get('/services/' + this.props.match.params.id, {
+        const [services] = await trackPromise(Promise.all([
+            Axios.get('/api/services/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -59,7 +60,7 @@ class editservices extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (services !== null) {
@@ -87,7 +88,7 @@ class editservices extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Sửa thông tin dịch vụ`}</div>
                         </div>
                         <div className="col">
                             <button type="submit" className="btn btn-createnew">Cập nhật</button>

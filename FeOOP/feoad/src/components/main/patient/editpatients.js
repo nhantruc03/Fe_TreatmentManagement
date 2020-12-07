@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
+import { trackPromise } from 'react-promise-tracker';
 
 var Genders = [
     { value: 'male', label: 'Male' },
@@ -54,7 +55,7 @@ class editpatients extends Component {
             email: this.state.email,
             job: this.state.job
         };
-        Axios.put('/patients/' + this.props.match.params.id, data, {
+        Axios.put('/api/patients/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -71,8 +72,8 @@ class editpatients extends Component {
     async componentDidMount() {
 
         this._isMounted = true;
-        const [patients] = await Promise.all([
-            Axios.get('/patients/' + this.props.match.params.id, {
+        const [patients] = await trackPromise(Promise.all([
+            Axios.get('/api/patients/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -80,7 +81,7 @@ class editpatients extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
 
         if (patients !== null) {
@@ -112,7 +113,7 @@ class editpatients extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Sửa bệnh nhân`}</div>
                         </div>
                         <div className="col">
                             <button type="submit" className="btn btn-createnew">Cập nhập</button>

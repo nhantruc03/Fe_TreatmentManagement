@@ -18,6 +18,7 @@ class tablerow_ketquachuyenkhoa extends Component {
                         <Link className="link" to={`/khamdakhoa/chitietchuyenkhoa/${this.props.data._id}`} >
                             <div className="btn btn-warning"><i className="fa fa-edit" />Xem</div>
                         </Link>
+                    
                     </div>
                 </td>
             )

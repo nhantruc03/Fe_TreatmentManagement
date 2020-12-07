@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import Image from '../image';
+import { trackPromise } from 'react-promise-tracker';
 class chitietchuyenkhoa extends Component {
     constructor(props) {
         super(props);
@@ -23,8 +24,8 @@ class chitietchuyenkhoa extends Component {
         })
 
         this._isMounted = true;
-        const [medical_record] = await Promise.all([
-            Axios.get('/medical-details/' + this.props.match.params.id, {
+        const [medical_record] = await trackPromise(Promise.all([
+            Axios.get('/api/medical-details/' + this.props.match.params.id, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -32,7 +33,7 @@ class chitietchuyenkhoa extends Component {
                 .then((res) =>
                     res.data.data
                 )
-        ]);
+        ]));
 
         if (medical_record !== null) {
             if (this._isMounted) {
@@ -66,7 +67,7 @@ class chitietchuyenkhoa extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'> {`<- Quay về`}</div>
+                            <div onClick={this.goBack} className='subject'> {`<- Chi tiết khám chuyên khoa`}</div>
                         </div>
                     </div>
 
