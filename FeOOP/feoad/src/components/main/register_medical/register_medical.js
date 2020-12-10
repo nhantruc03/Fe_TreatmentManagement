@@ -6,6 +6,8 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket('ws://localhost:3002');
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -91,7 +93,6 @@ class register_medical extends Component {
             }
         })
             .then(res => {
-                console.log(res.data.data);
                 temp_medicalrecord_id = res.data.data._id;
             })
             .catch(err => {
@@ -99,7 +100,7 @@ class register_medical extends Component {
             })
 
         data = {
-            medicalrecordIds: [temp_medicalrecord_id]
+            medicalrecordIds: temp_medicalrecord_id
         };
         await Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
             headers: {
@@ -108,6 +109,11 @@ class register_medical extends Component {
         })
             .then(res => {
                 console.log(res);
+                client.send(JSON.stringify({
+                    type: "ADD",
+                    id: res.data.data[0]._id,
+                    data: res.data.data[0].queue
+                }))
                 this.onDone();
             })
             .catch(err => {

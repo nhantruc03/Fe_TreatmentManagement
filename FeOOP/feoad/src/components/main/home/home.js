@@ -6,10 +6,11 @@ import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
 import { trackPromise } from 'react-promise-tracker';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 const obj = "departments";
-
+const client = new W3CWebSocket('ws://localhost:3002');
 class home extends Component {
     constructor(props) {
         super(props);
@@ -25,6 +26,20 @@ class home extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
+
+        // websocket - realtime section
+        client.onmessage = (message) => {
+            const dataFromServer = JSON.parse(message.data);
+            if (dataFromServer.type === "REMOVE") {
+                this.setState({
+                    data: this.state.data.filter(o => o._id !== dataFromServer.id),
+                    SearchData: this.state.SearchData.filter(o => o._id !== dataFromServer.id)
+                })
+            }
+
+        };
+        // end - realtime section
+
         this.props.history.push("/home");
         const polyclinic = await trackPromise(
             Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
@@ -43,6 +58,7 @@ class home extends Component {
                         'Authorization': { AUTH }.AUTH
                     }
                 }).then((res) =>
+
                     res.data.data
                 )
 
@@ -69,6 +85,7 @@ class home extends Component {
                         min_departmentId: min_department
                     })
                 }
+                console.log(this.state.data)
             }
         }
     }

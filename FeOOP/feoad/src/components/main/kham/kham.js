@@ -6,10 +6,12 @@ import { AUTH } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 var obj = "departments";
 
+const client = new W3CWebSocket('ws://localhost:3002');
 
 class kham extends Component {
     constructor(props) {
@@ -23,8 +25,32 @@ class kham extends Component {
             type: ''
         }
     }
+
+    sendMessage = () => {
+        client.send(JSON.stringify({
+            type: "message",
+            msg: 'hello'
+        }))
+    }
+
     async componentDidMount() {
         this._isMounted = true;
+
+        // websocket - realtime section
+       
+        client.onmessage = (message) => {
+            const dataFromServer = JSON.parse(message.data);
+            if(dataFromServer.id === this.props.match.params.id){
+                if(dataFromServer.type==="ADD"){
+                    this.setState({
+                        data:dataFromServer.data,
+                        SearchData: dataFromServer.data
+                    })
+                }
+            }
+        };
+        // end - realtime section
+        
         const [queue, this_room, polyclinic] = await trackPromise(Promise.all([
             Axios.get('/api/departments/' + this.props.match.params.id + "/patient-queue", {
                 headers: {
@@ -52,7 +78,7 @@ class kham extends Component {
                 )
         ]));
 
-        console.log(queue);
+        // console.log(queue);
 
         if (queue !== null && this_room !== null && polyclinic !== null) {
             if (this._isMounted) {
@@ -108,6 +134,11 @@ class kham extends Component {
             data: this.state.data.filter(o => o._id !== e),
             SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
+
+        client.send(JSON.stringify({
+            type: "REMOVE",
+            id: e
+        }))
     }
     onChange = (e) => {
         this.setState({
@@ -122,7 +153,7 @@ class kham extends Component {
         return listpage;
     }
 
-    goBack = () =>{
+    goBack = () => {
         this.props.history.goBack();
     }
 
@@ -156,6 +187,7 @@ class kham extends Component {
         return (
             <div>
                 <div className="container-fluid">
+                    <button onClick={() => this.sendMessage()}>send</button>
                     {this.printData(this.state.SearchData)}
                 </div>
             </div>
