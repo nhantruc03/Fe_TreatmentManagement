@@ -11,7 +11,7 @@ const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 var obj = "departments";
 
-const client = new W3CWebSocket('ws://localhost:3002');
+const client = new W3CWebSocket('ws://localhost:3001');
 
 class kham extends Component {
     constructor(props) {

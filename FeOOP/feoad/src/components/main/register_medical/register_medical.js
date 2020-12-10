@@ -7,7 +7,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-const client = new W3CWebSocket('ws://localhost:3002');
+const client = new W3CWebSocket('ws://localhost:3001');
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }

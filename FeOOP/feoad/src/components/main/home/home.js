@@ -10,7 +10,7 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 const obj = "departments";
-const client = new W3CWebSocket('ws://localhost:3002');
+const client = new W3CWebSocket('ws://localhost:3001');
 class home extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +28,11 @@ class home extends Component {
         this._isMounted = true;
 
         // websocket - realtime section
+
+        client.onopen = () =>{
+            console.log('Connect to ws')
+        }
+
         client.onmessage = (message) => {
             const dataFromServer = JSON.parse(message.data);
             if (dataFromServer.type === "REMOVE") {
