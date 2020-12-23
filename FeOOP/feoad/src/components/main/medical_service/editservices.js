@@ -85,13 +85,13 @@ class editservices extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px'}}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Sửa thông tin dịch vụ`}</div>
                         </div>
-                        <div className="col">
-                            <button type="submit" className="btn btn-createnew">Cập nhật</button>
+                        <div className="col" style={{paddingRight:'25px'}}>
+                            <button type="submit" className="btn btn-createnew" >Cập nhật</button>
                         </div>
                     </div>
 

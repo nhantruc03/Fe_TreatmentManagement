@@ -62,7 +62,7 @@ class chitietdonthuoc extends Component {
             return (
                 <div className='mt-1'>
                     <div className="row">
-                        <div className="col-9">
+                        <div className="col-9" style={{marginLeft:"30px"}}>
                             <div onClick={() => this.goBack()} className='subject'> {`<- Chi tiết đơn thuốc`}</div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@ class chitietdonthuoc extends Component {
                         />
                     </div>
                     <div className="row">
-                        <div className="col">
+                        <div className="col" >
                             <label htmlFor="conclude" className='subject'>Kết luận</label>
                             <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude} readOnly></textarea>
                         </div>

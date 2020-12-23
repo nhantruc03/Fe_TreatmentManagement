@@ -84,6 +84,7 @@ class editmedicinecategories extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
+                <div className="col-10">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-9">
@@ -110,6 +111,7 @@ class editmedicinecategories extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </form>
         );

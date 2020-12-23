@@ -6,6 +6,7 @@ import Search from '../search';
 import { AUTH } from '../../env'
 import { Link } from 'react-router-dom';
 import { trackPromise } from 'react-promise-tracker';
+
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
 const keydata = ['medicalrecordId.name', 'conclude', 'doctorId.name', 'doctorId.facultyId', 'doctorId.departmentId', 'createdAt']
 

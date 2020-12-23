@@ -43,9 +43,9 @@ class TableDataRow extends Component {
                 <td>
                     <div className="btn-group">
                         <Link className="link" to={`/edit${this.props.obj}/${this.props.data._id}`} >
-                            <div className="btn btn-warning"><i className="fa fa-edit" />Sửa</div>
+                            <div className="btn btn-link"><i className="fa fa-edit" /></div>
                         </Link>
-                        <div onClick={() => this.deleteClick()} className="btn btn-danger xoa"> <i className="fa fa-minus" />Xóa</div>
+                        <div onClick={() => this.deleteClick()} className="btn btn-link" style={{color:'red'}}> <i className="fa fa-trash-alt" /></div>
                     </div>
                 </td>
             )

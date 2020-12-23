@@ -105,7 +105,7 @@ class listprescriptionbills extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh hóa đơn thuốc</div>
+                            <div className='subject'>Danh sách hóa đơn thuốc</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/addusers`} >

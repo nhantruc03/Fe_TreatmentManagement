@@ -102,10 +102,10 @@ class taodonthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={this.goBack} className='subject'>{`<- Đơn thuốc`}</div>
+                            <div onClick={this.goBack} className='subject' style={{marginLeft:'0px'}}>{`<- Đơn thuốc`}</div>
                         </div>
                         <div className="col">
-                            <div onClick={() => this.Create()} className="btn btn-createnew">+ Tạo đơn thuốc</div>
+                            <div onClick={() => this.Create()} className="btn btn-createnew" >+ Tạo đơn thuốc</div>
                         </div>
                     </div>
                     <TableData
@@ -118,8 +118,8 @@ class taodonthuoc extends Component {
                     />
                     <div className="row">
                         <div className="col">
-                            <label htmlFor="conclude" className='subject'>Conclude</label>
-                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude}></textarea>
+                            <label htmlFor="conclude" className='subject' style={{marginLeft:'0'}}>Kết Luận</label>
+                            <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" style={{marginRight:'20px'}}value={this.state.conclude}></textarea>
                         </div>
 
                     </div>

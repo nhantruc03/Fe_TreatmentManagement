@@ -163,14 +163,14 @@ class addusers extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingRight:'150px', paddingLeft:'150px', paddingBottom:'50px'}}>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Create new user`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Tạo người dùng mới`}</div>
                         </div>
-                        <div className="col">
+                        <div className="col" style={{paddingRight:'126px'}}>
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
-                            <button type="submit" className="btn btn-createnew">Create</button>
+                            <button type="submit" className="btn btn-createnew">Tạo mới</button>
                         </div>
                     </div>
 
@@ -181,27 +181,27 @@ class addusers extends Component {
                                     <li className="fas fa-user"></li> Thông tin
                                     </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="username"  >Tài khoản</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="username" placeholder="Tài khoản" required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="name"  >Tên</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên người dùng" required={true} />
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="phoneNumber"  >Điện thoại</label>
                                         <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="phoneNumber" placeholder="Eg. 0919385172" required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="address">Địa chỉ</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" required={true} />
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         {this.state.birthday && <label htmlFor="address">Ngày: {this.state.birthday.toLocaleDateString()}</label>}
                                         {!this.state.birthday && <label htmlFor="address">Ngày</label>}
                                         <DayPickerInput
@@ -211,7 +211,7 @@ class addusers extends Component {
                                             }}
                                         />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="gender"  >Giới tính</label>
                                         <Select
                                             onChange={(e) => this.onSelectGender(e)}
@@ -227,7 +227,7 @@ class addusers extends Component {
                                     </div>
                                 </div>
                                 <hr></hr>
-                                <br></br>
+                              
                                 <label htmlFor="password"  >Mật khẩu</label>
                                 <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" required={true} />
                             </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { render } from '../service/renderTableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class tablerow_phongduocsi extends Component {
     renderData = () => {
@@ -12,9 +13,11 @@ class tablerow_phongduocsi extends Component {
     renderAction = () => {
         return (
             <td>
+                <Tooltip title="Xem Đơn Thuốc" arrow>
                 <Link className="link" to={`/phongduocsi/xemdonthuoc/${this.props.data._id}`} >
-                    <div className="btn btn-warning"><i className="fa fa-edit" />Xem Đơn thuốc</div>
+                    <div className="btn btn-link"><i className="fas fa-capsules" /></div>
                 </Link>
+                </Tooltip>
             </td>
         )
     }

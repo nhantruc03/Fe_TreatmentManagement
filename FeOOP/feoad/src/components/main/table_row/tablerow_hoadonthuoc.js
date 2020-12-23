@@ -13,18 +13,32 @@ class tablerow_hoadonthuoc extends Component {
         if (this.props.noaction) {
 
         } else {
-            return (
-                <td>
-                    <div className="btn-group">
-                        <Link className="link" to={`/xemdonthuoc/chitietdonthuoc/${this.props.data.prescriptionId._id}`} >
-                            <div className="btn btn-warning"><i className="fa fa-edit" />Xem Đơn thuốc</div>
-                        </Link>
-                        <Link className="link" to={`/xemhoadonthuoc/chitiethoadonthuoc/${this.props.data._id}`} >
-                            <div className="btn btn-warning"><i className="fa fa-edit" />Xem Hóa đơn thuốc</div>
-                        </Link>
-                    </div>
-                </td>
-            )
+            if(this.props.data.prescriptionId !== undefined){
+                return (
+                    <td>
+                        <div className="btn-group">
+                            <Link className="link" to={`/xemdonthuoc/chitietdonthuoc/${this.props.data.prescriptionId._id}`} >
+                                <div className="btn btn-warning"><i className="fa fa-edit" />Xem Đơn thuốc</div>
+                            </Link>
+                            <Link className="link" to={`/xemhoadonthuoc/chitiethoadonthuoc/${this.props.data._id}`} >
+                                <div className="btn btn-warning"><i className="fa fa-edit" />Xem Hóa đơn thuốc</div>
+                            </Link>
+                        </div>
+                    </td>
+                )
+            }
+            else{
+                return(
+                    <td>
+                        <div className="btn-group">
+                            <Link className="link" to={`/xemhoadonthuoc/chitiethoadonthuoc/${this.props.data._id}`} >
+                                <div className="btn btn-warning"><i className="fa fa-edit" />Xem Hóa đơn thuốc</div>
+                            </Link>
+                        </div>
+                    </td>
+                )
+            }
+            
         }
     }
 

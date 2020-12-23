@@ -163,14 +163,12 @@ class register_medical extends Component {
         else {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <div className="container-fluid">
+                    <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'20px'}} className="container-fluid">
                         <div className="row">
                             <div className="col-9">
                                 <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
                             </div>
-                            <div className="col">
-                                <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
-                            </div>
+                            
                         </div>
 
                         <div className="container-fluid mt-3">
@@ -180,16 +178,19 @@ class register_medical extends Component {
                                         <li className="fas fa-user"></li> Thông tin
                                     </div>
                                     <div className="row mt-3">
-                                        <div className="col">
+                                        <div className="col-9">
                                             <label htmlFor="_id"  >Id</label>
                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="_id" value={this.state._id} />
                                         </div>
-                                    </div>
-                                    <div className="row mt-3">
                                         <div className="col">
-                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%' }} className="btn btn-createnew">Tìm kiếm</button>
+                                        <button onClick={(e) => this.Find(e)} style={{ width: '100%', marginTop: '33px' }} className="btn btn-search">Tìm kiếm</button>
                                         </div>
                                     </div>
+                                    {/* <div className="row mt-3">
+                                        <div className="col">
+                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%' }} className="btn btn-search">Tìm kiếm</button>
+                                        </div>
+                                    </div> */}
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="name"  >Tên</label>
@@ -229,8 +230,6 @@ class register_medical extends Component {
                                             <label htmlFor="job"  >Nghề nghiệp</label>
                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="job" placeholder="Eg. sinh viên" value={this.state.job} required={true} />
                                         </div>
-                                    </div>
-                                    <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="email"  >Email</label>
                                             <input onChange={(e) => this.onChange(e)} type="email" className="form-control" name="email" placeholder="Eg. abc**@gmail.com" value={this.state.email} required={true} />
@@ -240,6 +239,11 @@ class register_medical extends Component {
                                         <div className="col">
                                             <label htmlFor="reason"  >Lý do khám</label>
                                             <textarea onChange={(e) => this.onChange(e)} type="text" rows="5" className="form-control" name="reason" placeholder="Eg. headache" required={true} />
+                                        </div>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                        <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
                                         </div>
                                     </div>
                                 </div>
