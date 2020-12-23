@@ -42,12 +42,12 @@ class addmedicinecategories extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
                         </div>
-                        <div className="col">
+                        <div className="col" style={{paddingRight:'24px'}}>
                             <button type="submit" className="btn btn-createnew">Tạo mới</button>
                         </div>
                     </div>

@@ -109,7 +109,7 @@ class listprescriptionbills extends Component {
                         </div>
                         <div className="col">
                             <Link className="link" to={`/addusers`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                                <div className="btn btn-createnew"><i className="fa fa-plus" /> Tạo mới</div>
                             </Link>
                         </div>
                     </div>

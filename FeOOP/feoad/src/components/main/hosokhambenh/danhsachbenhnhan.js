@@ -33,7 +33,7 @@ class danhsachbenhnhan extends Component {
                     res.data.data
                 )
         ]));
-
+        console.log(patients)
         if (patients !== null) {
             if (this._isMounted) {
                 this.setState({

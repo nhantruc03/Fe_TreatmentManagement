@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { render } from '../service/renderTableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class tablerow_hosokhambenh extends Component {
     renderData = () => {
@@ -16,9 +17,11 @@ class tablerow_hosokhambenh extends Component {
             return (
                 <td>
                     <div className="btn-group">
+                        <Tooltip title="Chi tiết khám bệnh" arrow>
                         <Link className="link" to={`/danhsachchitietkhambenh/${this.props.data._id}`} >
-                            <div className="btn btn-warning"><i className="fa fa-edit" />Xem chi tiết khám bệnh</div>
+                            <div className="btn btn-link"><i className="fas fa-info-circle" /></div>
                         </Link>
+                        </Tooltip>
                     </div>
                 </td>
             )
