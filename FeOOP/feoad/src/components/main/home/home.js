@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { AUTH } from '../../env'
+import { AUTH,WebSocketServer } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
@@ -10,7 +10,7 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
 const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 const obj = "departments";
-const client = new W3CWebSocket('ws://localhost:3001');
+const client = new W3CWebSocket(WebSocketServer);
 class home extends Component {
     constructor(props) {
         super(props);

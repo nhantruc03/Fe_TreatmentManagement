@@ -1,12 +1,12 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { AUTH } from '../../env'
+import { AUTH,WebSocketServer } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-const client = new W3CWebSocket('ws://localhost:3001');
+const client = new W3CWebSocket(WebSocketServer);
 var Genders = [
     { value: 'male', label: 'Nam Nữ' },
     { value: 'female', label: 'Female' }
