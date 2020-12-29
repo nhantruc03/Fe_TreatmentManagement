@@ -57,35 +57,28 @@ class topbar extends Component {
         }
         else if (this.state.role === 'staff') {
             return (
-                <div className="NBar">
-                    <NavLink className="link top" to="/home" >Trang đăng kí</NavLink>
-                    <NavLink className="link top" to="/listpatients" >Bệnh nhân</NavLink>
-                    <NavLink className="link top" to="/listdepartments" >Phòng</NavLink>
-                    <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
-                    <NavLink className="link top" to="/listusers" >Người dùng</NavLink>
-                    <NavLink className="link top" to="/listservices" >Dịch vụ</NavLink>
-                    <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
-                    <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
-                </div>
+                <ul className="nav nav-mtd tabs-info z-depth-1">
+                    <li className="nav-item1"><NavLink className="nav-link active" to="/home" >Trang đăng kí</NavLink></li>
+                </ul>
             )
         }
         else if (this.state.role === 'doctor') {
             return (
-                <div className="NBar">
-                    <NavLink className="link top" to="/danhsachbenhnhan" >Hồ sơ khám bệnh</NavLink>
-                    <NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink>
-                </div>
+                <ul className="nav nav-mtd tabs-info z-depth-1">
+                    <li className="nav-item1"><NavLink className="link top" to="/danhsachbenhnhan" >Hồ sơ khám bệnh</NavLink></li>
+                    <li className="nav-item1"><NavLink className="link top" to="/doctor_listdepartments" >Phòng khám</NavLink></li>
+                </ul>
             )
         }
         else if (this.state.role === 'pharmacist') {
             return (
-                <div className="NBar">
-                    <NavLink className="link top" to="/listmedicinecategories" >Danh mục thuốc</NavLink>
-                    <NavLink className="link top" to="/listmedicines" >Thuốc</NavLink>
-                    <NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink>
-                    <NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink>
-                    <NavLink className="link top" to="/hoadonthuoc" >Hóa đơn thuốc</NavLink>
-                </div>
+                <ul className="nav nav-mtd tabs-info z-depth-1">
+                    <li className="nav-item1"><NavLink className="link top" to="/listmedicinecategories" >Danh mục thuốc</NavLink></li>
+                    <li className="nav-item1"><NavLink className="link top" to="/listmedicines" >Thuốc</NavLink></li>
+                    <li className="nav-item1"><NavLink className="link top" to="/phongduocsi" >Phòng dược sĩ</NavLink></li>
+                    <li className="nav-item1"><NavLink className="link top" to="/sobanthuoc" >Sổ bán thuốc</NavLink></li>
+                    <li className="nav-item1"><NavLink className="link top" to="/hoadonthuoc" >Hóa đơn thuốc</NavLink></li>
+                </ul>
             )
         }
     }
@@ -104,25 +97,25 @@ class topbar extends Component {
         else {
             return (
                 <div >
-                    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style={{paddingRight:'50px'}}>
+                    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
                         {/* Sidebar Toggle (Topbar) */}
-                        <div className="col">
-                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{maxWidth:'100%'}}/></div>
+                        <div className="col-1">
+                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{ maxWidth: '100%' }} /></div>
                         </div>
-                        <div className="col-10">
+                        <div className="col-9" >
                             {this.renderData()}
                         </div>
                         {/* Topbar Navbar */}
                         <div className="col">
-                        <div className="navbar-nav ml-auto">
-                            <Nav variant="pills" activeKey="1" onSelect={this.handleSelect}>
-                                <NavDropdown title={this.state.name} id="nav-dropdown">
-                                    <NavDropdown.Item eventKey="user">Thông tin cá nhân</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item eventKey="Logout">Log out</NavDropdown.Item>
-                                </NavDropdown>
-                            </Nav>
-                        </div>
+                            <div className="navbar-nav ml-auto" style={{ float: 'right' }}>
+                                <Nav variant="pills" activeKey="1" onSelect={this.handleSelect} style={{ width: '100%' }}>
+                                    <NavDropdown title={this.state.name} id="nav-dropdown" style={{ width: '100%' }}>
+                                        <NavDropdown.Item eventKey="user">Thông tin cá nhân</NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item eventKey="Logout">Log out</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav>
+                            </div>
                         </div>
                     </nav>
 
