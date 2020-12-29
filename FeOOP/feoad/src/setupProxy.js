@@ -1,11 +1,13 @@
-import { BackEndUrl } from './components/env'
 const { createProxyMiddleware } = require('http-proxy-middleware');
+// const BackEndURL ="https://api-benhvien.herokuapp.com"
+const BackEndURL ="http://localhost:3001"
+// const BackEndURL ="http://backend:3001"
 
 module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: BackEndUrl,
+      target: BackEndURL,
       changeOrigin: true,
     })
   );

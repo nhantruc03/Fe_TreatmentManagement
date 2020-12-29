@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 // import { Redirect } from 'react-router-dom';
-import { AUTH,WebSocketServer } from '../../env'
+import { AUTH, WebSocketServer } from '../../env';
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
