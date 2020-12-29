@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { render } from '../service/renderTableRow';
-
 class tablerow_dangkikham extends Component {
     renderData = () => {
         return (

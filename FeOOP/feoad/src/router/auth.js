@@ -26,6 +26,12 @@ class Auth {
             this.authenticatedDoctor = false
             this.authenticatedStaff = false
         }
+        else if(data.role === "staff"){
+            this.authenticatedAdmin = false
+            this.authenticatedPharmarcist = false
+            this.authenticatedDoctor = false
+            this.authenticatedStaff = true
+        }
     }
 
     logout(cb) {
