@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { render } from '../service/renderTableRow';
+
 class tablerow_ketquachuyenkhoa extends Component {
     renderData = () => {
         return (
@@ -16,7 +17,7 @@ class tablerow_ketquachuyenkhoa extends Component {
                 <td>
                     <div className="btn-group">
                         <Link className="link" to={`/khamdakhoa/chitietchuyenkhoa/${this.props.data._id}`} >
-                            <div className="btn btn-warning"><i className="fa fa-edit" />Xem</div>
+                            <div className="btn btn-link" ><i className="fa fa-eye"/>Xem kết quả</div>
                         </Link>
                     
                     </div>

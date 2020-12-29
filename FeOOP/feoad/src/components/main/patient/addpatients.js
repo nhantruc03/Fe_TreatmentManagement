@@ -75,7 +75,7 @@ class addpatients extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}} className="container-fluid">
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Tạo mới bệnh nhân`}</div>

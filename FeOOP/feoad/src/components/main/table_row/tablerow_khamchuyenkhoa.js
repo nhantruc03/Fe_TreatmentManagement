@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { render } from '../service/renderTableRow';
 import { AUTH } from '../../env';
+import Tooltip from '@material-ui/core/Tooltip';
+import { green } from '@material-ui/core/colors';
+
 class tablerow_khamchuyenkhoa extends Component {
     renderData = () => {
         return (
@@ -30,16 +33,24 @@ class tablerow_khamchuyenkhoa extends Component {
         return (
             <td>
                 <div className="btn-group">
+                    <Tooltip title='Tạo kết quả' arrow>
                     <Link className="link" to={`/khamchuyenkhoa/${this.props.data._id}`} >
-                        <div className="btn btn-warning"><i className="fa fa-edit" />Tạo kết quả</div>
+                        <div className="btn btn-link"><i className="fa fa-file-medical-alt" /></div>
                     </Link>
+                    </Tooltip>
+                    <Tooltip title='Tạo đơn thuốc' arrow>
                     <Link className="link" to={`/khamchuyenkhoa/taodonthuoc/${this.props.data._id}`} >
-                        <div className="btn btn-warning"><i className="fa fa-edit" />Tạo đơn thuốc</div>
+                        <div className="btn btn-link"><i className="fas fa-pills" /></div>
                     </Link>
+                    </Tooltip>
+                    <Tooltip title='Xem đơn thuốc' arrow>
                     <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
-                        <div className="btn btn-warning"><i className="fa fa-edit" />Xem đơn thuốc</div>
+                        <div className="btn btn-link"><i className="fas fa-eye" /></div>
                     </Link>
-                    <div onClick={() => this.onComplete()} className="btn btn-warning"><i className="fa fa-edit" />Hoàn thành khám bệnh</div>
+                    </Tooltip>
+                    <Tooltip title='Hoàn thành khám bệnh' arrow>
+                    <div onClick={() => this.onComplete()} className="btn btn-link" style={{color: 'green'}}><i className="fa fa-check" /></div>
+                    </Tooltip>
                 </div>
             </td>
         )

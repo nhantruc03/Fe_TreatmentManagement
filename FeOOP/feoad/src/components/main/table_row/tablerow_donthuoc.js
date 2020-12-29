@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class tablerow_donthuoc extends Component {
     addClick = () => {
@@ -61,7 +62,9 @@ class tablerow_donthuoc extends Component {
             return (
                 <td>
                     <div className="btn-group">
-                        <div onClick={() => this.delete()} className="btn btn-warning"><i className="fa fa-edit" />Xóa</div>
+                        <Tooltip title="Xóa ">
+                        <div onClick={() => this.delete()} className="btn btn-link" style={{color:'red'}}><i className="fa fa-trash" /></div>
+                        </Tooltip>
                     </div>
                 </td>
             )

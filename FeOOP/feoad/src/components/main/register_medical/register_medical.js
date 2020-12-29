@@ -6,6 +6,8 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket('ws://localhost:3001');
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -91,7 +93,6 @@ class register_medical extends Component {
             }
         })
             .then(res => {
-                console.log(res.data.data);
                 temp_medicalrecord_id = res.data.data._id;
             })
             .catch(err => {
@@ -99,7 +100,7 @@ class register_medical extends Component {
             })
 
         data = {
-            medicalrecordIds: [temp_medicalrecord_id]
+            medicalrecordIds: temp_medicalrecord_id
         };
         await Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
             headers: {
@@ -108,6 +109,11 @@ class register_medical extends Component {
         })
             .then(res => {
                 console.log(res);
+                client.send(JSON.stringify({
+                    type: "ADD",
+                    id: res.data.data[0]._id,
+                    data: res.data.data[0].queue
+                }))
                 this.onDone();
             })
             .catch(err => {
@@ -163,7 +169,7 @@ class register_medical extends Component {
         else {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <div className="container-fluid">
+                    <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'20px'}} className="container-fluid">
                         <div className="row">
                             <div className="col-9">
                                 <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
@@ -180,16 +186,19 @@ class register_medical extends Component {
                                         <li className="fas fa-user"></li> Thông tin
                                     </div>
                                     <div className="row mt-3">
-                                        <div className="col">
+                                        <div className="col-9">
                                             <label htmlFor="_id"  >Id</label>
                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="_id" value={this.state._id} />
                                         </div>
-                                    </div>
-                                    <div className="row mt-3">
                                         <div className="col">
-                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%' }} className="btn btn-createnew">Tìm kiếm</button>
+                                        <button onClick={(e) => this.Find(e)} style={{ width: '100%', marginTop: '33px' }} className="btn btn-search">Tìm kiếm</button>
                                         </div>
                                     </div>
+                                    {/* <div className="row mt-3">
+                                        <div className="col">
+                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%' }} className="btn btn-search">Tìm kiếm</button>
+                                        </div>
+                                    </div> */}
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="name"  >Tên</label>
@@ -229,8 +238,6 @@ class register_medical extends Component {
                                             <label htmlFor="job"  >Nghề nghiệp</label>
                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="job" placeholder="Eg. sinh viên" value={this.state.job} required={true} />
                                         </div>
-                                    </div>
-                                    <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="email"  >Email</label>
                                             <input onChange={(e) => this.onChange(e)} type="email" className="form-control" name="email" placeholder="Eg. abc**@gmail.com" value={this.state.email} required={true} />
@@ -240,6 +247,11 @@ class register_medical extends Component {
                                         <div className="col">
                                             <label htmlFor="reason"  >Lý do khám</label>
                                             <textarea onChange={(e) => this.onChange(e)} type="text" rows="5" className="form-control" name="reason" placeholder="Eg. headache" required={true} />
+                                        </div>
+                                    </div>
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                        <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
                                         </div>
                                     </div>
                                 </div>

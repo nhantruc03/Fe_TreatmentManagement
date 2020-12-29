@@ -103,7 +103,7 @@ class listpatients extends Component {
                         </div>
                         <div className="col">
                             <Link className="link" to={`/addpatients`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                                <div className="btn btn-createnew"><i className="fa fa-plus" /> Tạo bệnh nhân mới</div>
                             </Link>
                         </div>
                     </div>

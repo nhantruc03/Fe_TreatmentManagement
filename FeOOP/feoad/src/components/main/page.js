@@ -10,12 +10,11 @@ class page extends Component {
                         {/* content wrapper */}
                         <div id="content-wrapper" className="d-flex flex-column">
                             <Topbar />
-                         
-                
+                            {this.props.children}
                         </div>
                     </div>
                 </div>
-                {this.props.children}
+                
             </React.Fragment>
         );
     }

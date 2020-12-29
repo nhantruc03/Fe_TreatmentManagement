@@ -83,15 +83,16 @@ class chitiethoadonthuoc extends Component {
                         />
                     </div>
                     <div className="row">
-                        <div className="col">
-                            <label htmlFor="total" className='subject'>Tổng cộng:  <NumberFormat value={this.state.total} displayType={'text'} thousandSeparator={true} /> vnđ</label>
-                        </div>
+                        
 
                     </div>
                     <div className="row">
-                        <div className="col">
+                        <div className="col-9">
                             <label htmlFor="conclude" className='subject'>Kết luận</label>
                             <textarea onChange={(e) => this.onChange(e)} rows='5' type="text" className="form-control" placeholder="Eg. conclude" name="conclude" value={this.state.conclude} readOnly></textarea>
+                        </div>
+                        <div className="col-3">
+                            <label style={{marginTop:'140px'}} htmlFor="total" className='subject'>Tổng cộng:  <NumberFormat value={this.state.total} displayType={'text'} thousandSeparator={true} /> vnđ</label>
                         </div>
 
                     </div>
