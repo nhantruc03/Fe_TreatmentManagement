@@ -37,20 +37,20 @@ class kham extends Component {
         this._isMounted = true;
 
         // websocket - realtime section
-       
+
         client.onmessage = (message) => {
             const dataFromServer = JSON.parse(message.data);
-            if(dataFromServer.id === this.props.match.params.id){
-                if(dataFromServer.type==="ADD"){
+            if (dataFromServer.id === this.props.match.params.id) {
+                if (dataFromServer.type === "ADD") {
                     this.setState({
-                        data:dataFromServer.data,
+                        data: dataFromServer.data,
                         SearchData: dataFromServer.data
                     })
                 }
             }
         };
         // end - realtime section
-        
+
         const [queue, this_room, polyclinic] = await trackPromise(Promise.all([
             Axios.get('/api/departments/' + this.props.match.params.id + "/patient-queue", {
                 headers: {
@@ -78,7 +78,7 @@ class kham extends Component {
                 )
         ]));
 
-        // console.log(queue);
+        console.log(queue);
 
         if (queue !== null && this_room !== null && polyclinic !== null) {
             if (this._isMounted) {
@@ -135,10 +135,12 @@ class kham extends Component {
             SearchData: this.state.SearchData.filter(o => o._id !== e)
         })
 
-        client.send(JSON.stringify({
-            type: "REMOVE",
-            id: e
-        }))
+        if (this.state.type === "khamdakhoa") {
+            client.send(JSON.stringify({
+                type: "REMOVE",
+                id: e
+            }))
+        }
     }
     onChange = (e) => {
         this.setState({
@@ -187,7 +189,6 @@ class kham extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <button onClick={() => this.sendMessage()}>send</button>
                     {this.printData(this.state.SearchData)}
                 </div>
             </div>

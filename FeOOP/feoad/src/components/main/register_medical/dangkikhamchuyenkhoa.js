@@ -5,6 +5,8 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket('ws://localhost:3001');
 var Genders = [
     { value: 'male', label: 'Nam Nữ' },
     { value: 'female', label: 'Female' }
@@ -114,6 +116,11 @@ class dangkikhamchuyenkhoa extends Component {
         })
             .then(res => {
                 console.log(res);
+                client.send(JSON.stringify({
+                    type: "ADD",
+                    id: res.data.data[0]._id,
+                    data: res.data.data[0].queue
+                }))
                 this.goBack()
             })
             .catch(err => {

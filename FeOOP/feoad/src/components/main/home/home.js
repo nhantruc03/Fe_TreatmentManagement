@@ -29,7 +29,7 @@ class home extends Component {
 
         // websocket - realtime section
 
-        client.onopen = () =>{
+        client.onopen = () => {
             console.log('Connect to ws')
         }
 
@@ -136,7 +136,7 @@ class home extends Component {
     }
     printData = (SearchData) => {
         return (
-            <div className='mt-1' style={{paddingBottom:'20px'}}>
+            <div className='mt-1' style={{ paddingBottom: '20px' }}>
                 <div className="row">
                     <div className="col-9">
                         <div className='subject'>Trang đăng kí khám bệnh</div>
@@ -149,11 +149,9 @@ class home extends Component {
                 </div>
                 <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                 <div className='mt-2'>
-                    <div classNames="col-9">
-                <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} /></div>
-                    <div classNames="col">
-                </div>               
-                
+                        <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} />
+                  
+
                 </div>
                 <Pagination
                     postsPerPage={this.state.postsPerPage}

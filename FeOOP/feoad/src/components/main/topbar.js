@@ -103,11 +103,11 @@ class topbar extends Component {
         }
         else {
             return (
-                <div>
-                    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <div >
+                    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style={{paddingRight:'50px'}}>
                         {/* Sidebar Toggle (Topbar) */}
                         <div className="col">
-                            <div className="logo"><img src="./Logo.png" alt="Logo" style={{maxWidth:'100%'}}/></div>
+                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{maxWidth:'100%'}}/></div>
                         </div>
                         <div className="col-10">
                             {this.renderData()}

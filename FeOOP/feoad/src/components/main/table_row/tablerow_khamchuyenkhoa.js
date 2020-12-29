@@ -4,7 +4,6 @@ import Axios from 'axios';
 import { render } from '../service/renderTableRow';
 import { AUTH } from '../../env';
 import Tooltip from '@material-ui/core/Tooltip';
-import { green } from '@material-ui/core/colors';
 
 class tablerow_khamchuyenkhoa extends Component {
     renderData = () => {
