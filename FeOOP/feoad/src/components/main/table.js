@@ -195,7 +195,7 @@ class TableData extends Component {
         return (
             <div className="col mt-2">
                 <table className="table table-striped table-hover">
-                    <thead>
+                    <thead className="thead">
                         <tr style={{ textAlign: "center" }}>
                             {this.printRow()}
                         </tr>

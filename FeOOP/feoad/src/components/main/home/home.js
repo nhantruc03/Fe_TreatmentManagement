@@ -17,7 +17,7 @@ class home extends Component {
         this.state = {
             data: [],
             currentPage: 1,
-            postsPerPage: 10,
+            postsPerPage: 6,
             listPage: [],
             SearchData: [],
             min_departmentId: ''
@@ -136,7 +136,7 @@ class home extends Component {
     }
     printData = (SearchData) => {
         return (
-            <div className='mt-1'>
+            <div className='mt-1' style={{paddingBottom:'20px'}}>
                 <div className="row">
                     <div className="col-9">
                         <div className='subject'>Trang đăng kí khám bệnh</div>
@@ -148,7 +148,13 @@ class home extends Component {
                     </div>
                 </div>
                 <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} />
+                <div className='mt-2'>
+                    <div classNames="col-9">
+                <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} /></div>
+                    <div classNames="col">
+                </div>               
+                
+                </div>
                 <Pagination
                     postsPerPage={this.state.postsPerPage}
                     totalPosts={this.getlistpage(SearchData)}

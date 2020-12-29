@@ -200,12 +200,12 @@ class editusers extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingRight:'150px', paddingLeft:'150px', paddingBottom:'50px'}}>
                     <div className="row">
                         <div className="col-9">
-                            <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
+                            <div onClick={() => this.goBack()} className='subject'> {`<- Quay lại`}</div>
                         </div>
-                        <div className="col">
+                        <div className="col" style={{paddingRight:'126px'}}>
                             {/* <button onClick={() => this.onDone()} className="btn btn-warning">Quay về</button> */}
                             <button type="submit" className="btn btn-createnew">Sửa</button>
                         </div>
@@ -218,21 +218,21 @@ class editusers extends Component {
                                     <li className="fas fa-user"></li> Thông tin
                                     </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="username"  >Tài khoản</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="username" placeholder="Tài khoản" value={this.state.username} required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="name"  >Tên</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên người dùng" value={this.state.name} required={true} />
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="phoneNumber"  >Điện thoại</label>
                                         <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="phoneNumber" placeholder="Eg. 0919385172" value={this.state.phoneNumber} required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="address">Địa chỉ</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" value={this.state.address} required={true} />
                                     </div>
@@ -265,7 +265,7 @@ class editusers extends Component {
                                     </div>
                                 </div>
                                 <hr></hr>
-                                <br></br>
+                            
                                 <label htmlFor="password"  >Mật khẩu</label>
                                 <input onChange={(e) => this.onChange(e)} type="password" className="form-control" name="password" placeholder="Mật khẩu" value={this.state.password} required={true} />
                             </div>

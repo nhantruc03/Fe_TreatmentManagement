@@ -104,7 +104,7 @@ class addmedicines extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Tạo thuốc`}</div>
@@ -125,40 +125,34 @@ class addmedicines extends Component {
                                         <label htmlFor="name"  >Tên</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên thuốc" required={true} />
                                     </div>
-                                </div>
-                                <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="price"  >Giá</label>
                                         <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="price" placeholder="Giá" required={true} />
                                     </div>
-                                </div>
-                                <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="quantity"  >Số lượng</label>
                                         <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="quantity" placeholder="Số lượng" required={true} />
                                     </div>
-                                </div>
-                                <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="unit"  >Đơn vị tính</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="unit" placeholder="Đơn vị tính" required={true} />
                                     </div>
                                 </div>
+                                
                                 <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="brand"  >Hãng sản xuất</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="brand" placeholder="Hãng sản xuất" required={true} />
                                     </div>
-                                </div>
-                                <div className="row mt-3">
                                     <div className="col">
-                                        <label className="mt-3" htmlFor="medicinecategoriesId"  >Danh mục thuốc</label>
+                                        <label htmlFor="medicinecategoriesId"  >Danh mục thuốc</label>
                                         <Select
                                             onChange={(e) => this.onSelectMedicineCategories(e)}
                                             options={this.state.list_medicinecategories}
                                         />
                                     </div>
                                 </div>
+                                
                                 <br></br>
                             </div>
                         </div>

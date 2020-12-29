@@ -197,7 +197,7 @@ class thongtincanhan extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Thông tin cá nhân`}</div>
@@ -215,21 +215,21 @@ class thongtincanhan extends Component {
                                     <li className="fas fa-user"></li> Thông tin
                                     </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="username"  >Tài khoản</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="username" placeholder="Tài khoản" value={this.state.username} required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="name"  >Tên</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="name" placeholder="Tên người dùng" value={this.state.name} required={true} />
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    <div className="col-7">
+                                    <div className="col">
                                         <label htmlFor="phoneNumber"  >Điện thoại</label>
                                         <input onChange={(e) => this.onChange(e)} type="number" className="form-control" name="phoneNumber" placeholder="Eg. 0919385172" value={this.state.phoneNumber} required={true} />
                                     </div>
-                                    <div className="col-5">
+                                    <div className="col">
                                         <label htmlFor="address">Địa chỉ</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" value={this.state.address} required={true} />
                                     </div>

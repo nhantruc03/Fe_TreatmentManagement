@@ -22,6 +22,7 @@ class danhsachhosokhambenh extends Component {
     }
 
     async componentDidMount() {
+        console.log('asdf')
         this._isMounted = true;
         const [medicalrecords] = await trackPromise(Promise.all([
             Axios.post('/api/medical-records/getAll', { patientId: this.props.match.params.id }, {

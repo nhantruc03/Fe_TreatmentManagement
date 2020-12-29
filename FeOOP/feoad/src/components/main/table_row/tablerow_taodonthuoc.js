@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from '../service/renderTableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class tablerow_taodonthuoc extends Component {
     addClick = () => {
@@ -15,9 +16,11 @@ class tablerow_taodonthuoc extends Component {
     renderAction = () => {
         return (
             <td>
+                <Tooltip title="Thêm thuốc" arrow>
                 <div className="btn-group">
-                    <div onClick={() => this.addClick()} className="btn btn-warning"><i className="fa fa-edit" />Thêm</div>
+                    <div onClick={() => this.addClick()} className="btn btn-link"><i className="fas fa-plus" /></div>
                 </div>
+                </Tooltip>
             </td>
         )
     }

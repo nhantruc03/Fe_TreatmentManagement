@@ -98,7 +98,7 @@ class danhsachthuoc extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách thuốc</div>
+                            <div className='subject'>Danh sách thuốc </div>
                         </div>
                     </div>
 
@@ -116,7 +116,7 @@ class danhsachthuoc extends Component {
             return (
                 <div className='mt-5'>
                     <h1 className='text-primary mb-3'>Danh sách thuốc</h1>
-                    <div onClick={() => this.onAddClick()} className="btn btn-block btn-success"><i className="fa fa-edit" />Thêm</div>
+                    <div onClick={() => this.onAddClick()} className="btn btn-link"><i className="fas fa-plus" />Thêm</div>
                 </div>
             )
         }

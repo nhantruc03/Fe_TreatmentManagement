@@ -117,7 +117,7 @@ class donthuoc extends Component {
                         </div>
                         <div className="col">
                             <Link className="link" to={`/taodonthuoctudo`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Create new</div>
+                                <div className="btn btn-createnew"><i className="fas fa-plus" />Tạo đơn thuốc mới</div>
                             </Link>
                         </div>
                     </div>
