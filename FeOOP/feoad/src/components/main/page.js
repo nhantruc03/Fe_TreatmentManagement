@@ -21,25 +21,20 @@ const LoadingIndicator = props => {
       </div>
     )
   }
-import {LoadingIndicator} from './Loading';
+// import {LoadingIndicator} from './Loading';
 class page extends Component {
     render() {
         return (
             <React.Fragment>
                 <div id="page-top" style={{height:'100vh'}}>
-                    <div id="wrapper" style={{height:'100%'}}>
-                <div id="page-top" style={{height:'100vh'}}>
-                    <div id="wrapper" style={{height:'100%', background:'white'}}>
+                   
                         {/* content wrapper */}
                         <div id="content-wrapper" className="d-flex flex-column">
                             <Topbar />
                             {this.props.children}
                             <LoadingIndicator />
-                            <LoadingIndicator/>
                         </div>
-                    </div>
                 </div>
-                
             </React.Fragment>
         );
     }

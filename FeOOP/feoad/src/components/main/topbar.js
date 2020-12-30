@@ -96,23 +96,21 @@ class topbar extends Component {
         }
         else {
             return (
-                <div >
+                <div>
                     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
                         {/* Sidebar Toggle (Topbar) */}
                         <div className="col-1">
-                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{ maxWidth: '100%' }} /></div>
-                        <div className="col-1">
-                            <div className="logo"><img src="./Logo.png" alt="Logo" style={{maxWidth:'100%'}}/></div>
+                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{maxWidth:'100%'}}/>
+                            </div>
                         </div>
-                        <div className="col-9">
                         <div className="col-9" >
                             {this.renderData()}
                         </div>
                         {/* Topbar Navbar */}
                         <div className="col">
-                            <div className="navbar-nav ml-auto">
-                                <Nav variant="pills" activeKey="1" onSelect={this.handleSelect}>
-                                    <NavDropdown title={this.state.name} id="nav-dropdown">
+                            <div className="navbar-nav ml-auto" style={{float:'right'}}>
+                                <Nav variant="pills" activeKey="1" onSelect={this.handleSelect} style={{width:'100%'}}>
+                                    <NavDropdown title={this.state.name} id="nav-dropdown" style={{width:'100%'}}>
                                         <NavDropdown.Item eventKey="user">Thông tin cá nhân</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item eventKey="Logout">Log out</NavDropdown.Item>
