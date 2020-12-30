@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
 import Search from '../search';
-import { AUTH } from '../../env'
-import { Link } from 'react-router-dom';
+import { AUTH } from '../../env';
 import { trackPromise } from 'react-promise-tracker';
 
 const tablerow = ['Tên bệnh nhân', 'Kết luận', 'Tên bác sĩ', 'Khoa bác sĩ', 'Phòng bác sĩ', 'Ngày tạo', 'Thao tác']
@@ -110,11 +109,11 @@ class phongduocsi extends Component {
                         <div className="col-9">
                             <div className='subject'>Phòng dược sĩ</div>
                         </div>
-                        <div className="col">
+                        {/* <div className="col">
                             <Link className="link" to={`/taodonthuoctudo`} >
                                 <div className="btn btn-createnew"><i className="fa fa-plus" /> Tạo mới</div>
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
                     <Search targetParent="medicalrecordId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData type={this.state.type} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} />

@@ -149,9 +149,9 @@ class home extends Component {
                 </div>
                 <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                 <div className='mt-2'>
-                        <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} />
-                  
-
+                    <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} />
+              
+                
                 </div>
                 <Pagination
                     postsPerPage={this.state.postsPerPage}
