@@ -1,11 +1,13 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { Redirect } from 'react-router-dom'
-import { AUTH } from '../../env'
+import { Redirect } from 'react-router-dom';
+import { AUTH, WebSocketServer } from '../../env';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket(WebSocketServer);
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -91,7 +93,6 @@ class register_medical extends Component {
             }
         })
             .then(res => {
-                console.log(res.data.data);
                 temp_medicalrecord_id = res.data.data._id;
             })
             .catch(err => {
@@ -99,7 +100,7 @@ class register_medical extends Component {
             })
 
         data = {
-            medicalrecordIds: [temp_medicalrecord_id]
+            medicalrecordIds: temp_medicalrecord_id
         };
         await Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
             headers: {
@@ -108,6 +109,11 @@ class register_medical extends Component {
         })
             .then(res => {
                 console.log(res);
+                client.send(JSON.stringify({
+                    type: "ADD",
+                    id: res.data.data[0]._id,
+                    data: res.data.data[0].queue
+                }))
                 this.onDone();
             })
             .catch(err => {
@@ -168,7 +174,9 @@ class register_medical extends Component {
                             <div className="col-9">
                                 <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
                             </div>
-                            
+                            <div className="col">
+                                <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
+                            </div>
                         </div>
 
                         <div className="container-fluid mt-3">

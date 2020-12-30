@@ -1,16 +1,16 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { AUTH } from '../../env'
+import { AUTH, WebSocketServer } from '../../env'
 import Pagination from '../Pagination';
 import Search from '../search';
 import TableData from '../table';
 import { trackPromise } from 'react-promise-tracker';
-
-const tablerow = ['Tên', 'Lý do', 'Trạng thái','Thao tác']
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const tablerow = ['Tên', 'Lý do', 'Trạng thái', 'Action']
 const keydata = ['patientId.name', 'reason', 'status']
 const obj = "departments";
-
+const client = new W3CWebSocket(WebSocketServer);
 class home extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +26,25 @@ class home extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
+
+        // websocket - realtime section
+
+        client.onopen = () => {
+            console.log('Connect to ws')
+        }
+
+        client.onmessage = (message) => {
+            const dataFromServer = JSON.parse(message.data);
+            if (dataFromServer.type === "REMOVE") {
+                this.setState({
+                    data: this.state.data.filter(o => o._id !== dataFromServer.id),
+                    SearchData: this.state.SearchData.filter(o => o._id !== dataFromServer.id)
+                })
+            }
+
+        };
+        // end - realtime section
+
         this.props.history.push("/home");
         const polyclinic = await trackPromise(
             Axios.post('/api/faculties/getAll', { name: "polyclinic" }, {
@@ -44,6 +63,7 @@ class home extends Component {
                         'Authorization': { AUTH }.AUTH
                     }
                 }).then((res) =>
+
                     res.data.data
                 )
 
@@ -70,6 +90,7 @@ class home extends Component {
                         min_departmentId: min_department
                     })
                 }
+                console.log(this.state.data)
             }
         }
     }
@@ -115,7 +136,7 @@ class home extends Component {
     }
     printData = (SearchData) => {
         return (
-            <div className='mt-1' style={{paddingBottom:'20px'}}>
+            <div className='mt-1' style={{ paddingBottom: '20px' }}>
                 <div className="row">
                     <div className="col-9">
                         <div className='subject'>Trang đăng kí khám bệnh</div>
@@ -128,11 +149,9 @@ class home extends Component {
                 </div>
                 <Search targetParent="patientId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                 <div className='mt-2'>
-                    <div classNames="col-9">
-                <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} /></div>
-                    <div classNames="col">
-                </div>               
-                
+                        <TableData type="dangkikham" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} home={true} />
+                  
+
                 </div>
                 <Pagination
                     postsPerPage={this.state.postsPerPage}

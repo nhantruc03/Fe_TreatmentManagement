@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  backend:
+    container_name: backend
+    restart: unless-stopped
+    build: 
+      context: ./BEOOP/TreatmentManagement
+    volumes:
+       - ./BEOOP/TreatmentManagement:/usr/src/app/TreatmentManagement
+       - /usr/src/app/TreatmentManagement/node_modules
+    ports:
+      - '3001:3001'
+    networks:
+      - internal
+
+  frontend:
+    container_name: frontend
+    restart: unless-stopped
+    build: 
+      context: ./FEOOP/feoad
+    volumes:
+       - ./FEOOP/feoad:/usr/src/app/feoad
+       - /usr/src/app/feoad/node_modules
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    networks:
+      - internal
+
+networks:
+  internal:
+

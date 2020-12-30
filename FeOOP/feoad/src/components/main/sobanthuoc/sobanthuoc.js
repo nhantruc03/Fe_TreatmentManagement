@@ -32,7 +32,7 @@ class sobanthuoc extends Component {
                     res.data.data
                 )
         ]));
-        console.log(bill_details)
+
         if (bill_details !== null) {
             if (this._isMounted) {
                 this.setState({

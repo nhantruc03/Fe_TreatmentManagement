@@ -2,7 +2,6 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
-import Image from '../image';
 import { trackPromise } from 'react-promise-tracker';
 import ModalImage from '../modal-image';
 
