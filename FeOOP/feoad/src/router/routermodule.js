@@ -55,7 +55,7 @@ class router extends Component {
         return (
             <div>
 
-                <SecureRouteStaff exact path="/" component={trangchu} layout={Admin} />
+                <SecureRouteStaff exact path="/trangchu" component={trangchu} layout={Admin} />
                 <SecureRouteAdmin exact path="/listusers" component={user} layout={Admin} />
                 <SecureRouteAdmin exact path="/addusers" component={addusers} layout={Admin} />
                 <SecureRouteAdmin exact path="/editusers/:id" component={editusers} layout={Admin} />

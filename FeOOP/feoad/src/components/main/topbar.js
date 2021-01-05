@@ -1,7 +1,8 @@
 import { Nav, NavDropdown } from 'react-bootstrap';
 import React, { Component } from 'react';
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink, Redirect,Link } from 'react-router-dom'
 import auth from '../../router/auth';
+
 class topbar extends Component {
     constructor(props) {
         super(props);
@@ -39,6 +40,8 @@ class topbar extends Component {
             }
         }
     }
+
+   
 
     renderData = () => {
         if (this.state.role === 'admin') {
@@ -100,7 +103,7 @@ class topbar extends Component {
                     <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
                         {/* Sidebar Toggle (Topbar) */}
                         <div className="col-1">
-                            <div className="logo"><img src="/Logo.png" alt="Logo" style={{ maxWidth: '100%' }} /></div>
+                            <div className="logo"><Link to="/trangchu"><img src="/Logo.png" alt="Logo" style={{ maxWidth: '100%', cursor:'pointer' }} /></Link></div>
                         </div>
                         <div className="col-9" >
                             {this.renderData()}

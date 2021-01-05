@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
+
 class trangchu extends Component {
     async componentDidMount() {
         this._isMounted = true;
-        this.props.history.push("/");
+        this.props.history.push("/trangchu");
     }
 
     componentWillUnmount() {
@@ -12,7 +13,7 @@ class trangchu extends Component {
     render() {
         return (
             <div>
-                
+               <img src="/Home.png" alt="Home" style={{ maxWidth:'100%'}}></img>
             </div>
         );
     }
