@@ -2,7 +2,8 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import auth from '.././../../router/auth';
-
+import { trackPromise } from 'react-promise-tracker';
+import {LoadingIndicator} from '../Loading';
 class login extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +26,7 @@ class login extends Component {
 
         data.append("username", this.state.username);
         data.append("password", this.state.password);
-        await Axios.post('/api/users/login', data)
+        await trackPromise(Axios.post('/api/users/login', data)
             .then(res => {
                 if (res.data.success === true) {
                     auth.login(res.data.data);
@@ -41,7 +42,7 @@ class login extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
     }
     onDone = () => {
@@ -63,7 +64,7 @@ class login extends Component {
         else {
             return (
                 <div className="bg-gradient-primary" style={{ height: '100vh' }}>
-                    <div className="container" style={{ paddingTop: 100 }}>
+                    <div className="container" style={{ paddingTop: 200 }}>
                         {/* Outer Row */}
                         <div className="row justify-content-center">
                             <div className="col-xl-10 col-lg-12 col-md-9">
@@ -89,6 +90,7 @@ class login extends Component {
                                                             Đăng nhập
                                                     </button>
                                                     </form>
+                                                    <LoadingIndicator/>
                                                 </div>
                                             </div>
                                         </div>

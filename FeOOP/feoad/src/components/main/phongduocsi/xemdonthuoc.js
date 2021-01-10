@@ -62,7 +62,7 @@ class xemdonthuoc extends Component {
             conclude: this.state.conclude,
             prescriptionId: this.props.match.params.id
         }
-        var curprescriptions_bill = await Axios.post('/api/prescription-bills', data, {
+        var curprescriptions_bill = await trackPromise(Axios.post('/api/prescription-bills', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -74,7 +74,7 @@ class xemdonthuoc extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
         let list_temp = [];
         this.state.data.forEach(async (value) => {
@@ -86,7 +86,7 @@ class xemdonthuoc extends Component {
             list_temp.push(data)
             
         })
-        await Axios.post('/api/prescription-bill-details', list_temp, {
+        await trackPromise(Axios.post('/api/prescription-bill-details', list_temp, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -96,7 +96,7 @@ class xemdonthuoc extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
         this.goBack();
 

@@ -19,12 +19,12 @@ class editmedicinecategories extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name
         };
-        Axios.put('/api/medicine-categories/' + this.props.match.params.id, data, {
+        await trackPromise(Axios.put('/api/medicine-categories/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -35,7 +35,7 @@ class editmedicinecategories extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }));
     }
 
     onDone = () => {

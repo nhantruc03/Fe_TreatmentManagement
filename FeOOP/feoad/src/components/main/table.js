@@ -12,9 +12,15 @@ import Donthuoctuphongkham from './table_row/tablerow_donthuoctuphongkham';
 import Hoadonthuoc from './table_row/tablerow_hoadonthuoc';
 import Hosobenhnhan from './table_row/tablerow_hosobenhnhan';
 import Hosokhambenh from './table_row/tablerow_hosokhambenh';
-
+import Hoadonkham from './table_row/tablerow_hoadonkham';
+import ReactAutoScroll from 'react-to-target-auto-scroll'
 class TableData extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            tableType: ''
+        }
+    }
     mappingDataUser = () => {
         if (this.props.type === "chonphongkham") {
             return (
@@ -39,6 +45,7 @@ class TableData extends Component {
                         curRoom={this.props.curRoom}
                         departmentId={this.props.departmentId}
                         onDelete={(e) => this.props.onDelete(e)}
+                        noaction={this.props.noaction}
                     />
                 ))
             )
@@ -54,6 +61,7 @@ class TableData extends Component {
                         curRoom={this.props.curRoom}
                         departmentId={this.props.departmentId}
                         onDelete={(e) => this.props.onDelete(e)}
+                        noaction={this.props.noaction}
                     />
                 ))
             )
@@ -170,6 +178,18 @@ class TableData extends Component {
                 ))
             )
         }
+        else if (this.props.type === "hoadonkham") {
+            return (
+                this.props.data.map((value, key) => (
+                    <Hoadonkham
+                        obj={this.props.obj}
+                        key={key}
+                        keydata={this.props.keydata}
+                        data={value}
+                    />
+                ))
+            )
+        }
         else {
             return (
                 this.props.data.map((value, key) => (
@@ -191,19 +211,60 @@ class TableData extends Component {
             <th key={key}>{value}</th>
         ))
 
+
+    handleScroll = (e) => {
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        if (bottom) {
+            this.refs.test.scrollTo(0, 0)
+        }
+    }
+
+    renderBlank = () => {
+        if (this.props.autoScroll && this.props.data.length > 12) {
+            return (
+                <tr style={{ height: '200px' }}>
+                  
+                </tr>
+            )
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.autoScroll) {
+            this.setState({
+                tableType: 'AutoScrollTable'
+            })
+        }
+    }
+
     render() {
         return (
             <div className="col mt-2">
-                <table className="table table-striped table-hover">
-                    <thead className="thead">
-                        <tr style={{ textAlign: "center" }}>
-                            {this.printRow()}
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {this.mappingDataUser()}
-                    </tbody>
-                </table>
+                <ReactAutoScroll
+                    targetPosition={700}
+                    easeType={'linear'}
+                    speed={2}
+                    updateInterval={40}
+                    onScrollingDone={() => this.refs.test.scrollTo(0, 0)}
+                    scrollTargetRef={this.refs.test}
+                    StopScrolling={false}
+                    isEnabled={this.props.autoScroll}>
+                    <div onScroll={this.handleScroll} ref="test" className={`${this.state.tableType}`}>
+                        <table className="table table-striped table-hover">
+                            <thead className="thead">
+                                <tr style={{ textAlign: "center" }}>
+                                    {this.printRow()}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.mappingDataUser()}
+                                {this.renderBlank()}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </ReactAutoScroll>
+
             </div>
         );
     }

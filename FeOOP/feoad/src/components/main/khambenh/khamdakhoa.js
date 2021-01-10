@@ -105,7 +105,7 @@ class khamdakhoa extends Component {
             reason: this.state.reason,
             status: this.state.status
         }
-        Axios.put('/api/medical-records/' + this.props.match.params.id, data, {
+        await trackPromise(Axios.put('/api/medical-records/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -113,7 +113,7 @@ class khamdakhoa extends Component {
             .then((res) => {
                 console.log(res.data);
                 this.goBack();
-            })
+            }))
     }
 
     goBack = () => {

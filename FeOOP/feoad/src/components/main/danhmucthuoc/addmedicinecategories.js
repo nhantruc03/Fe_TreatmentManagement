@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 class addmedicinecategories extends Component {
     constructor(props) {
         super(props);
@@ -15,13 +16,13 @@ class addmedicinecategories extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name
         };
         console.log(data)
-        Axios.post('/api/medicine-categories', data, {
+        await trackPromise(Axios.post('/api/medicine-categories', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -32,7 +33,7 @@ class addmedicinecategories extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     goBack = () => {

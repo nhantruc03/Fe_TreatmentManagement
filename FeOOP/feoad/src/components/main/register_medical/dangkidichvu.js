@@ -104,7 +104,7 @@ class dangkidichvu extends Component {
         var data = {
             medicalrecordId: [this.props.match.params.id]
         };
-        var curBill = await Axios.post('/api/medical-bills/getAll', data, {
+        var curBill = await trackPromise(Axios.post('/api/medical-bills/getAll', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -116,13 +116,13 @@ class dangkidichvu extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
         if (curBill === undefined) {
             data = {
                 medicalrecordId: this.props.match.params.id
             }
-            curBill = await Axios.post('/api/medical-bills', data, {
+            curBill = await trackPromise(Axios.post('/api/medical-bills', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -134,7 +134,7 @@ class dangkidichvu extends Component {
                 })
                 .catch(err => {
                     console.log(err);
-                })
+                }))
         }
 
         console.log(curBill);
@@ -144,7 +144,7 @@ class dangkidichvu extends Component {
             serviceId: this.state.serviceId,
             medicalBillId: curBill
         }
-        await Axios.post('/api/medical-bill-details', data, {
+        await trackPromise(Axios.post('/api/medical-bill-details', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -154,7 +154,7 @@ class dangkidichvu extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
     }
 

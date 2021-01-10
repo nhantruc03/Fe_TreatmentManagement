@@ -30,7 +30,7 @@ class addmedicines extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -41,7 +41,7 @@ class addmedicines extends Component {
             medicinecategoriesId: this.state.medicinecategoriesId
         };
         console.log(data)
-        Axios.post('/api/medicines', data, {
+        await trackPromise(Axios.post('/api/medicines', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -52,7 +52,7 @@ class addmedicines extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     goBack = () => {

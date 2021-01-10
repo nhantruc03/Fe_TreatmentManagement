@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class taodonthuoctudo extends Component {
@@ -59,7 +60,7 @@ class taodonthuoctudo extends Component {
             pharmacistId: obj.id,
             conclude: this.state.conclude
         }
-        var curprescriptions_bill = await Axios.post('/api/prescription-bills', data, {
+        var curprescriptions_bill = await trackPromise(Axios.post('/api/prescription-bills', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -71,7 +72,7 @@ class taodonthuoctudo extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
 
         this.state.data.forEach(async (value) => {
@@ -80,7 +81,7 @@ class taodonthuoctudo extends Component {
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/api/prescription-bill-details', data, {
+            await trackPromise(Axios.post('/api/prescription-bill-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -90,7 +91,7 @@ class taodonthuoctudo extends Component {
                 })
                 .catch(err => {
                     console.log(err);
-                })
+                }))
         })
 
         this.goBack();

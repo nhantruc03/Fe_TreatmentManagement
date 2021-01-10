@@ -12,8 +12,8 @@ class trangchu extends Component {
     }
     render() {
         return (
-            <div>
-               <img src="/Home.png" alt="Home" style={{ maxWidth:'100%'}}></img>
+            <div style={{height:'100%'}}>
+               <img src="/Home.png" alt="Home" style={{ maxWidth:'100%', height:'100%'}}></img>
             </div>
         );
     }

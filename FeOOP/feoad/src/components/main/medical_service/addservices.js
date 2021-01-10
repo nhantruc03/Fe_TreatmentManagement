@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
-
+import { trackPromise } from 'react-promise-tracker';
 class addservices extends Component {
     constructor(props) {
         super(props);
@@ -21,14 +21,14 @@ class addservices extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
             price: this.state.price,
             note: this.state.note
         };
-        Axios.post('/api/services', data, {
+        await trackPromise(Axios.post('/api/services', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -39,7 +39,7 @@ class addservices extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     onDone = () => {

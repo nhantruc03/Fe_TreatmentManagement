@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-
+import { trackPromise } from 'react-promise-tracker';
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -42,7 +42,7 @@ class addpatients extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -54,7 +54,7 @@ class addpatients extends Component {
             job: this.state.job
         };
         console.log(data)
-        Axios.post('/api/patients', data, {
+        await trackPromise(Axios.post('/api/patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -65,7 +65,7 @@ class addpatients extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     goBack = () => {

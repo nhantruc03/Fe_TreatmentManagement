@@ -2,7 +2,6 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
-import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
 import { trackPromise } from 'react-promise-tracker';
@@ -106,11 +105,6 @@ class listprescriptionbills extends Component {
                     <div className="row">
                         <div className="col-9">
                             <div className='subject'>Danh sách hóa đơn thuốc</div>
-                        </div>
-                        <div className="col">
-                            <Link className="link" to={`/addusers`} >
-                                <div className="btn btn-createnew"><i className="fa fa-plus" /> Tạo mới</div>
-                            </Link>
                         </div>
                     </div>
                     <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />

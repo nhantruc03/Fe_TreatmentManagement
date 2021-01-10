@@ -113,7 +113,7 @@ class khamchuyenkhoa extends Component {
         data.append('doctorId', obj.id);
         data.append('medicalrecordId', this.props.match.params.id);
 
-        Axios.post('/api/medical-details', data, {
+        await trackPromise(Axios.post('/api/medical-details', data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': { AUTH }.AUTH
@@ -122,7 +122,7 @@ class khamchuyenkhoa extends Component {
             .then((res) => {
                 console.log(res.data);
                 this.goBack();
-            })
+            }))
         console.log(data)
     }
 

@@ -14,10 +14,16 @@ class tablerow_chonphongkham extends Component {
         return (
             <td>
                 <div className="btn-group">
+                    <Tooltip title="Xem danh sách" arrow>
+                        <Link className="link" to={`/departments-queue/${this.props.data._id}`} >
+                            <button className="btn btn-link" ><i className="fas fa-list" /></button>
+                        </Link>
+                    </Tooltip>
                     <Tooltip title="Vào phòng" arrow>
-                    <Link className="link" to={`/${this.props.obj}/${this.props.data._id}`} >
-                        <div className="btn btn-warning" style={{backgroundColor: "#2997ff"  }}><i className="fas fa-door-open" /></div>
-                    </Link>
+                        <Link className="link" to={`/${this.props.obj}/${this.props.data._id}`} >
+                            <button className="btn btn-link" ><i className="fas fa-door-open" /></button>
+                            
+                        </Link>
                     </Tooltip>
                 </div>
             </td>

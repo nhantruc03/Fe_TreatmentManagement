@@ -72,7 +72,7 @@ class thongtincanhan extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         const login = localStorage.getItem('login');
         const obj = JSON.parse(login);
@@ -89,7 +89,7 @@ class thongtincanhan extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/api/users/' + obj.id, data, {
+        await trackPromise(Axios.put('/api/users/' + obj.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -100,7 +100,7 @@ class thongtincanhan extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     onDone = () => {

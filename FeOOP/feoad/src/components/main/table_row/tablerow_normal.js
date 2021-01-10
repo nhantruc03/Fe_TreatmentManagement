@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { render } from '../service/renderTableRow';
 import { AUTH } from '../../env'
 import Tooltip from '@material-ui/core/Tooltip';
+import { trackPromise } from 'react-promise-tracker';
 class TableDataRow extends Component {
     constructor(props) {
         super(props);
@@ -18,15 +19,15 @@ class TableDataRow extends Component {
         })
     }
 
-    deleteClick = () => {
-        Axios.delete("/api/" + this.props.obj + "/" + this.props.data._id, {
+    deleteClick = async () => {
+        await trackPromise(Axios.delete("/api/" + this.props.obj + "/" + this.props.data._id, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
         })
             .then((res) => {
                 console.log(res.data);
-            })
+            }))
         this.props.onDelete(this.props.data._id);
     }
 

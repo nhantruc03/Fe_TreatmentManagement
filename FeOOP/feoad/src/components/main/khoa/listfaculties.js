@@ -2,14 +2,15 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import TableData from '../table';
 import Pagination from '../Pagination';
-import { Link } from 'react-router-dom';
 import Search from '../search';
 import { AUTH } from '../../env'
+import { Link } from 'react-router-dom';
 import { trackPromise } from 'react-promise-tracker';
-const tablerow = ['Tên', 'Giới tính', 'Email', 'Ngày sinh', 'Điện thoại', 'Trạng thái', 'Thao tác']
-const keydata = ['name', 'gender', 'email', 'birthday', 'phoneNumber', 'isDeleted']
-const obj = "patients";
-class listpatients extends Component {
+const tablerow = ['Tên', 'Trạng thái', 'Thao tác']
+const keydata = ['name', 'isDeleted']
+const obj = "faculties"
+
+class listfaulcuties extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,8 +24,8 @@ class listpatients extends Component {
 
     async componentDidMount() {
         this._isMounted = true;
-        const [patients] = await trackPromise(Promise.all([
-            Axios.post('/api/patients/getAll', {}, {
+        const [departments] = await trackPromise(Promise.all([
+            Axios.post('/api/faculties/getAll', {}, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -34,11 +35,12 @@ class listpatients extends Component {
                 )
         ]));
 
-        if (patients !== null) {
+
+        if (departments !== null) {
             if (this._isMounted) {
                 this.setState({
-                    data: patients,
-                    SearchData: patients
+                    data: departments,
+                    SearchData: departments
                 })
             }
         }
@@ -99,17 +101,16 @@ class listpatients extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách bệnh nhân</div>
+                            <div className='subject'>Danh sách phòng</div>
                         </div>
-                        
                         <div className="col">
-                            <Link className="link" to={`/addpatients`} >
-                                <div className="btn btn-createnew"><i className="fa fa-plus" /> Tạo bệnh nhân mới</div>
+                            <Link className="link" to={`/addfaculties`} >
+                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
                             </Link>
                         </div>
                     </div>
                     <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
-                    <TableData obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
+                    <TableData redirectUrl="editdepartments" obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
@@ -137,4 +138,4 @@ class listpatients extends Component {
         );
     }
 }
-export default listpatients;
+export default listfaulcuties;

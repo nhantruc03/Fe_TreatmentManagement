@@ -50,6 +50,7 @@ class topbar extends Component {
                     <li className="nav-item1"><NavLink className="nav-link active" to="/home" >Trang đăng kí</NavLink></li>
                     <li className="nav-item1"><NavLink className="nav-link active" to="/listpatients" >Bệnh nhân</NavLink></li>
                     <li className="nav-item1"><NavLink className="nav-link active" to="/listdepartments" >Phòng</NavLink></li>
+                    <li className="nav-item1"><NavLink className="nav-link active" to="/listfalcuties" >Khoa</NavLink></li>
                     <li className="nav-item1"><NavLink className="nav-link active" to="/phongduocsi" >Phòng dược sĩ</NavLink></li>
                     <li className="nav-item1"><NavLink className="nav-link active" to="/listusers" >Người dùng</NavLink></li>
                     <li className="nav-item1"><NavLink className="nav-link active" to="/listservices" >Dịch vụ</NavLink></li>
@@ -62,6 +63,7 @@ class topbar extends Component {
             return (
                 <ul className="nav nav-mtd tabs-info z-depth-1">
                     <li className="nav-item1"><NavLink className="nav-link active" to="/home" >Trang đăng kí</NavLink></li>
+                    <li className="nav-item1"><NavLink className="nav-link active" to="/hoadonkham" >Hóa đơn khám bệnh</NavLink></li>
                 </ul>
             )
         }
@@ -115,7 +117,7 @@ class topbar extends Component {
                                     <NavDropdown title={this.state.name} id="nav-dropdown" style={{ width: '100%' }}>
                                         <NavDropdown.Item eventKey="user">Thông tin cá nhân</NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item eventKey="Logout">Log out</NavDropdown.Item>
+                                        <NavDropdown.Item eventKey="Logout">Đăng xuất</NavDropdown.Item>
                                     </NavDropdown>
                                 </Nav>
                             </div>

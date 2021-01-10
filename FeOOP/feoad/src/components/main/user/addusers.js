@@ -71,7 +71,7 @@ class addusers extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -87,7 +87,7 @@ class addusers extends Component {
             email: this.state.email
         };
         console.log(data)
-        Axios.post('/api/users', data, {
+        await trackPromise(Axios.post('/api/users', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -98,7 +98,7 @@ class addusers extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     goBack = () => {

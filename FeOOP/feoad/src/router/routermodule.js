@@ -50,12 +50,22 @@ import listprescriptionbills from '../components/main/hoadonthuoc/listprescripti
 import chitiethoadonthuoc from '../components/main/hoadonthuoc/chitiethoadonthuoc';
 import danhsachbenhnhan from '../components/main/hosokhambenh/danhsachbenhnhan';
 import danhsachhosokhambenh from '../components/main/hosokhambenh/danhsachhosokhambenh';
+import listfalcuties from '../components/main/khoa/listfaculties';
+import addfalcuties from '../components/main/khoa/addfaculties';
+import editfaculties from '../components/main/khoa/editfaculties';
+import hoadonkham from '../components/main/hoadonkhambenh/listhoadonkhambenh';
+import Danhsachbenhnhan from '../components/main/kham/danhsachbenhnhan';
 class router extends Component {
     render() {
         return (
             <div>
 
                 <SecureRouteStaff exact path="/trangchu" component={trangchu} layout={Admin} />
+
+                <SecureRouteStaff exact path="/" component={trangchu} layout={Admin} />
+
+                <SecureRouteStaff exact path="/hoadonkham" component={hoadonkham} layout={Admin} />
+
                 <SecureRouteAdmin exact path="/listusers" component={user} layout={Admin} />
                 <SecureRouteAdmin exact path="/addusers" component={addusers} layout={Admin} />
                 <SecureRouteAdmin exact path="/editusers/:id" component={editusers} layout={Admin} />
@@ -64,12 +74,20 @@ class router extends Component {
                 <SecureRouteAdmin exact path="/listdepartments" component={listdepartments} layout={Admin} />
                 <SecureRouteAdmin exact path="/adddepartments" component={adddepartments} layout={Admin} />
                 <SecureRouteAdmin exact path="/editdepartments/:id" component={editdepartments} layout={Admin} />
+
+                <SecureRouteAdmin exact path="/listfalcuties" component={listfalcuties} layout={Admin} />
+                <SecureRouteAdmin exact path="/addfaculties" component={addfalcuties} layout={Admin} />
+                <SecureRouteAdmin exact path="/editfaculties/:id" component={editfaculties} layout={Admin} />
+
+
+
                 <SecureRouteAdmin exact path="/listpatients" component={listpatients} layout={Admin} />
                 <SecureRouteAdmin exact path="/editpatients/:id" component={editpatients} layout={Admin} />
                 <SecureRouteAdmin exact path="/addpatients" component={addpatients} layout={Admin} />
                 <SecureRouteStaff exact path="/home" component={home} layout={Admin} />
                 <SecureRouteStaff exact path="/register_medical/:id" component={register_medical} layout={Admin} />
                 <SecureRouteDoctor exact path="/doctor_listdepartments" component={doctor_listdepartments} layout={Admin} />
+                <SecureRouteDoctor exact path="/departments-queue/:id" component={Danhsachbenhnhan} layout={Admin} />
 
                 <SecureRouteAdmin exact path="/listservices" component={listservices} layout={Admin} />
                 <SecureRouteAdmin exact path="/addservices" component={addservices} layout={Admin} />

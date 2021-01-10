@@ -72,7 +72,7 @@ class editusers extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -87,7 +87,7 @@ class editusers extends Component {
             gender: this.state.gender,
             email: this.state.email
         };
-        Axios.put('/api/users/' + this.props.match.params.id, data, {
+        await trackPromise(Axios.put('/api/users/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -98,7 +98,7 @@ class editusers extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     onDone = () => {

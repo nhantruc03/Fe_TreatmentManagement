@@ -66,7 +66,7 @@ class register_medical extends Component {
                 email: this.state.email,
                 job: this.state.job
             };
-            await Axios.post('/api/patients/', data, {
+            await trackPromise(Axios.post('/api/patients/', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -76,7 +76,7 @@ class register_medical extends Component {
                 })
                 .catch(err => {
                     console.log(err);
-                })
+                }))
         }
 
         var temp_medicalrecord_id = ''
@@ -87,7 +87,7 @@ class register_medical extends Component {
             status: 'chờ'
         }
 
-        await Axios.post('/api/medical-records/', data, {
+        await trackPromise(Axios.post('/api/medical-records/', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -97,12 +97,12 @@ class register_medical extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
 
         data = {
             medicalrecordIds: temp_medicalrecord_id
         };
-        await Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
+        await trackPromise(Axios.put('/api/departments/' + this.props.match.params.id + '/add-patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -118,10 +118,7 @@ class register_medical extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
-
-
-
+            }))
     }
 
     onDone = () => {
@@ -194,11 +191,6 @@ class register_medical extends Component {
                                         <button onClick={(e) => this.Find(e)} style={{ width: '100%', marginTop: '33px' }} className="btn btn-search">Tìm kiếm</button>
                                         </div>
                                     </div>
-                                    {/* <div className="row mt-3">
-                                        <div className="col">
-                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%' }} className="btn btn-search">Tìm kiếm</button>
-                                        </div>
-                                    </div> */}
                                     <div className="row mt-3">
                                         <div className="col">
                                             <label htmlFor="name"  >Tên</label>

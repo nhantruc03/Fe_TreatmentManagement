@@ -122,7 +122,7 @@ class xemhoadon extends Component {
                             </Link>
                         </div>
                     </div>
-                    <Search target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
+                    <Search targetParent="serviceId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData obj={obj} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} noaction />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}

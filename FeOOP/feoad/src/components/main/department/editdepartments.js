@@ -32,7 +32,7 @@ class editdepartments extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -43,7 +43,7 @@ class editdepartments extends Component {
             facultyId: this.state.facultyId
         };
         console.log(data)
-        Axios.put('/api/departments', data, {
+        await trackPromise(Axios.put('/api/departments/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -54,7 +54,7 @@ class editdepartments extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }));
     }
 
     async componentDidMount() {

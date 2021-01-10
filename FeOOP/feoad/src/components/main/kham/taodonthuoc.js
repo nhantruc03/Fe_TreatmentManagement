@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
+import { trackPromise } from 'react-promise-tracker';
 const tablerow = ['Tên', 'Đơn vị tính', 'Số lượng', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity']
 class taodonthuoc extends Component {
@@ -58,7 +59,7 @@ class taodonthuoc extends Component {
             doctorId: obj.id,
             conclude: this.state.conclude
         }
-        var curprescriptions = await Axios.post('/api/prescriptions', data, {
+        var curprescriptions = await trackPromise(Axios.post('/api/prescriptions', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -70,7 +71,7 @@ class taodonthuoc extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }));
             
 
         this.state.data.forEach(async (value) => {
@@ -79,7 +80,7 @@ class taodonthuoc extends Component {
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await Axios.post('/api/prescription-details', data, {
+            await trackPromise(Axios.post('/api/prescription-details', data, {
                 headers: {
                     'Authorization': { AUTH }.AUTH
                 }
@@ -89,7 +90,7 @@ class taodonthuoc extends Component {
                 })
                 .catch(err => {
                     console.log(err);
-                })
+                }))
         })
 
         this.goBack();

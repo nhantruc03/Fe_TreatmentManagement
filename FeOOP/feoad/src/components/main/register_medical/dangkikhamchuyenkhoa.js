@@ -109,7 +109,7 @@ class dangkikhamchuyenkhoa extends Component {
         var data = {
             medicalrecordIds: [this.props.match.params.id]
         };
-        await Axios.put('/api/departments/' + this.state.departmentId + '/add-patients', data, {
+        await trackPromise(Axios.put('/api/departments/' + this.state.departmentId + '/add-patients', data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -125,7 +125,7 @@ class dangkikhamchuyenkhoa extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     goBack = () => {

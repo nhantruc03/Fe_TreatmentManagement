@@ -44,7 +44,7 @@ class editpatients extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
         var data = {
             name: this.state.name,
@@ -55,7 +55,7 @@ class editpatients extends Component {
             email: this.state.email,
             job: this.state.job
         };
-        Axios.put('/api/patients/' + this.props.match.params.id, data, {
+        await trackPromise(Axios.put('/api/patients/' + this.props.match.params.id, data, {
             headers: {
                 'Authorization': { AUTH }.AUTH
             }
@@ -66,7 +66,7 @@ class editpatients extends Component {
             })
             .catch(err => {
                 console.log(err);
-            })
+            }))
     }
 
     async componentDidMount() {
