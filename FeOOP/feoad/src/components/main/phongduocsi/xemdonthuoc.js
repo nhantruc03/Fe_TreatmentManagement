@@ -4,6 +4,7 @@ import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class xemdonthuoc extends Component {
@@ -92,14 +93,11 @@ class xemdonthuoc extends Component {
             }
         })
             .then(res => {
-                console.log(res.data.data);
+                Message('Tạo thành công', true, this.props);
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false);
             }))
-
-        this.goBack();
-
     }
 
 

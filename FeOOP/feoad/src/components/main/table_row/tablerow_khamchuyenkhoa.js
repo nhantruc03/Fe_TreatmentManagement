@@ -29,33 +29,38 @@ class tablerow_khamchuyenkhoa extends Component {
     }
 
     renderAction = () => {
-        if(!this.props.noaction){
+        if (!this.props.noaction) {
             return (
                 <td>
                     <div className="btn-group">
+                        <Tooltip title='Xem hồ sơ' arrow>
+                            <Link className="link" to={`/xemhoso/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fas fa-user" /></div>
+                            </Link>
+                        </Tooltip>
                         <Tooltip title='Tạo kết quả' arrow>
-                        <Link className="link" to={`/khamchuyenkhoa/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fa fa-file-medical-alt" /></div>
-                        </Link>
+                            <Link className="link" to={`/khamchuyenkhoa/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fa fa-file-medical-alt" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Tạo đơn thuốc' arrow>
-                        <Link className="link" to={`/khamchuyenkhoa/taodonthuoc/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fas fa-pills" /></div>
-                        </Link>
+                            <Link className="link" to={`/khamchuyenkhoa/taodonthuoc/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fas fa-pills" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Xem đơn thuốc' arrow>
-                        <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fas fa-eye" /></div>
-                        </Link>
+                            <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fas fa-eye" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Hoàn thành khám bệnh' arrow>
-                        <div onClick={() => this.onComplete()} className="btn btn-link" style={{color: 'green'}}><i className="fa fa-check" /></div>
+                            <div onClick={() => this.onComplete()} className="btn btn-link" style={{ color: 'green' }}><i className="fa fa-check" /></div>
                         </Tooltip>
                     </div>
                 </td>
             )
         }
-    
+
     }
 
     render() {

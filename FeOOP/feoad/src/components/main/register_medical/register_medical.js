@@ -7,6 +7,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { Message } from '../service/renderMessage';
 const client = new W3CWebSocket(WebSocketServer);
 var Genders = [
     { value: 'male', label: 'Nam' },
@@ -114,10 +115,10 @@ class register_medical extends Component {
                     id: res.data.data[0]._id,
                     data: res.data.data[0].queue
                 }))
-                this.onDone();
+                Message('Đăng kí thành công', true, this.props)
             })
             .catch(err => {
-                console.log(err);
+                Message('Đăng kí thất bại', false)
             }))
     }
 
@@ -139,10 +140,11 @@ class register_medical extends Component {
                 .then((res) =>
                     res.data.data
                 )
+                .catch(() => {
+                    Message('Không tìm thấy bệnh nhân', false)
+                })
         ]));
-
-
-        if (patients !== null) {
+        if (patients !== undefined) {
             var day = new Date(patients.birthday);
             this.setState({
                 _id: patients._id,
@@ -154,6 +156,7 @@ class register_medical extends Component {
                 email: patients.email,
                 job: patients.job
             })
+            Message('Tìm thấy bệnh nhân', true)
         }
     }
 
@@ -166,7 +169,7 @@ class register_medical extends Component {
         else {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'20px'}} className="container-fluid">
+                    <div style={{ paddingLeft: '150px', paddingRight: '150px', paddingBottom: '20px' }} className="container-fluid">
                         <div className="row">
                             <div className="col-9">
                                 <div onClick={() => this.onDone()} className='subject'> {`<- Tạo mới phiếu khám bệnh`}</div>
@@ -188,7 +191,7 @@ class register_medical extends Component {
                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="_id" value={this.state._id} />
                                         </div>
                                         <div className="col">
-                                        <button onClick={(e) => this.Find(e)} style={{ width: '100%', marginTop: '33px' }} className="btn btn-search">Tìm kiếm</button>
+                                            <button onClick={(e) => this.Find(e)} style={{ width: '100%', marginTop: '33px' }} className="btn btn-search">Tìm kiếm</button>
                                         </div>
                                     </div>
                                     <div className="row mt-3">
@@ -241,11 +244,12 @@ class register_medical extends Component {
                                             <textarea onChange={(e) => this.onChange(e)} type="text" rows="5" className="form-control" name="reason" placeholder="Eg. headache" required={true} />
                                         </div>
                                     </div>
-                                    <div className="row mt-3">
+                                    {/* <div className="row mt-3">
                                         <div className="col">
-                                        <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
+                                            <button type="submit" className="btn btn-createnew">Đăng kí khám bệnh</button>
                                         </div>
-                                    </div>
+                                    </div> */}
+
                                 </div>
                             </div>
                         </div>

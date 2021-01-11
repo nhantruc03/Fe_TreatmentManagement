@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import Select from 'react-select';
 import { AUTH } from '../../env'
+import { Message } from '../service/renderMessage';
 class addmedicines extends Component {
     constructor(props) {
         super(props);
@@ -47,11 +48,10 @@ class addmedicines extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Tạo thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false); 
             }))
     }
 

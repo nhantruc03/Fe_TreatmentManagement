@@ -12,7 +12,7 @@ import editusers from '../components/main/user/editusers';
 import user from '../components/main/user/listusers';
 import doctor_listdepartments from '../components/main/kham/doctor_listdepartments'
 import kham from '../components/main/kham/kham';
-import khamdakhoa from '../components/main/khambenh/khamdakhoa';
+import xemhoso from '../components/main/khambenh/xemhoso';
 import dangkikhamchuyenkhoa from '../components/main/register_medical/dangkikhamchuyenkhoa';
 import khamchuyenkhoa from '../components/main/khambenh/khamchuyenkhoa';
 import listservices from '../components/main/medical_service/listservices';
@@ -105,7 +105,7 @@ class router extends Component {
 
 
                 <SecureRouteDoctor exact path="/doctor_listdepartments/:id" component={kham} layout={Admin} />
-                <SecureRouteDoctor exact path="/khamdakhoa/:id" component={khamdakhoa} layout={Admin} />
+                <SecureRouteDoctor exact path="/xemhoso/:id" component={xemhoso} layout={Admin} />
                 <SecureRouteDoctor exact path="/khamchuyenkhoa/:id" component={khamchuyenkhoa} layout={Admin} />
                 <SecureRouteStaff exact path="/dangkikhamchuyenkhoa/:id" component={dangkikhamchuyenkhoa} layout={Admin} />
                 <SecureRouteStaff exact path="/dangkidichvu/:id" component={dangkidichvu} layout={Admin} />

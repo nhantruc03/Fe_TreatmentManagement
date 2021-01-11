@@ -5,18 +5,22 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
 ]
 
 var Statuss = [
-    { value: 'chờ', label: 'chờ' },
-    { value: 'chờ chuyên khoa', label: 'chờ chuyên khoa' },
-    { value: 'xong', label: 'xong' }
+    { value: 'chờ đa khoa', label: 'Chờ đa khoa' },
+    { value: 'khám đa khoa', label: 'Khám đa khoa' },
+    { value: 'chờ chuyên khoa', label: 'Chờ chuyên khoa' },
+    { value: 'khám chuyên khoa', label: 'Khám chuyên khoa' },
+    { value: 'lấy kết quả', label: 'Lấy kết quả' },
+    { value: 'xong', label: 'Xong' }
 ]
 
-class khamdakhoa extends Component {
+class xemhoso extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -111,9 +115,11 @@ class khamdakhoa extends Component {
             }
         })
             .then((res) => {
-                console.log(res.data);
-                this.goBack();
+                Message('Tạo thành công', true,this.props); 
             }))
+            .catch(()=>{
+                Message('Tạo thất bại', false); 
+            })
     }
 
     goBack = () => {
@@ -171,7 +177,7 @@ class khamdakhoa extends Component {
                                         <label htmlFor="gender"  >Giới tính</label>
                                         <Select
                                             onChange={(e) => this.onSelectGender(e)}
-                                            value={Genders.filter((value) => value === this.state.gender)}
+                                            defaultValue={Genders.filter((value) => value.value === this.state.gender)}
                                             options={Genders}
                                             isDisabled={true}
                                         />
@@ -213,4 +219,4 @@ class khamdakhoa extends Component {
     }
 }
 
-export default khamdakhoa;
+export default xemhoso;

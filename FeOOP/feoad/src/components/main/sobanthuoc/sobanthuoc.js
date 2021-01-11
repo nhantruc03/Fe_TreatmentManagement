@@ -5,18 +5,24 @@ import Pagination from '../Pagination';
 import Search from '../search';
 import { AUTH } from '../../env'
 import { trackPromise } from 'react-promise-tracker';
-const tablerow = ['Ngày bán','Mã thuốc','Tên thuốc','Nhà sản xuất','Đơn vị tính','Số lượng']
-const keydata = ['createdAt','medicineId._id','medicineId.name','medicineId.brand','medicineId.unit','quantity']
+import NumberFormat from 'react-number-format';
+const tablerow = ['Ngày bán', 'Mã thuốc', 'Tên thuốc', 'Nhà sản xuất', 'Đơn vị tính', 'Đơn giá', 'Số lượng']
+const keydata = ['createdAt', 'medicineId._id', 'medicineId.name', 'medicineId.brand', 'medicineId.unit', 'medicineId.price', 'quantity']
 
 class sobanthuoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: null,
+            ReportData: null,
+            SearchData: null,
+            total: 0,
             currentPage: 1,
             postsPerPage: 10,
             listPage: [],
-            SearchData: []
+            day: '',
+            month: '',
+            year: ''
         }
     }
 
@@ -33,12 +39,30 @@ class sobanthuoc extends Component {
                 )
         ]));
 
+
         if (bill_details !== null) {
             if (this._isMounted) {
+                console.log(bill_details)
+                var temp = bill_details.reduce((prev, cur) => {
+
+                    const index = prev.findIndex(v => (v.medicineId._id === cur.medicineId._id && v.price === cur.price
+                        && new Date(v.createdAt).getDate() === new Date(cur.createdAt).getDate()
+                        && new Date(v.createdAt).getMonth() === new Date(cur.createdAt).getMonth()
+                        && new Date(v.createdAt).getFullYear() === new Date(cur.createdAt).getFullYear()));
+                    if (index === -1) {
+                        prev.push(cur);
+                    } else {
+                        prev[index].quantity = Number(prev[index].quantity) + Number(cur.quantity);
+                    }
+                    return prev;
+                }, [])
+
                 this.setState({
-                    data: bill_details,
-                    SearchData: bill_details
+                    data: temp,
+                    SearchData: temp,
+                    ReportData: temp
                 })
+                this.getTotal();
             }
         }
 
@@ -80,6 +104,68 @@ class sobanthuoc extends Component {
         return listpage;
     }
 
+    Report = () => {
+        var data = [];
+        this.state.data.forEach(e => {
+            var temp = new Date(e.createdAt);
+            if (this.state.day !== '') {
+                if (this.state.month !== '' && this.state.year !== '') {
+                    if (temp.getDate() === Number(this.state.day) && temp.getMonth() + 1 === Number(this.state.month) && temp.getFullYear() === Number(this.state.year)) {
+                        data.push(e);
+                    }
+                }
+                else if (this.state.month !== '') {
+                    if (temp.getDate() === Number(this.state.day) && temp.getMonth() + 1 === Number(this.state.month)) {
+                        data.push(e);
+                    }
+                }
+                else if (this.state.year !== '') {
+                    if (temp.getDate() === Number(this.state.day) && temp.getFullYear() === Number(this.state.year)) {
+                        data.push(e);
+                    }
+                } else {
+                    if (temp.getDate() === Number(this.state.day)) {
+                        data.push(e);
+                    }
+                }
+            }
+            else if (this.state.month !== '') {
+                if (this.state.year !== '') {
+                    if (Number(this.state.month) === temp.getMonth() + 1 && Number(this.state.year) === temp.getFullYear()) {
+                        data.push(e)
+                    }
+                }
+                else {
+                    if (Number(this.state.month) === temp.getMonth() + 1) {
+                        data.push(e)
+                    }
+                }
+            }
+            else if (this.state.year !== '') {
+                if (Number(this.state.year) === temp.getFullYear()) {
+                    data.push(e)
+                }
+            }
+        })
+
+        if (this.state.day === '' && this.state.month === '' && this.state.year === '') {
+            this.setState({
+                ReportData: this.state.data,
+                SearchData: this.state.data
+            }, () => {
+                this.getTotal();
+            })
+        } else {
+            this.setState({
+                ReportData: data,
+                SearchData: data
+            }, () => {
+                this.getTotal();
+            })
+        }
+
+    }
+
     printData = (SearchData) => {
         if (this.state.data !== null) {
             return (
@@ -89,6 +175,23 @@ class sobanthuoc extends Component {
                             <div className='subject'>Sổ bán thuốc</div>
                         </div>
                     </div>
+                    <div className="row">
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="day" min="1" max="31" placeholder="Ngày"></input>
+                        </div>
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="month" min="1" max="12" placeholder="Tháng"></input>
+                        </div>
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="year" min="1" placeholder="Năm"></input>
+                        </div>
+                        <div className="col-3">
+
+                            <button onClick={this.Report} className="btn btn-success form-control" >Xem báo cáo</button>
+                        </div>
+
+                    </div>
+                    <br></br>
                     <Search targetParent="medicineId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData noaction={true} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
                     <Pagination
@@ -96,6 +199,7 @@ class sobanthuoc extends Component {
                         totalPosts={this.getlistpage(SearchData)}
                         paginate={(e) => this.paginate(e)}
                     />
+                    {this.renderTotal()}
                 </div>
             )
         } else {
@@ -107,6 +211,21 @@ class sobanthuoc extends Component {
             )
         }
     }
+    getTotal = () => {
+        var total = 0;
+        this.state.SearchData.forEach(o => {
+            total += o.medicineId.price * o.quantity;
+        });
+        this.setState({
+            total: total
+        })
+    }
+
+    renderTotal = () => {
+        return (
+            <p style={{ fontSize: '2rem', textAlign: "center" }}>Tổng tiền: <NumberFormat style={{ fontSize: '2rem' }} value={this.state.total} displayType={'text'} thousandSeparator={true} prefix={'đ'} /></p>
+        )
+    }
 
     render() {
         return (
@@ -117,6 +236,7 @@ class sobanthuoc extends Component {
             </div>
         );
     }
+
 }
 
 export default sobanthuoc;

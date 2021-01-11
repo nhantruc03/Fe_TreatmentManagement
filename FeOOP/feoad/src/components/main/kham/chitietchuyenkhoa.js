@@ -48,7 +48,7 @@ class chitietchuyenkhoa extends Component {
             }
         }
     }
-    
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -59,17 +59,20 @@ class chitietchuyenkhoa extends Component {
     getImage = () => {
         return (
             this.state.images.map((value, key) => (
-                <ModalImage key={key} 
-                            src={value}   
-                            ratio={'3:2'}
-                 />
+                <div className="col-6" style={{padding:5}}>
+                    <ModalImage key={key}
+                        src={value}
+                        ratio={'3:2'}
+                    />
+                </div>
+
             ))
         )
     }
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'250px'}}>
+                <div className="container-fluid" style={{ paddingLeft: '150px', paddingRight: '150px', paddingBottom: '250px' }}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={this.goBack} className='subject'> {`<- Chi tiết khám chuyên khoa`}</div>
@@ -96,11 +99,11 @@ class chitietchuyenkhoa extends Component {
                                         <textarea rows="5" onChange={(e) => this.onChange(e)} type="text" className="form-control" name="note" placeholder="Eg. note" value={this.state.note} required={true} readOnly />
                                     </div>
                                 </div>
-                               
+
                                 <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="images" >Hình ảnh</label>
-                                        <div>
+                                        <div className="row">
                                             {this.getImage()}
                                         </div>
                                     </div>

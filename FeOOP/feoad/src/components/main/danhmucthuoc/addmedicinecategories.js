@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import { AUTH } from '../../env';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 class addmedicinecategories extends Component {
     constructor(props) {
         super(props);
@@ -28,11 +29,10 @@ class addmedicinecategories extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Tạo thành công', true, this.props);
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false);
             }))
     }
 
@@ -43,12 +43,12 @@ class addmedicinecategories extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}}>
+                <div className="container-fluid" style={{ paddingLeft: '150px', paddingRight: '150px', paddingBottom: '80px' }}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Back`}</div>
                         </div>
-                        <div className="col" style={{paddingRight:'24px'}}>
+                        <div className="col" style={{ paddingRight: '24px' }}>
                             <button type="submit" className="btn btn-createnew">Tạo mới</button>
                         </div>
                     </div>

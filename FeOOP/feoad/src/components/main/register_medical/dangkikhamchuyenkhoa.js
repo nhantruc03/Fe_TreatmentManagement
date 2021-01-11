@@ -6,6 +6,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { Message } from '../service/renderMessage';
 const client = new W3CWebSocket(WebSocketServer);
 var Genders = [
     { value: 'male', label: 'Nam Nữ' },
@@ -121,10 +122,10 @@ class dangkikhamchuyenkhoa extends Component {
                     id: res.data.data[0]._id,
                     data: res.data.data[0].queue
                 }))
-                this.goBack()
+                Message('Đăng kí thành công', true, this.props);
             })
             .catch(err => {
-                console.log(err);
+                Message('Đăng kí thất bại', false);
             }))
     }
 
@@ -135,13 +136,13 @@ class dangkikhamchuyenkhoa extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom:'80px'}} className="container-fluid">
+                <div style={{ paddingLeft: '150px', paddingRight: '150px', paddingBottom: '80px' }} className="container-fluid">
                     <div className="row">
                         <div className="col-9">
                             <div onClick={this.goBack} className='subject'> {`<- Đăng kí khám chuyên khoa`}</div>
                         </div>
-                        <div className="col" style={{paddingRight: '35px'}}>
-                                <button type="submit" className="btn btn-createnew">Đăng kí</button>
+                        <div className="col" style={{ paddingRight: '35px' }}>
+                            <button type="submit" className="btn btn-createnew">Đăng kí</button>
                         </div>
                     </div>
                     <div className="container-fluid mt-3">
@@ -165,7 +166,7 @@ class dangkikhamchuyenkhoa extends Component {
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    
+
                                     <div className="col">
                                         <label htmlFor="address">Địa chỉ</label>
                                         <input onChange={(e) => this.onChange(e)} type="text" className="form-control" name="address" placeholder="Eg. 37/10BIS" value={this.state.address} required={true} readOnly />
@@ -190,8 +191,8 @@ class dangkikhamchuyenkhoa extends Component {
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    
-                                    
+
+
                                 </div>
                                 <div className="row mt-3">
                                     <div className="col">
@@ -217,7 +218,7 @@ class dangkikhamchuyenkhoa extends Component {
                                     </div>
                                 </div>
                                 <div className="row mt-3">
-                                    
+
                                 </div>
                             </div>
                         </div>

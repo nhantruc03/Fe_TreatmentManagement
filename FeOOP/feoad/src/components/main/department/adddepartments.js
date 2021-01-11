@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 
 class adddepartments extends Component {
     constructor(props) {
@@ -49,11 +50,10 @@ class adddepartments extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.onDone();
+                Message('Tạo thành công', true, this.props);
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false);
             })
     }
 
@@ -112,12 +112,12 @@ class adddepartments extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div className="container-fluid" style={{paddingLeft: '150px', paddingRight: '150px'}}>
+                <div className="container-fluid" style={{ paddingLeft: '150px', paddingRight: '150px' }}>
                     <div className="row">
                         <div className="col-9">
                             <div onClick={() => this.goBack()} className='subject'> {`<- Quay về`}</div>
                         </div>
-                        <div className="col" style={{paddingRight: '140px'}}>
+                        <div className="col" style={{ paddingRight: '140px' }}>
                             <button type="submit" className="btn btn-createnew">Tạo mới</button>
                         </div>
                     </div>

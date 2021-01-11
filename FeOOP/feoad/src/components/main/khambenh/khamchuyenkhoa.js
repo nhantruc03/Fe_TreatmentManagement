@@ -6,6 +6,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import MultiImageInput from 'react-multiple-image-input';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 var Genders = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' }
@@ -120,9 +121,11 @@ class khamchuyenkhoa extends Component {
             }
         })
             .then((res) => {
-                console.log(res.data);
-                this.goBack();
+                Message('Tạo thành công', true,this.props); 
             }))
+            .catch(()=>{
+                Message('Tạo thất bại', false); 
+            })
         console.log(data)
     }
 

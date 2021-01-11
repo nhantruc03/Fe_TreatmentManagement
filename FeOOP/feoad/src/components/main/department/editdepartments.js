@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 
 class editdepartments extends Component {
     constructor(props) {
@@ -49,11 +50,10 @@ class editdepartments extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Sửa thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Sửa thất bại', false); 
             }));
     }
 

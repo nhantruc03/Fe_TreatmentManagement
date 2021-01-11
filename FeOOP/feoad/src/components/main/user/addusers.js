@@ -5,6 +5,7 @@ import { AUTH } from '../../env';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 var Roles = [
     { value: 'admin', label: 'Quản trị viên' },
     { value: 'doctor', label: 'Bác sĩ' },
@@ -93,11 +94,10 @@ class addusers extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Tạo thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false); 
             }))
     }
 

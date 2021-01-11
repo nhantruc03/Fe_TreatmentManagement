@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 
 class addfaculties extends Component {
     constructor(props) {
@@ -31,11 +32,10 @@ class addfaculties extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.onDone();
+                Message('Tạo thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false); 
             }));
     }
 

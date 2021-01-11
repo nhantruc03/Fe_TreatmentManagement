@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 
 class editservices extends Component {
     constructor(props) {
@@ -34,11 +35,10 @@ class editservices extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Sửa thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Sửa thất bại', false); 
             })
     }
 

@@ -5,6 +5,7 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 var Genders = [
     { value: 'male', label: 'Nam' },
     { value: 'female', label: 'Nữ' }
@@ -150,10 +151,10 @@ class dangkidichvu extends Component {
             }
         })
             .then(() => {
-                this.props.history.goBack();
+                Message('Đăng kí thành công', true, this.props);
             })
             .catch(err => {
-                console.log(err);
+                Message('Đăng kí thất bại', false);
             }))
 
     }
@@ -164,7 +165,7 @@ class dangkidichvu extends Component {
     render() {
         return (
             <form onSubmit={this.onSubmit}>
-                <div style={{paddingLeft: '150px', paddingRight: '150px', paddingBottom: '50px'}} className="container-fluid">
+                <div style={{ paddingLeft: '150px', paddingRight: '150px', paddingBottom: '50px' }} className="container-fluid">
                     <div className="row">
                         <div className="col-9">
                             <div onClick={this.goBack} className='subject'> {`<- Đăng kí dịch vụ`}</div>
@@ -218,7 +219,7 @@ class dangkidichvu extends Component {
                                         />
                                     </div>
                                 </div>
-                               
+
                                 <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="job"  >Nghệ nghiệp</label>
@@ -229,7 +230,7 @@ class dangkidichvu extends Component {
                                         <input onChange={(e) => this.onChange(e)} type="email" className="form-control" name="email" placeholder="Eg. abc**@gmail.com" value={this.state.email} required={true} readOnly />
                                     </div>
                                 </div>
-                                
+
                                 <div className="row mt-3">
                                     <div className="col">
                                         <label htmlFor="reason"  >Lý do</label>
@@ -249,7 +250,7 @@ class dangkidichvu extends Component {
                                         <textarea rows="2" onChange={(e) => this.onChange(e)} type="text" className="form-control" name="note" placeholder="Eg. notes" value={this.state.note} required={true} />
                                     </div>
                                 </div>
-                              
+
                             </div>
                         </div>
                     </div>

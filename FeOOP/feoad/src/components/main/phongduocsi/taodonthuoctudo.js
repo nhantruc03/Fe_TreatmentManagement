@@ -4,6 +4,7 @@ import Danhsachthuoc from '../danhsachthuoc';
 import TableData from '../table';
 import { AUTH } from '../../env';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 const tablerow = ['Name', 'Unit', 'Quantity', 'Price', 'Thao tác']
 const keydata = ['medicineId.name', 'medicineId.unit', 'quantity', 'medicineId.price']
 class taodonthuoctudo extends Component {
@@ -75,27 +76,27 @@ class taodonthuoctudo extends Component {
             }))
 
 
-        this.state.data.forEach(async (value) => {
+        var temp=[];
+        this.state.data.forEach( (value) => {
             data = {
                 prescriptionbillId: curprescriptions_bill,
                 medicineId: value.medicineId._id,
                 quantity: value.quantity
             }
-            await trackPromise(Axios.post('/api/prescription-bill-details', data, {
-                headers: {
-                    'Authorization': { AUTH }.AUTH
-                }
-            })
-                .then(res => {
-                    console.log(res.data.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                }))
+            temp.push(data)
+            
         })
-
-        this.goBack();
-
+        await trackPromise(Axios.post('/api/prescription-bill-details', temp, {
+            headers: {
+                'Authorization': { AUTH }.AUTH
+            }
+        })
+            .then(res => {
+                Message('Tạo thành công', true,this.props); 
+            })
+            .catch(err => {
+                Message('Tạo thất bại', false); 
+            }))
     }
 
     printData = (data) => {

@@ -5,6 +5,7 @@ import { AUTH } from '../../env'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 
 var Genders = [
     { value: 'male', label: 'Male' },
@@ -61,11 +62,10 @@ class editpatients extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.goBack();
+                Message('Sửa thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Sửa thất bại', false); 
             }))
     }
 

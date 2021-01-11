@@ -36,32 +36,32 @@ class tablerow_khamdakhoa extends Component {
     }
 
     renderAction = () => {
-        if(!this.props.noaction){
+        if (!this.props.noaction) {
             return (
                 <td>
                     <div className="btn-group">
                         <Tooltip title='Xem hồ sơ' arrow>
-                        <Link className="link" to={`/khamdakhoa/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fas fa-user" /></div>
-                        </Link>
+                            <Link className="link" to={`/xemhoso/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fas fa-user" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Danh sách khám chuyên khoa' arrow>
-                        <Link className="link" to={`/khamdakhoa/danhsachketquachuyenkhoa/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fa fa-list" /></div>
-                        </Link>
+                            <Link className="link" to={`/khamdakhoa/danhsachketquachuyenkhoa/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fa fa-list" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Tạo đơn thuốc'>
-                        <Link className="link" to={`/khamdakhoa/taodonthuoc/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fas fa-pills" /></div>
-                        </Link>
+                            <Link className="link" to={`/khamdakhoa/taodonthuoc/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fas fa-pills" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Xem đơn thuốc'>
-                        <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
-                            <div className="btn btn-link"><i className="fa fa-eye" /></div>
-                        </Link>
+                            <Link className="link" to={`/xemdonthuocbs/${this.props.data._id}`} >
+                                <div className="btn btn-link"><i className="fa fa-eye" /></div>
+                            </Link>
                         </Tooltip>
                         <Tooltip title='Hoàn thành khám bệnh' arrow>
-                        <div onClick={() => this.onComplete()} className="btn btn-link"><i className="fa fa-check" style={{color:'green'}} /></div>
+                            <div onClick={() => this.onComplete()} className="btn btn-link"><i className="fa fa-check" style={{ color: 'green' }} /></div>
                         </Tooltip>
                     </div>
                 </td>

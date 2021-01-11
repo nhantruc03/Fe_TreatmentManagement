@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { AUTH } from '../../env'
 import 'react-day-picker/lib/style.css';
 import { trackPromise } from 'react-promise-tracker';
+import { Message } from '../service/renderMessage';
 class addservices extends Component {
     constructor(props) {
         super(props);
@@ -34,11 +35,10 @@ class addservices extends Component {
             }
         })
             .then(res => {
-                console.log(res);
-                this.onDone();
+                Message('Tạo thành công', true,this.props); 
             })
             .catch(err => {
-                console.log(err);
+                Message('Tạo thất bại', false); 
             }))
     }
 
