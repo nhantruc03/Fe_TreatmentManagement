@@ -171,36 +171,46 @@ class sobanthuoc extends Component {
             return (
                 <div className='mt-1'>
                     <div className="row">
-                        <div className="col-9">
+                        <div className="col-6">
                             <div className='subject'>Sổ bán thuốc</div>
                         </div>
+                        
                     </div>
+                    
                     <div className="row">
-                        <div className="col-3">
-                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="day" min="1" max="31" placeholder="Ngày"></input>
-                        </div>
-                        <div className="col-3">
-                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="month" min="1" max="12" placeholder="Tháng"></input>
-                        </div>
-                        <div className="col-3">
-                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="year" min="1" placeholder="Năm"></input>
-                        </div>
-                        <div className="col-3">
-
-                            <button onClick={this.Report} className="btn btn-success form-control" >Xem báo cáo</button>
-                        </div>
-
+                    <div className="col-6">
+                    <Search targetParent="medicineId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} /></div>
+                    <div className="col">{this.renderTotal()}</div>
                     </div>
-                    <br></br>
-                    <Search targetParent="medicineId" target="name" data={this.state.data} getSearchData={(e) => this.getSearchData(e)} />
                     <TableData noaction={true} dataRow={tablerow} data={this.getCurData(SearchData)} keydata={keydata} onDelete={(e) => this.onDelete(e)} />
                     <Pagination
                         postsPerPage={this.state.postsPerPage}
                         totalPosts={this.getlistpage(SearchData)}
                         paginate={(e) => this.paginate(e)}
                     />
-                    {this.renderTotal()}
+                   <div className="row">
+                        <div className="col-6">
+                            <div className='subject'>Báo cáo</div>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div className="row">
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="day" min="1" max="31" placeholder="Ngày" style={{marginLeft:'20px'}}></input>
+                        </div>
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="month" min="1" max="12" placeholder="Tháng"style={{marginLeft:'20px'}}></input>
+                        </div>
+                        <div className="col-3">
+                            <input className='form-control' onChange={(e) => this.onChange(e)} type="number" name="year" min="1" placeholder="Năm"style={{marginLeft:'20px'}}></input>
+                        </div>
+                        <div className="col-3">
+                            <button onClick={this.Report} className="btn btn-success form-control" >Xem báo cáo</button>
+                        </div>
+
+                    </div>
                 </div>
+                
             )
         } else {
             return (
@@ -223,7 +233,7 @@ class sobanthuoc extends Component {
 
     renderTotal = () => {
         return (
-            <p style={{ fontSize: '2rem', textAlign: "center" }}>Tổng tiền: <NumberFormat style={{ fontSize: '2rem' }} value={this.state.total} displayType={'text'} thousandSeparator={true} prefix={'đ'} /></p>
+            <p style={{ fontSize: '2rem', textAlign: "right",marginBottom:"0" }}>Tổng tiền: <NumberFormat style={{ fontSize: '2rem' }} value={this.state.total} displayType={'text'} thousandSeparator={true} prefix={'đ'} /></p>
         )
     }
 

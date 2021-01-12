@@ -107,7 +107,7 @@ class topbar extends Component {
                         <div className="col-1">
                             <div className="logo"><Link to="/trangchu"><img src="/Logo.png" alt="Logo" style={{ maxWidth: '100%', cursor:'pointer' }} /></Link></div>
                         </div>
-                        <div className="col-9" >
+                        <div className="col-9" style={{maxWidth:'90%'}} >
                             {this.renderData()}
                         </div>
                         {/* Topbar Navbar */}

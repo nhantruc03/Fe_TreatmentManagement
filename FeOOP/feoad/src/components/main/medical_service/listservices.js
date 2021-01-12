@@ -106,7 +106,7 @@ class listservices extends Component {
                         </div>
                         <div className="col">
                             <Link className="link" to={`/addservices`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
+                                <div className="btn btn-createnew">+ Tạo mới</div>
                             </Link>
                         </div>
                     </div>

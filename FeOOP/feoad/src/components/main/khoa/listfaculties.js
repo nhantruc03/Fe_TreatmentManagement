@@ -101,11 +101,11 @@ class listfaulcuties extends Component {
                 <div className='mt-1'>
                     <div className="row">
                         <div className="col-9">
-                            <div className='subject'>Danh sách phòng</div>
+                            <div className='subject'>Danh sách khoa</div>
                         </div>
                         <div className="col">
                             <Link className="link" to={`/addfaculties`} >
-                                <div className="btn btn-createnew"><i className="fa fa-edit" />+ Tạo mới</div>
+                                <div className="btn btn-createnew">+ Tạo mới</div>
                             </Link>
                         </div>
                     </div>
