@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import auth from '.././../../router/auth';
 import { trackPromise } from 'react-promise-tracker';
 import {LoadingIndicator} from '../Loading';
+// import MaskGroup from './public/MaskGroup.png';
 class login extends Component {
     constructor(props) {
         super(props);
@@ -63,7 +64,7 @@ class login extends Component {
         }
         else {
             return (
-                <div className="bg-gradient-primary" style={{ height: '100vh' }}>
+                <div className="bg-gradient-primary" style={{ height: '100vh',backgroundImage: `url(/img/MaskGroup.png)`  }}>  
                     <div className="container" style={{ paddingTop: 200 }}>
                         {/* Outer Row */}
                         <div className="row justify-content-center">
@@ -71,13 +72,15 @@ class login extends Component {
                                 <div className="card o-hidden border-0 shadow-lg my-5">
                                     <div className="card-body p-0">
                                         {/* Nested Row within Card Body */}
-                                        <div className="row">
-                                            <div className="col-lg-6 d-none d-lg-block bg-login-image" />
-                                            <div className="col-lg-6">
-                                                <div className="p-5">
+                                            <div className="row">
+                                                <div className="col-3"></div>
+                                                <div className="col-6">
+                                                <div className="p-5" style={{alignContent:'center'}}>
                                                     <div className="text-center">
-                                                        <h1 className="h4 text-gray-900 mb-4">Xin chào!</h1>
+                                                        <h1 className="h4 text-gray-900 mb-4" >Xin Chào!</h1>
                                                     </div>
+                                                    <br></br>
+                                                    <br></br>
                                                     <form className="user" onSubmit={(e) => this.onSubmit(e)}>
                                                         <div className="form-group">
                                                             <input onChange={(e) => this.onChange(e)} type="text" className="form-control form-control-user" name="username" placeholder="Nhập tài khoản..." required />
@@ -86,14 +89,16 @@ class login extends Component {
                                                             <input onChange={(e) => this.onChange(e)} type="password" className="form-control form-control-user" name="password" placeholder="Mật khẩu" required />
                                                         </div>
                                                         {this.handleFail()}
-                                                        <button type="submit" style={{ marginTop: 100 }} className="btn btn-primary btn-user btn-block">
+                                                        <button type="submit" style={{ marginTop: 50  }} className="btn btn-primary btn-user btn-block">
                                                             Đăng nhập
                                                     </button>
                                                     </form>
                                                     <LoadingIndicator/>
                                                 </div>
+                                                </div>
+                                                <div className="col-3"></div>
+                                               
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

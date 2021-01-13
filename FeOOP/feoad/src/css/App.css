@@ -5247,6 +5247,7 @@ h3 {
 .h4,
 h4 {
   font-size: 1.5rem;
+
 }
 .h5,
 h5 {
@@ -15582,6 +15583,7 @@ h3 {
 .h4,
 h4 {
   font-size: 1.5rem;
+  font-weight: 500px;
 }
 .h5,
 h5 {
@@ -24317,6 +24319,7 @@ a:focus {
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
 .bg-gradient-primary {
+  /* background-image: url("./MaskGroup.png"); */
   background-color: #4e73df;
   background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
   background-size: cover;
@@ -25123,13 +25126,14 @@ form.user .custom-checkbox.small label {
 }
 form.user .form-control-user {
   font-size: 0.8rem;
-  border-radius: 10rem;
+  border-radius: 8px;
   padding: 1.5rem 1rem;
 }
 form.user .btn-user {
-  font-size: 0.8rem;
-  border-radius: 10rem;
+  font-size: 13px;
+  border-radius: 5px;
   padding: 0.75rem 1rem;
+  background:linear-gradient(79.68deg, #2A7FCE 0%, #10D8D8 100%)
 }
 .btn-google {
   color: #fff;
